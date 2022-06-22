@@ -8,13 +8,13 @@
   ],
   "scripts": {
     "build": "lerna run build --stream",
-    "versionup": "lerna version --conventional-commits --yes && commit-version",
+    "versionup": "lerna version --conventional-commits --yes && yarn commit-version",
     "commit-version": "git add . && git commit -m \"chore(release): publish `node -p 'require(\"./lerna.json\").version'`\"",
     "postinstall": "husky install",
     "lint": "lerna run lint --stream --parallel && yarn format",
     "format": "npm-run-all format:*",
-    "format:ts": "prettier --write \"**/*.ts{,x}\"",
-    "format:json": "prettier --write \"**/*.json\""
+    "format:ts": "prettier --write --no-error-on-unmatched-pattern \"**/*.ts{,x}\"",
+    "format:json": "prettier --write --no-error-on-unmatched-pattern \"**/*.json\""
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.2",
