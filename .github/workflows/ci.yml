@@ -11,25 +11,29 @@ jobs:
     steps:
         - name: Checkout
           uses: actions/checkout@v2
+          with:
+            fetch-depth: 0
+
         - name: Setup Node
           uses: actions/setup-node@v2
           with:
             node-version: 14
             registry-url: 'https://npm.pkg.github.com'
-        - name: Git Identity
-          run: |
-            git config --global user.name 'github-actions[bot]'
-            git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-            git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/$GITHUB_REPOSITORY
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
         - name: Install dependencies
           run: npm install --global yarn && yarn install
+
         - name: Run lint
           run: yarn lint
-        - name: Create new version
-          run: yarn versionup
-        - name: Commit version
-          run: yarn commit-version
 
+        - name: Format code
+          run: yarn format
 
+        - name: Create new version and publish
+          env:
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          run: |
+            git config user.name "${{ github.actor }}"
+            git config user.email "${{ github.actor}}@users.noreply.github.com"
+            
+            yarn versionup
