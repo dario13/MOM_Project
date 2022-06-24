@@ -1,5 +1,8 @@
 {
-  "packages": ["Frontend/*", "Backend/*"],
+  "packages": [
+    "Frontend/*",
+    "Backend/*"
+  ],
   "useNx": false,
   "npmClient": "yarn",
   "useWorkspaces": true,
@@ -11,5 +14,5 @@
       "message": "chore(release): publish %s"
     }
   },
-  "version": "0.0.0"
+  "version": "0.0.5"
 }
