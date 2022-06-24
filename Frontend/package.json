@@ -60,6 +60,5 @@
   },
   "resolutions": {
     "webpack": "^5"
-  },
-  "gitHead": "d74eacc72501c59cea2e6695d34e10efc032b873"
+  }
 }
