@@ -1,0 +1,60 @@
+{
+  "name": "@mom-project/frontend",
+  "version": "0.0.0",
+  "license": "MIT",
+  "dependencies": {
+    "@tailwindcss/typography": "^0.5.2",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.3.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.1",
+    "@types/node": "^16.11.36",
+    "@types/react": "^18.0.9",
+    "@types/react-dom": "^18.0.5",
+    "clsx": "^1.1.1",
+    "daisyui": "^2.15.1",
+    "next": "^12.1.6",
+    "postcss": "^8.4.14",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "tailwind-merge": "^1.2.1",
+    "typescript": "^4.7.2",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "next start",
+    "build": "next build",
+    "lint": "eslint --fix --ext .ts,.tsx src",
+    "dev": "next dev",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+  },
+  "devDependencies": {
+    "@storybook/addon-actions": "^6.5.9",
+    "@storybook/addon-essentials": "^6.5.9",
+    "@storybook/addon-interactions": "^6.5.9",
+    "@storybook/addon-links": "^6.5.9",
+    "@storybook/addon-postcss": "^2.0.0",
+    "@storybook/addons": "^6.5.9",
+    "@storybook/builder-webpack5": "^6.5.9",
+    "@storybook/manager-webpack5": "^6.5.9",
+    "@storybook/node-logger": "^6.5.9",
+    "@storybook/react": "^6.5.9",
+    "@storybook/testing-library": "^0.0.13",
+    "@typescript-eslint/eslint-plugin": "^5.29.0",
+    "@typescript-eslint/parser": "^5.29.0",
+    "autoprefixer": "^10.4.7",
+    "eslint": "^8.18.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.2.3",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-react": "^7.30.0",
+    "eslint-plugin-storybook": "^0.5.12",
+    "tailwindcss": "^3.0.24"
+  },
+  "resolutions": {
+    "webpack": "^5"
+  }
+}

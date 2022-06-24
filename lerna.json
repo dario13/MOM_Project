@@ -3,5 +3,10 @@
   "useNx": false,
   "npmClient": "yarn",
   "useWorkspaces": true,
+  "command": {
+    "version": {
+      "message": "chore(release): publish %s"
+    }
+  },
   "version": "0.0.0"
 }
