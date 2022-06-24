@@ -1,0 +1,26 @@
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - master
+
+jobs:
+  publish:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-18.04
+    steps:
+        - name: Setup Node
+          uses: actions/setup-node@v3
+          with:
+            node-version: 14
+            cache: 'yarn'
+
+        - name: Install dependencies
+          run: npm install --global yarn && yarn install --frozen-lockfile
+
+        - name: "Create version and publish"
+          uses: actions/checkout@v3
+        - run: |
+            git config user.name "${{ github.actor }}"
+            git config user.email "${{ github.actor}}@users.noreply.github.com"
+            yarn publish
