@@ -1,5 +1,5 @@
 {
-  "name": "root",
+  "name": "mom_project",
   "private": true,
   "license": "MIT",
   "workspaces": [
@@ -8,7 +8,6 @@
   ],
   "scripts": {
     "build": "lerna run build --stream",
-    "publish": "lerna version --conventional-commits --yes && lerna publish from-git --yes",
     "postinstall": "husky install",
     "lint": "lerna run lint --stream --parallel",
     "format": "concurrently 'yarn:format-*'",
