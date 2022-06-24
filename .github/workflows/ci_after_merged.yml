@@ -15,10 +15,14 @@ jobs:
           with:
             node-version: 14
             cache: 'yarn'
-            cache-dependency-path: '**/yarn.lock'
 
         - name: Install dependencies
           run: npm install --global yarn && yarn install --frozen-lockfile
+        
+        - name: "Setup npm"
+          run: |
+            npm set @dario13:registry=https://npm.pkg.github.com/dario13
+            npm set "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}"
 
         - name: "Create version and publish "
           run: |
