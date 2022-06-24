@@ -4,6 +4,9 @@
   "npmClient": "yarn",
   "useWorkspaces": true,
   "command": {
+    "publish": {
+      "registry": "https://npm.pkg.github.com/dario13"
+    },
     "version": {
       "message": "chore(release): publish %s"
     }
