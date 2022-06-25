@@ -1,7 +1,15 @@
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
-  ignorePatterns: ['.eslintrc.js'],
+  ignorePatterns: [
+    '.eslintrc.js',
+    'tsconfig.json',
+    'jest.config.js',
+    'jest.setup.js',
+    'next.config.js',
+    'postcss.config.js',
+    'tailwind.config.js',
+  ],
   extends: [
     'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended',
