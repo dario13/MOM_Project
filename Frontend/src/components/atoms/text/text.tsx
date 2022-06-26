@@ -60,9 +60,7 @@ const Text = forwardRef<HTMLSpanElement, TextProps>((props: TextProps, ref): JSX
   )
 
   const renderTextAligned = (align: TextAlignmentType): JSX.Element => (
-    <p className={textAlignment[align]} data-testid="AlignText">
-      {renderOnlyText()}
-    </p>
+    <p className={textAlignment[align]}>{renderOnlyText()}</p>
   )
 
   return <>{align ? renderTextAligned(align) : renderOnlyText()}</>
