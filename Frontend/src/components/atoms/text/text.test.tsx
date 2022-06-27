@@ -4,8 +4,8 @@ import { Text } from './text'
 import { componentColors, componentSizes } from '../../constants'
 import { TextAlignment } from './text.props'
 
-describe('Render a text component', () => {
-  test('', () => {
+describe('Text', () => {
+  test('should render a Text component', () => {
     // Given
     const size = componentSizes[0]
     const color = componentColors[0]
