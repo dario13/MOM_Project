@@ -10,6 +10,7 @@
     "build": "lerna run build --stream",
     "postinstall": "husky install",
     "lint": "lerna run lint --stream --parallel",
+    "test": "lerna run test --stream --parallel",
     "format": "concurrently 'yarn:format-*'",
     "format-ts": "prettier --write --no-error-on-unmatched-pattern \"**/*.ts{,x}\"",
     "format-json": "prettier --write --no-error-on-unmatched-pattern \"**/*.json\""
