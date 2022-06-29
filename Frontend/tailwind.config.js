@@ -4,6 +4,14 @@ module.exports = {
   darkMode: 'false', // 'media' reads from operative system, 'false' or 'class',
   theme: {
     extend: {},
+    borderWidth: {
+      DEFAULT: '1px',
+      0: '0',
+      2: '2px',
+      4: '4px',
+      8: '8px',
+      16: '16px',
+    },
   },
   variants: {
     extend: {},
