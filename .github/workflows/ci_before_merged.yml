@@ -4,8 +4,8 @@ on:
     types: [labeled]
 
 jobs:
-  build:
-    name: Build
+  pre-publish:
+    name: Pre-publish
     if: github.event.label.name == 'ready-to-merge'
     runs-on: ubuntu-18.04
     steps:
@@ -28,5 +28,5 @@ jobs:
           run: yarn format
 
         - name: Run tests
-          run: yarn tests
+          run: yarn test
 
