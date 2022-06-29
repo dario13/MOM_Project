@@ -10,16 +10,21 @@
     "build": "lerna run build --stream",
     "postinstall": "husky install",
     "lint": "lerna run lint --stream --parallel",
+    "test": "lerna run test --stream --parallel",
     "format": "concurrently 'yarn:format-*'",
     "format-ts": "prettier --write --no-error-on-unmatched-pattern \"**/*.ts{,x}\"",
     "format-json": "prettier --write --no-error-on-unmatched-pattern \"**/*.json\""
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": "eslint --fix --ext .ts,.tsx"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.2",
     "@commitlint/config-conventional": "^17.0.2",
     "concurrently": "^7.2.2",
     "husky": "^8.0.1",
-    "lerna": "^5.1.4"
+    "lerna": "^5.1.4",
+    "lint-staged": "^13.0.3"
   },
   "version": "0.0.0"
 }
