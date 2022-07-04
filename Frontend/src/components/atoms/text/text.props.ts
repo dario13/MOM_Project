@@ -3,9 +3,9 @@ import { ComponentColor, ComponentSize, IComponentBaseProps } from '../../types'
 
 type NativeTextProps = React.HTMLAttributes<HTMLSpanElement>
 
-export const TextAlignment = ['left', 'center', 'right', 'justify', 'start', 'end'] as const
+export const textAlignments = ['left', 'center', 'right', 'justify', 'start', 'end'] as const
 
-export type TextAlignmentType = typeof TextAlignment[number]
+export type TextAlignmentType = typeof textAlignments[number]
 
 export type TextProps = Omit<NativeTextProps, 'color'> &
   IComponentBaseProps & {
