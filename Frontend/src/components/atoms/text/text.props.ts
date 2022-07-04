@@ -1,5 +1,5 @@
 import React from 'react'
-import { ComponentColor, ComponentSize, IComponentBaseProps } from '../../types'
+import { ComponentSize, IComponentBaseProps } from '../../types'
 
 type NativeTextProps = React.HTMLAttributes<HTMLSpanElement>
 
@@ -10,7 +10,6 @@ export type TextAlignmentType = typeof textAlignments[number]
 export type TextProps = Omit<NativeTextProps, 'color'> &
   IComponentBaseProps & {
     size?: ComponentSize
-    color?: ComponentColor
     align?: TextAlignmentType
     bold?: boolean
     italic?: boolean

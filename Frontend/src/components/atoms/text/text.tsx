@@ -4,16 +4,6 @@ import React, { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { TextAlignmentType, TextProps } from './text.props'
 
-const textColor = {
-  primary: 'text-primary',
-  secondary: 'text-secondary',
-  accent: 'text-accent',
-  success: 'text-success',
-  info: 'text-info',
-  warning: 'text-warning',
-  error: 'text-error',
-}
-
 const textSize = {
   xs: 'text-xs',
   sm: 'text-sm',
@@ -31,21 +21,10 @@ const textAlignment = {
 }
 
 const Text = forwardRef<HTMLSpanElement, TextProps>((props: TextProps, ref): JSX.Element => {
-  const {
-    align,
-    size = 'md',
-    color = 'primary',
-    text,
-    italic,
-    bold,
-    className,
-    style,
-    children,
-  } = props
+  const { align, size = 'md', text, italic, bold, className, style, children } = props
   const { theme } = useTheme()
 
   const conditionalClasses = {
-    [textColor[color]]: color,
     [textSize[size]]: size,
     'font-bold': bold,
     italic,
