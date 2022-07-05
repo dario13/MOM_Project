@@ -1,4 +1,3 @@
-import { useTheme } from '@/hooks/use-theme'
 import clsx from 'clsx'
 import React, { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
@@ -21,8 +20,7 @@ const textAlignment = {
 }
 
 const Text = forwardRef<HTMLSpanElement, TextProps>((props: TextProps, ref): JSX.Element => {
-  const { align, size = 'md', text, italic, bold, className, style, children } = props
-  const { theme } = useTheme()
+  const { align, size = 'md', text, italic, bold, className, style, children, dataTheme } = props
 
   const conditionalClasses = {
     [textSize[size]]: size,
@@ -33,7 +31,7 @@ const Text = forwardRef<HTMLSpanElement, TextProps>((props: TextProps, ref): JSX
   const classes = twMerge('text', className, clsx(conditionalClasses))
 
   const renderOnlyText = (): JSX.Element => (
-    <span className={classes} data-theme={theme} ref={ref} style={style} data-testid="Text">
+    <span className={classes} ref={ref} style={style} data-testid="Text" data-theme={dataTheme}>
       {text || children}
     </span>
   )
