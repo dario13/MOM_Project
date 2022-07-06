@@ -34,8 +34,8 @@ const buttonVariant = {
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  (
-    {
+  (buttonProps: ButtonProps, ref): JSX.Element => {
+    const {
       text,
       textBold,
       shape,
@@ -52,9 +52,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       className,
       style,
       ...props
-    },
-    ref,
-  ): JSX.Element => {
+    } = buttonProps
     const btnSize = size ? buttonSize[size] : ''
     const btnVariant = variant ? buttonVariant[variant] : ''
     const btnShape = shape ? buttonShape[shape] : ''
