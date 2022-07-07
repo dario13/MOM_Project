@@ -8,9 +8,9 @@ describe('Button', () => {
     render(<Button text="test" />)
 
     // When
-    const renderedTextComponent = screen.getByTestId('Button')
+    const renderedButtonComponent = screen.getByTestId('Button')
 
     // Then
-    expect(renderedTextComponent).toBeInTheDocument()
+    expect(renderedButtonComponent).toBeInTheDocument()
   })
 })

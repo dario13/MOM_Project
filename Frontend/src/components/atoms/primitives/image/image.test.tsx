@@ -9,9 +9,9 @@ describe('Image', () => {
     render(<Image src={logo} />)
 
     // When
-    const renderedTextComponent = screen.getByTestId('Image')
+    const renderedImageComponent = screen.getByTestId('Image')
 
     // Then
-    expect(renderedTextComponent).toBeInTheDocument()
+    expect(renderedImageComponent).toBeInTheDocument()
   })
 })

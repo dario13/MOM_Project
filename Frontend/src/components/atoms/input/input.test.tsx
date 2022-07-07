@@ -8,9 +8,9 @@ describe('Input', () => {
     render(<Input />)
 
     // When
-    const renderedTextComponent = screen.getByTestId('Input')
+    const renderedInputComponent = screen.getByTestId('Input')
 
     // Then
-    expect(renderedTextComponent).toBeInTheDocument()
+    expect(renderedInputComponent).toBeInTheDocument()
   })
 })

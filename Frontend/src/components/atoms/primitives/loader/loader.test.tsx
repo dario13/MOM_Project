@@ -8,9 +8,9 @@ describe('Loader', () => {
     render(<Loader />)
 
     // When
-    const renderedTextComponent = screen.getByTestId('Loader')
+    const renderedLoaderComponent = screen.getByTestId('Loader')
 
     // Then
-    expect(renderedTextComponent).toBeInTheDocument()
+    expect(renderedLoaderComponent).toBeInTheDocument()
   })
 })

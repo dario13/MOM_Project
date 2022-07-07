@@ -8,9 +8,9 @@ describe('FlexBox', () => {
     render(<FlexBox />)
 
     // When
-    const renderedTextComponent = screen.getByTestId('FlexBox')
+    const renderedFlexBoxComponent = screen.getByTestId('FlexBox')
 
     // Then
-    expect(renderedTextComponent).toBeInTheDocument()
+    expect(renderedFlexBoxComponent).toBeInTheDocument()
   })
 })

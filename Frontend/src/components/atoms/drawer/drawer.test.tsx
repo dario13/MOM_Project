@@ -9,9 +9,9 @@ describe('Loader', () => {
     render(<Drawer side={<Button text="Open drawer" />}></Drawer>)
 
     // When
-    const renderedTextComponent = screen.getByTestId('Button')
+    const renderedDrawerComponent = screen.getByTestId('Button')
 
     // Then
-    expect(renderedTextComponent).toBeInTheDocument()
+    expect(renderedDrawerComponent).toBeInTheDocument()
   })
 })
