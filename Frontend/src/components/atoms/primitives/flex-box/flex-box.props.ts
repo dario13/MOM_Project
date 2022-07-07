@@ -26,4 +26,5 @@ export type FlexBoxProps = {
   height?: string
   maxWidth?: string
   maxHeight?: string
+  gap?: string
 }
