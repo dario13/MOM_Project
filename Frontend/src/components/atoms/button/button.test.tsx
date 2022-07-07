@@ -2,8 +2,8 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import { Button } from './button'
 
-describe('Loader', () => {
-  test('should render a Loader component', () => {
+describe('Button', () => {
+  test('should render a Button component', () => {
     // Given
     render(<Button text="test" />)
 

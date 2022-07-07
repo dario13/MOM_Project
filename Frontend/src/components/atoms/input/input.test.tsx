@@ -2,8 +2,8 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import { Input } from './input'
 
-describe('Loader', () => {
-  test('should render a Loader component', () => {
+describe('Input', () => {
+  test('should render an Input component', () => {
     // Given
     render(<Input />)
 
