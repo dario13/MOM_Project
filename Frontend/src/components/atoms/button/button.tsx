@@ -1,4 +1,4 @@
-import { Text } from '@/components/atoms'
+import { Text } from '@/components/atoms/primitives'
 import clsx from 'clsx'
 import React, { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'

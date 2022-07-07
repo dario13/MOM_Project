@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import { Text } from './text'
-import { componentSizes } from '../../constants'
+import { componentSizes } from '../../../constants'
 import { textAlignments } from './text.props'
 
 describe('Text', () => {

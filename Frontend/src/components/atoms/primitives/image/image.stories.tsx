@@ -1,7 +1,7 @@
 import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { Image } from './image'
-import logo from '../../../../public/images/logo.png'
+import logo from '../../../../../public/images/logo.png'
 
 export default {
   title: 'Atoms/Image',

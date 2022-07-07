@@ -1,7 +1,7 @@
 import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { Button } from './button'
-import { WalletIcon } from '@/components/atoms/icons/wallet-icon'
+import { WalletIcon } from '@/components/atoms/primitives/icons/wallet-icon'
 
 export default {
   title: 'Molecules/Button',

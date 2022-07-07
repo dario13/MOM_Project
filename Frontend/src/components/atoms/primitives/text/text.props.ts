@@ -1,5 +1,5 @@
 import React from 'react'
-import { ComponentSize, IComponentBaseProps } from '../../types'
+import { ComponentSize, IComponentBaseProps } from '../../../types'
 
 type NativeTextProps = React.HTMLAttributes<HTMLSpanElement>
 
