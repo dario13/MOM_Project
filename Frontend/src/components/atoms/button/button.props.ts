@@ -22,6 +22,7 @@ export type ButtonProps = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'c
     animation?: boolean
     loading?: boolean
     active?: boolean
+    children?: ReactNode
     startIcon?: ReactNode
     endIcon?: ReactNode
   }

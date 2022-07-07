@@ -37,6 +37,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (buttonProps: ButtonProps, ref): JSX.Element => {
     const {
       text,
+      children,
       textBold,
       shape,
       size,
@@ -81,7 +82,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled}
       >
         {startIcon && !loading && startIcon}
-        {text && <Text text={text} />}
+        {text || (children && <Text text={text}>{children}</Text>)}
         {endIcon && endIcon}
       </button>
     )
