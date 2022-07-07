@@ -4,7 +4,7 @@ import { Image } from './image'
 import logo from '../../../../../public/images/logo.png'
 
 export default {
-  title: 'Atoms/Image',
+  title: 'Atoms/Primitives/Image',
   component: Image,
 } as ComponentMeta<typeof Image>
 

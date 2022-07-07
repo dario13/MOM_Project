@@ -4,7 +4,7 @@ import { Button } from './button'
 import { WalletIcon } from '@/components/atoms/primitives/icons/wallet-icon'
 
 export default {
-  title: 'Molecules/Button',
+  title: 'Atoms/Button',
   component: Button,
 } as ComponentMeta<typeof Button>
 

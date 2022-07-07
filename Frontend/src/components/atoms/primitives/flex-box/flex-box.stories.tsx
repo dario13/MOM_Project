@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { FlexBox } from './flex-box'
 
 export default {
-  title: 'Atoms/FlexBox',
+  title: 'Atoms/Primitives/FlexBox',
   component: FlexBox,
 } as ComponentMeta<typeof FlexBox>
 
