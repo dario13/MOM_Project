@@ -13,10 +13,10 @@ describe('Modal', () => {
     )
 
     // When
-    const renderedButtonComponent = screen.queryByRole('button', { name: 'Do not click me' })
+    const renderedModalComponent = screen.queryByRole('button', { name: 'Do not click me' })
 
     // Then
-    expect(renderedButtonComponent).not.toBeInTheDocument()
+    expect(renderedModalComponent).not.toBeInTheDocument()
   })
 
   it('should show modal', () => {
@@ -28,9 +28,9 @@ describe('Modal', () => {
     )
 
     // When
-    const renderedButtonComponent = screen.queryByRole('button', { name: 'Do not click me' })
+    const renderedModalComponent = screen.queryByRole('button', { name: 'Do not click me' })
 
     // Then
-    expect(renderedButtonComponent).toBeInTheDocument()
+    expect(renderedModalComponent).toBeInTheDocument()
   })
 })
