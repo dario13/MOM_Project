@@ -42,7 +42,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       shape,
       size,
       variant,
-      color = 'primary',
+      color,
       startIcon,
       endIcon,
       responsive = true,
@@ -57,12 +57,13 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const btnSize = size ? buttonSize[size] : ''
     const btnVariant = variant ? buttonVariant[variant] : ''
     const btnShape = shape ? buttonShape[shape] : ''
+    const btnColor = color ? buttonColor[color] : ''
 
     const conditionalClasses = clsx(((startIcon && !loading) || endIcon) && 'gap-2', {
       [btnSize]: size,
       [btnVariant]: variant,
       [btnShape]: shape,
-      [buttonColor[color]]: color,
+      [btnColor]: color,
       'btn-xs md:btn-sm lg:btn-md xl:btn-lg': responsive,
       'btn-active': active,
       'btn-disabled': disabled,
