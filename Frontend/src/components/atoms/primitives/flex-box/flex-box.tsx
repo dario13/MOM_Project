@@ -15,6 +15,8 @@ const FlexBox = (props: FlexBoxProps) => {
     flexShrink,
     flexWrap,
     justifyContent,
+    style,
+    ref,
     ...rest
   } = props
 
@@ -32,6 +34,8 @@ const FlexBox = (props: FlexBoxProps) => {
       {...rest}
       className={className}
       data-testid="FlexBox"
+      style={style}
+      ref={ref}
     >
       {children}
     </StyledFlexBox>

@@ -1,3 +1,5 @@
+import React from 'react'
+
 export type FlexBoxProps = {
   children?: any
   className?: string
@@ -27,4 +29,6 @@ export type FlexBoxProps = {
   maxWidth?: string
   maxHeight?: string
   gap?: string
+  style?: React.CSSProperties
+  ref?: React.Ref<HTMLDivElement>
 }
