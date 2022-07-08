@@ -13,6 +13,7 @@ const buttonColor = {
   info: 'btn-info',
   warning: 'btn-warning',
   error: 'btn-error',
+  ghost: 'btn-ghost',
 }
 
 const buttonSize = {

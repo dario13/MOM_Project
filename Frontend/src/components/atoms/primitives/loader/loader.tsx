@@ -11,6 +11,7 @@ const loaderBackgroundColor = {
   info: 'text-info',
   warning: 'text-warning',
   error: 'text-error',
+  ghost: 'text-ghost',
 }
 
 const loaderAnimationColor = {
@@ -21,6 +22,7 @@ const loaderAnimationColor = {
   info: 'border-t-info',
   warning: 'border-t-warning',
   error: 'border-t-error',
+  ghost: 'border-t-ghost',
 }
 
 const loaderSize = {

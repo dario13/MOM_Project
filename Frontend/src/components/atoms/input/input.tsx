@@ -11,6 +11,7 @@ const inputColor = {
   info: 'input-info',
   warning: 'input-warning',
   error: 'input-error',
+  ghost: 'input-ghost',
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
