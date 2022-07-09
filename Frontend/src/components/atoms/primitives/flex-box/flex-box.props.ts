@@ -18,13 +18,21 @@ export type FlexBoxProps = IComponentBaseProps & {
   flexWrap?: 'wrap' | 'nowrap' | 'wrap-reverse'
   alignItems?: 'stretch' | 'center' | 'flex-start' | 'flex-end' | 'baseline'
   /** **** Child Props ********/
-  flexGrow?: string
-  flexShrink?: string
+  flexGrow?: '0' | '1'
+  flexShrink?: '0' | '1'
   flexBasis?: string
   flex?: string
   /** **** Common Layout Props ********/
   padding?: string
+  paddingTop?: string
+  paddingRight?: string
+  paddingBottom?: string
+  paddingLeft?: string
   margin?: string
+  marginTop?: string
+  marginRight?: string
+  marginBottom?: string
+  marginLeft?: string
   width?: string
   height?: string
   maxWidth?: string

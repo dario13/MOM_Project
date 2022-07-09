@@ -9,7 +9,7 @@ const FlexBox = (props: FlexBoxProps) => {
     className,
     dataTheme,
     display = 'flex',
-    flex,
+    flex = '1 1 0px',
     flexBasis,
     flexDirection = 'column',
     flexGrow,
