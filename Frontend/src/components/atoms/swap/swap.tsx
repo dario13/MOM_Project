@@ -20,7 +20,7 @@ const Swap = React.forwardRef<HTMLLabelElement, SwapProps>((swapProps, ref): JSX
   const offEl = <div className="swap-off">{offElement}</div>
 
   return (
-    <label {...props} data-theme={dataTheme} className={classes} ref={ref}>
+    <label {...props} data-theme={dataTheme} className={classes} ref={ref} data-testId="Swap">
       <input type="checkbox" />
       {onEl}
       {offEl}
