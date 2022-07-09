@@ -14,7 +14,7 @@ const AlertDialog = (props: AlertDialogProps) => {
           </Text>
         )}
         {message && <Text>{message}</Text>}
-        <FlexBox flexDirection="row" justifyContent="flex-end" gap="10px">
+        <FlexBox flexDirection="row" justifyContent="flex-end" gap="1rem">
           {actions.dismiss && (
             <Button
               color={actions.dismiss.color}
