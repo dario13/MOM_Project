@@ -18,4 +18,5 @@ export const StyledFlexBox = styled.div<Omit<FlexBoxProps, 'children' | 'classNa
   max-width: ${(props) => props.maxWidth};
   max-height: ${(props) => props.maxHeight};
   gap: ${(props) => props.gap};
+  data-theme: ${(props) => props.theme};
 `

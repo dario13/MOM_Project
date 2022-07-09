@@ -7,6 +7,7 @@ const FlexBox = (props: FlexBoxProps) => {
     alignItems,
     children,
     className,
+    dataTheme,
     display = 'flex',
     flex,
     flexBasis,
@@ -31,11 +32,12 @@ const FlexBox = (props: FlexBoxProps) => {
       flexShrink={flexShrink}
       flexWrap={flexWrap}
       justifyContent={justifyContent}
-      {...rest}
       className={className}
       data-testid="FlexBox"
       style={style}
       ref={ref}
+      dataTheme={dataTheme}
+      {...rest}
     >
       {children}
     </StyledFlexBox>

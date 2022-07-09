@@ -1,6 +1,7 @@
+import { IComponentBaseProps } from '@/components/types'
 import React from 'react'
 
-export type FlexBoxProps = {
+export type FlexBoxProps = IComponentBaseProps & {
   children?: any
   className?: string
   display?: 'flex' | 'inline-flex'
