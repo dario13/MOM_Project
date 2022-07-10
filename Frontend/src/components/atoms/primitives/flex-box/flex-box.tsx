@@ -18,6 +18,7 @@ const FlexBox = (props: FlexBoxProps) => {
     justifyContent,
     style,
     ref,
+    onClick,
     ...rest
   } = props
 
@@ -36,7 +37,8 @@ const FlexBox = (props: FlexBoxProps) => {
       data-testid="FlexBox"
       style={style}
       ref={ref}
-      dataTheme={dataTheme}
+      data-theme={dataTheme}
+      onClick={onClick}
       {...rest}
     >
       {children}

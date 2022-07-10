@@ -40,4 +40,5 @@ export type FlexBoxProps = IComponentBaseProps & {
   gap?: string
   style?: React.CSSProperties
   ref?: React.Ref<HTMLDivElement>
+  onClick?: (e: React.MouseEvent<HTMLDivElement>) => void
 }
