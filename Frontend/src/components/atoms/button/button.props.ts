@@ -13,7 +13,6 @@ export type ButtonVariantType = typeof buttonVariants[number]
 export type ButtonProps = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'color'> &
   IComponentBaseProps & {
     text?: string
-    textBold?: boolean
     shape?: ComponentShape
     size?: ComponentSize
     variant?: ButtonVariantType

@@ -39,7 +39,6 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const {
       text,
       children,
-      textBold,
       shape,
       size,
       variant,
