@@ -2,7 +2,7 @@ import { IComponentBaseProps } from '@/components/types'
 import React from 'react'
 
 export type FlexBoxProps = IComponentBaseProps & {
-  children?: any
+  children?: React.ReactNode
   className?: string
   display?: 'flex' | 'inline-flex'
   /** **** Container Props ********/
