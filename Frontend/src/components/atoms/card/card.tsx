@@ -31,7 +31,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>((props: CardProps, ref)
   const classes = twMerge('card', conditionalClasses)
 
   return (
-    <FlexBox data-theme={dataTheme} className={classes} display="inline-flex">
+    <FlexBox data-theme={dataTheme} className={classes} display="inline-flex" ref={ref}>
       {children}
     </FlexBox>
   )
