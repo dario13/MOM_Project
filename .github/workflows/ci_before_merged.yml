@@ -30,3 +30,16 @@ jobs:
         - name: Run tests
           run: yarn test
 
+        - name: Initialize CodeQL
+          uses: github/codeql-action/init@v2
+          with:
+            languages: javascript
+
+        - name: Build code
+          run: |
+            make bootstrap
+            make release
+
+        - name: Perform CodeQL Analysis
+          uses: github/codeql-action/analyze@v2
+
