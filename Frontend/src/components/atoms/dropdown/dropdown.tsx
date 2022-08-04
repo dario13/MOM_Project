@@ -1,3 +1,4 @@
+import { useMedia } from '@/hooks/use-media'
 import clsx from 'clsx'
 import React, { ReactNode } from 'react'
 import { twMerge } from 'tailwind-merge'
@@ -36,6 +37,8 @@ const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
       dataTheme,
       ...props
     } = dropDownProps
+
+    const { isMobile } = useMedia()
 
     const itsAMenu = (content: Menu | ReactNode): content is Menu => {
       return Array.isArray(content)
@@ -76,6 +79,8 @@ const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
                   startIcon={item.startIcon}
                   endIcon={item.endIcon}
                   color={item.color || 'ghost'}
+                  responsive={false}
+                  size={isMobile ? 'sm' : 'md'}
                 />
               }
             </li>
