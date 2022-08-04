@@ -28,8 +28,15 @@ const DropdownHamburger = (props: DropdownHamburgerProps) => {
             debouncedHandleClick()
           }}
           color="ghost"
+          responsive={false}
         >
-          <Swap onElement={<CloseIcon />} offElement={<HamburguerIcon />} active={isOpen} rotate />
+          <Swap
+            onElement={<CloseIcon />}
+            offElement={<HamburguerIcon />}
+            active={isOpen}
+            rotate
+            className="p-1"
+          />
         </Button>
       }
       content={menuItems}
