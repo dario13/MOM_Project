@@ -6,4 +6,5 @@ export type NavbarProps = React.HTMLAttributes<HTMLDivElement> &
     left?: React.ReactNode
     right?: React.ReactNode
     center?: React.ReactNode
+    background?: boolean
   }

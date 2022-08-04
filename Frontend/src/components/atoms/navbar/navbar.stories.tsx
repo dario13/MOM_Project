@@ -13,7 +13,6 @@ const Template: ComponentStory<typeof Navbar> = (args) => {
   return (
     <Navbar
       {...args}
-      className="bg-base-100 shadow-xl rounded-box"
       left={
         <Button shape="square" color="ghost">
           {<HamburguerIcon />}
