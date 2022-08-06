@@ -2,9 +2,13 @@ import React from 'react'
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { DropdownHamburger } from './dropdown-hamburger'
 import { act } from 'react-dom/test-utils'
+import { mediaQueryMock } from '@/mocks/media-query'
 
 describe('DropdownHamburger', () => {
-  it('when the hamburger icon is clicked, the menu should be rendered', async () => {
+  beforeAll(() => {
+    mediaQueryMock()
+  })
+  it('when the hamburger icon is clicked, the menu must be rendered', async () => {
     // Given
     render(
       <DropdownHamburger
@@ -17,12 +21,11 @@ describe('DropdownHamburger', () => {
 
     // When
     const renderedDropdownHamburgerComponent = screen.queryByTestId('DropdownHamburger')
-    const renderedButtonInDropdownHamburgerComponent = screen.queryByTestId('Button')
 
     await act(async () => {
       /* fire events that update state */
-      if (renderedButtonInDropdownHamburgerComponent) {
-        fireEvent.click(renderedButtonInDropdownHamburgerComponent)
+      if (renderedDropdownHamburgerComponent) {
+        fireEvent.click(renderedDropdownHamburgerComponent)
       }
     })
 
@@ -34,7 +37,7 @@ describe('DropdownHamburger', () => {
       { timeout: 10 },
     )
   })
-  it('when the X icon is clicked, the menu should be closed', async () => {
+  it('when the X icon is clicked, the menu must be changed to closed', async () => {
     // Given
     render(
       <DropdownHamburger
@@ -48,12 +51,11 @@ describe('DropdownHamburger', () => {
 
     // When
     const renderedDropdownHamburgerComponent = screen.queryByTestId('DropdownHamburger')
-    const renderedButtonInDropdownHamburgerComponent = screen.queryByTestId('Button')
 
     await act(async () => {
       /* fire events that update state */
-      if (renderedButtonInDropdownHamburgerComponent) {
-        fireEvent.click(renderedButtonInDropdownHamburgerComponent)
+      if (renderedDropdownHamburgerComponent) {
+        fireEvent.click(renderedDropdownHamburgerComponent)
       }
     })
 

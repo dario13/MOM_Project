@@ -22,14 +22,11 @@ const DropdownHamburger = (props: DropdownHamburgerProps) => {
   return (
     <Dropdown
       tabIndex={0}
+      onClick={() => {
+        debouncedHandleClick()
+      }}
       toggleElement={
-        <Button
-          onClick={() => {
-            debouncedHandleClick()
-          }}
-          color="ghost"
-          responsive={false}
-        >
+        <Button color="ghost" responsive={false}>
           <Swap
             onElement={<CloseIcon />}
             offElement={<HamburguerIcon />}
