@@ -37,12 +37,14 @@
     "dev": "next dev",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "test": "jest"
+    "test": "jest",
+    "test-watch": "jest --watch"
   },
   "lint-staged": {
     "*.{ts,tsx}": "eslint --fix --ext .ts,.tsx"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.3.0",
     "@storybook/addon-actions": "^6.5.9",
     "@storybook/addon-essentials": "^6.5.9",
     "@storybook/addon-interactions": "^6.5.9",

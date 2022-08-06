@@ -1,9 +1,12 @@
-import { ComponentBgColors, IComponentBaseProps } from '@/components/types'
+import { ComponentBgColors, ComponentColor, IComponentBaseProps } from '@/components/types'
 import React, { ReactNode } from 'react'
 
 export type Item = {
   label: string
   onClick: () => void
+  color?: ComponentColor
+  startIcon?: ReactNode
+  endIcon?: ReactNode
   active?: boolean
 }
 

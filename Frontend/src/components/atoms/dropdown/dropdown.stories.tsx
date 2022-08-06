@@ -25,6 +25,7 @@ const WIthMenuTemplate: ComponentStory<typeof Dropdown> = (args) => (
       content={[
         { label: 'Example item 1', onClick: () => ({}) },
         { label: 'Example item 2', onClick: () => ({}) },
+        { label: 'Example item 3', color: 'primary', onClick: () => ({}) },
       ]}
     />
   </FlexBox>

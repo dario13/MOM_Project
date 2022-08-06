@@ -1,7 +1,8 @@
+import { useMedia } from '@/hooks/use-media'
 import clsx from 'clsx'
 import React, { ReactNode } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { Text } from '../primitives'
+import { Button } from '../button'
 import { DropdownProps, Item, Menu } from './dropdown.props'
 
 const dropDownHorizontal = {
@@ -37,6 +38,8 @@ const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
       ...props
     } = dropDownProps
 
+    const { isMobile } = useMedia()
+
     const itsAMenu = (content: Menu | ReactNode): content is Menu => {
       return Array.isArray(content)
     }
@@ -68,8 +71,18 @@ const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
       return (
         <ul className={dropdownMenuClasses} tabIndex={0} data-theme={dataTheme}>
           {menuItems.map((item, index) => (
-            <li key={index} onClick={item.onClick}>
-              {<Text text={item.label} />}
+            <li key={index}>
+              {
+                <Button
+                  text={item.label}
+                  onClick={item.onClick}
+                  startIcon={item.startIcon}
+                  endIcon={item.endIcon}
+                  color={item.color || 'ghost'}
+                  responsive={false}
+                  size={isMobile ? 'sm' : 'md'}
+                />
+              }
             </li>
           ))}
         </ul>
