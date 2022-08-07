@@ -26,8 +26,5 @@
     "lerna": "^5.1.4",
     "lint-staged": "^13.0.3"
   },
-  "resolutions": {
-    "parse-url": ">=6.0.1"
-  },
   "version": "0.0.0"
 }
