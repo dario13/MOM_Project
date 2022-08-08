@@ -6,6 +6,9 @@
   },
   "version": "0.0.0",
   "license": "MIT",
+  "scripts": {
+    "lint": "eslint --fix --ext .ts"
+  },
   "devDependencies": {
     "@nomicfoundation/hardhat-chai-matchers": "^1.0.2",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.3",
