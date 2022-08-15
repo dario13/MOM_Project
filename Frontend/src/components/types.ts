@@ -1,4 +1,4 @@
-import { DataTheme } from '@/theme/types'
+import { DataTheme } from '@/contexts/theme/theme-type'
 import {
   bgColors,
   brandColors,
