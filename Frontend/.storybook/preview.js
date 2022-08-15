@@ -1,4 +1,7 @@
 import '../src/styles/global.css'
+import React, { useEffect } from 'react'
+import { useTheme } from '@/hooks/use-theme'
+import { ThemeProvider } from '@/contexts/theme/theme-provider'
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -8,3 +11,21 @@ export const parameters = {
     },
   },
 }
+
+export const decorators = [
+  (Story, options) => {
+    const { toggle, theme } = useTheme()
+
+    useEffect(() => {
+      if (options?.args?.dataTheme !== theme) {
+        toggle()
+      }
+    }, [theme, options])
+
+    return (
+      <ThemeProvider>
+        <Story />
+      </ThemeProvider>
+    )
+  },
+]
