@@ -4,7 +4,12 @@ import { useThemeStore } from '@/store/theme/theme.store'
 import { useContext, useEffect, useState } from 'react'
 import debounce from 'lodash.debounce'
 
-export const useTheme = () => {
+export type useThemeType = {
+  theme: DataTheme
+  toggle: () => void
+}
+
+export const useTheme = (): useThemeType => {
   const context = useContext(ThemeContext)
   const { persistedTheme, persistTheme } = useThemeStore()
   // The next useState is a workaround for the issue related to hydrate the state of the persisted theme.

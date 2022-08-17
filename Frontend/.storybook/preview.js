@@ -20,7 +20,7 @@ export const decorators = [
       if (options?.args?.dataTheme !== theme) {
         toggle()
       }
-    }, [theme, options])
+    }, [options.args.dataTheme])
 
     return (
       <ThemeProvider>
