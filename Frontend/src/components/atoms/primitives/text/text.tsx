@@ -31,13 +31,13 @@ const Text = forwardRef<HTMLSpanElement, TextProps>((props: TextProps, ref): JSX
   const classes = twMerge('text', className, clsx(conditionalClasses))
 
   const renderOnlyText = (): JSX.Element => (
-    <span className={classes} ref={ref} style={style} data-testid="Text" data-theme={dataTheme}>
+    <span ref={ref} className={classes} style={style} data-testid="Text" data-theme={dataTheme}>
       {text || children}
     </span>
   )
 
   const renderTextAligned = (align: TextAlignmentType): JSX.Element => (
-    <p className={textAlignment[align]}>{renderOnlyText()}</p>
+    <div className={textAlignment[align]}>{renderOnlyText()}</div>
   )
 
   return <>{align ? renderTextAligned(align) : renderOnlyText()}</>

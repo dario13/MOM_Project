@@ -2,11 +2,11 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import { Dropdown } from './dropdown'
 import { Button } from '../button'
-import { mediaQueryMock } from '@/mocks/media-query'
+import { useMediaQueryMock } from '@/__mocks__/hooks/use-media-query.mock'
 
 describe('Dropdown', () => {
   beforeAll(() => {
-    mediaQueryMock()
+    useMediaQueryMock()
   })
   it('should not show Dropdown', () => {
     // Given

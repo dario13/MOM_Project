@@ -37,6 +37,8 @@ export type FlexBoxProps = IComponentBaseProps & {
   height?: string
   maxWidth?: string
   maxHeight?: string
+  minWidth?: string
+  minHeight?: string
   gap?: string
   style?: React.CSSProperties
   ref?: React.Ref<HTMLDivElement>

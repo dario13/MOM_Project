@@ -2,7 +2,16 @@ import { useEffect, useState } from 'react'
 import { ethers } from 'ethers'
 import { useWalletStore } from '@/store/wallet/wallet.store'
 
-export const useWallet = () => {
+export type useWalletType = {
+  connect: () => void
+  disconnect: () => void
+  isWalletInstalled: boolean
+  isWalletConnected: boolean
+  error?: Error
+  signer?: ethers.Signer
+}
+
+export const useWallet = (): useWalletType => {
   const { isConnected, disconnected, connected } = useWalletStore()
   const [isWalletInstalled, setIsWalletInstalled] = useState(false)
   const [error, setError] = useState<Error>()
@@ -15,7 +24,7 @@ export const useWallet = () => {
         : setIsWalletInstalled(false)
 
     const checkIfWalletHasChanged = () => {
-      window.ethereum.on('accountsChanged', () => {
+      window.ethereum?.on('accountsChanged', () => {
         disconnected()
       })
     }
@@ -44,7 +53,6 @@ export const useWallet = () => {
         setError(e)
       }
     }
-    
   }
 
   return {
