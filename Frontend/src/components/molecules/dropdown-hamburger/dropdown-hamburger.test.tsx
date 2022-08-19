@@ -2,11 +2,11 @@ import React from 'react'
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { DropdownHamburger } from './dropdown-hamburger'
 import { act } from 'react-dom/test-utils'
-import { mediaQueryMock } from '@/mocks/media-query'
+import { useMediaQueryMock } from '@/__mocks__/hooks/use-media-query.mock'
 
 describe('DropdownHamburger', () => {
   beforeAll(() => {
-    mediaQueryMock()
+    useMediaQueryMock()
   })
   it('when the hamburger icon is clicked, the menu must be rendered', async () => {
     // Given
@@ -31,10 +31,8 @@ describe('DropdownHamburger', () => {
 
     // Then
     // Wait for the dropdown to open
-    await waitFor(
-      () =>
-        expect(renderedDropdownHamburgerComponent?.classList.contains('dropdown-open')).toBe(true),
-      { timeout: 10 },
+    await waitFor(() =>
+      expect(renderedDropdownHamburgerComponent?.classList.contains('dropdown-open')).toBe(true),
     )
   })
   it('when the X icon is clicked, the menu must be changed to closed', async () => {
@@ -61,10 +59,8 @@ describe('DropdownHamburger', () => {
 
     // Then
     // Wait for the dropdown to close
-    await waitFor(
-      () =>
-        expect(renderedDropdownHamburgerComponent?.classList.contains('dropdown-open')).toBe(false),
-      { timeout: 10 },
+    await waitFor(() =>
+      expect(renderedDropdownHamburgerComponent?.classList.contains('dropdown-open')).toBe(false),
     )
   })
 })
