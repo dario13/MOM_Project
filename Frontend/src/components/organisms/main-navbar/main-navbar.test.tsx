@@ -1,29 +1,21 @@
 import React from 'react'
-import { render, screen, waitFor } from '@testing-library/react'
-import { MainNavbar } from './main-navbar'
-import { faker } from '@faker-js/faker'
-import { Image } from '@/components/atoms'
-import { mediaQueryMock } from '@/mocks/media-query'
-import { resizeWindow } from '@/mocks/resize-window'
+import { render, screen } from '@testing-library/react'
+import { actionWalletButtonText, MainNavbar } from './main-navbar'
+
+import { useMediaMocked } from '@/__mocks__/hooks/use-media.mock'
+import { useWalletMocked } from '@/__mocks__/hooks/use-wallet.mock'
+
+jest.mock('@/hooks/use-wallet')
 
 const renderedComponent = () => {
-  return render(
-    <MainNavbar
-      menuItems={[
-        { label: 'Example item 1', onClick: () => ({}) },
-        { label: 'Example item 2', onClick: () => ({}) },
-      ]}
-      logo={<Image src={faker.image.image()} width={100} height={50} title="logo" />}
-    />,
-  )
+  return render(<MainNavbar />)
 }
 
 describe('MainNavbar', () => {
-  it('when the screen size is desktop, the logo must be rendered and the hamburguer menu must not be rendered', async () => {
+  it('when the screen size is desktop, the logo must be rendered and the hamburguer menu must not be rendered', () => {
     // Given
-    mediaQueryMock('desktop')
-    resizeWindow('desktop')
-
+    useWalletMocked()
+    useMediaMocked({ isDesktop: true })
     const { container } = renderedComponent()
 
     // When
@@ -35,10 +27,9 @@ describe('MainNavbar', () => {
     expect(renderedDropdownHamburgerComponent).toBeNull()
   })
 
-  it('when the screen size is mobile, the hamburguer menu and the logo must be rendered', async () => {
+  it('when the screen size is mobile, the hamburguer menu and the logo must be rendered', () => {
     // Given
-    mediaQueryMock('mobile')
-    resizeWindow('mobile')
+    useMediaMocked({ isMobile: true })
     const { container } = renderedComponent()
 
     // When
@@ -46,9 +37,35 @@ describe('MainNavbar', () => {
     const renderedLogo = container.querySelector('img[title="logo"]')
 
     // Then
-    await waitFor(() => {
-      expect(renderedDropdownHamburgerComponent).toBeInTheDocument()
-      expect(renderedLogo).toBeInTheDocument()
-    })
+    expect(renderedDropdownHamburgerComponent).toBeInTheDocument()
+    expect(renderedLogo).toBeInTheDocument()
+  })
+
+  it("when the wallet isn't connected, the start button must be rendered", () => {
+    // Given
+    const buttonTitle = actionWalletButtonText.start
+    useWalletMocked({ isWalletConnected: false })
+    useMediaMocked({ isDesktop: true })
+    const { getByRole } = renderedComponent()
+
+    // When
+    const renderedStartButton = getByRole('button', { name: buttonTitle })
+
+    // Then
+    expect(renderedStartButton).toBeInTheDocument()
+  })
+
+  it('when the wallet is connected, the connected button must be rendered', () => {
+    // Given
+    const buttonTitle = actionWalletButtonText.connected
+    useMediaMocked({ isDesktop: true })
+    useWalletMocked({ isWalletConnected: true, isWalletInstalled: true })
+    const { getByRole } = renderedComponent()
+
+    // When
+    const renderedConnectedButton = getByRole('button', { name: buttonTitle })
+
+    // Then
+    expect(renderedConnectedButton).toBeInTheDocument()
   })
 })
