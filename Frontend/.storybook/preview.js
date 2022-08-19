@@ -12,14 +12,14 @@ export const parameters = {
   },
 }
 
+export const args = { dataTheme: 'light' }
+
 export const decorators = [
   (Story, options) => {
     const { toggle, theme } = useTheme()
 
     useEffect(() => {
-      if (options?.args?.dataTheme !== theme) {
-        toggle()
-      }
+      toggle()
     }, [options.args.dataTheme])
 
     return (
