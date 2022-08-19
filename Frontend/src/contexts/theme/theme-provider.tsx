@@ -12,10 +12,7 @@ export const ThemeProvider = (props: ThemeProviderProps) => {
 
   return (
     <ThemeContext.Provider value={{ theme, toggle }}>
-      <>
-        {console.log('ThemeProvider', theme)}
-        <div data-theme={theme}>{children}</div>
-      </>
+      <div data-theme={theme}>{children}</div>
     </ThemeContext.Provider>
   )
 }
