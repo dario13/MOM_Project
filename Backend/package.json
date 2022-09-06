@@ -9,7 +9,8 @@
   "scripts": {
     "lint": "eslint --fix --ext .ts",
     "test": "hardhat test",
-    "compile": "hardhat compile"
+    "compile": "hardhat compile",
+    "deploy": "hardhat deploy"
   },
   "devDependencies": {
     "@defi-wonderland/smock": "^2.2.0",
@@ -31,6 +32,8 @@
     "typechain": "^8.1.0"
   },
   "dependencies": {
-    "@openzeppelin/contracts": "^4.7.3"
+    "@chainlink/contracts": "^0.4.1",
+    "@openzeppelin/contracts": "^4.7.3",
+    "dotenv": "^16.0.1"
   }
 }
