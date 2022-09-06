@@ -10,3 +10,4 @@ typechain-types/
 artifacts/
 coverage*
 deployments/
+.env
