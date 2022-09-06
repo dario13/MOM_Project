@@ -3,6 +3,7 @@
   "compilerOptions": {
   "baseUrl": "."
 },
-"include": ["**/*.ts"]
+"include": ["**/*.ts"],
+"files": ["./hardhat.config.ts", "./helper-hardhat-config.ts"]
 }
 
