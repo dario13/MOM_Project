@@ -8,6 +8,9 @@ const textSize = {
   sm: 'text-sm',
   md: 'text-md',
   lg: 'text-lg',
+  xl: 'text-xl',
+  IIxl: 'text-2xl',
+  IIIxl: 'text-3xl',
 }
 
 const textAlignment = {
