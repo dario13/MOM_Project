@@ -4,7 +4,7 @@ import React from 'react'
 export type FlexBoxProps = IComponentBaseProps & {
   children?: React.ReactNode
   className?: string
-  display?: 'flex' | 'inline-flex'
+  display?: 'flex' | 'inline-flex' | 'none'
   /** **** Container Props ********/
   flexDirection?: 'row' | 'column' | 'row-reverse' | 'column-reverse'
   justifyContent?:

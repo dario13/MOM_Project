@@ -29,6 +29,7 @@ const Navbar = React.forwardRef<HTMLDivElement, NavbarProps>(
           data-theme={dataTheme}
           flexDirection="row"
           className={section}
+          justifyContent="center"
           style={style}
           ref={ref}
         >
