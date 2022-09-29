@@ -23,7 +23,6 @@ WithPrefixAndSuffix.args = {
   placeholder: '0.00',
   prefix: '$',
   suffix: 'USD',
-  onChange: (e) => console.log(e.target.value),
 }
 
 export const WithDateMask = Template.bind({})
@@ -44,6 +43,5 @@ WithDateMask.args = {
         Y: { mask: IMask.MaskedRange, placeholderChar: 'Y', from: 1900, to: 2999, maxLength: 4 },
       },
     },
-    onAccept: (value) => console.log(value),
   },
 }
