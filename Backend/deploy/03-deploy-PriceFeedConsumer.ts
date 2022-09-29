@@ -9,12 +9,8 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const { deployer } = await getNamedAccounts()
 
-  const {
-    isLocalNetwork,
-    networkName,
-    ethUsdPriceFeedAddress,
-    verificationBlockConfirmations,
-  }: NetWorkInfo = await run('networkInfo')
+  const { isLocalNetwork, networkName, ethUsdPriceFeedAddress, blockConfirmations }: NetWorkInfo =
+    await run('networkInfo')
 
   let ethUsdPriceFeedInterfaceAddress: string
 
@@ -38,7 +34,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
       from: deployer,
       log: true,
       args: [ethUsdPriceFeedInterfaceAddress],
-      waitConfirmations: verificationBlockConfirmations,
+      waitConfirmations: blockConfirmations,
     })
   } catch (error) {
     log('Error deploying PriceFeedConsumer...')

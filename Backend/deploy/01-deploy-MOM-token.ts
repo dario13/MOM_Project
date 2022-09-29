@@ -9,9 +9,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const { deployer, tokenOwner } = await getNamedAccounts()
 
-  const { fundAmount, verificationBlockConfirmations, isLocalNetwork }: NetWorkInfo = await run(
-    'networkInfo',
-  )
+  const { fundAmount, blockConfirmations, isLocalNetwork }: NetWorkInfo = await run('networkInfo')
 
   // Only differentiate between token owner and deployer in local network
   const tknOwner = isLocalNetwork ? tokenOwner : deployer
@@ -23,7 +21,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
       from: deployer,
       args: [tknOwner, fundAmount],
       log: true,
-      waitConfirmations: verificationBlockConfirmations,
+      waitConfirmations: blockConfirmations,
     })
   } catch (error) {
     log('Error deploying MOMToken...')
