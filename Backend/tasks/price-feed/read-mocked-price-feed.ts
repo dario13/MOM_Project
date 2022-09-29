@@ -17,6 +17,7 @@ task('readMockedPriceFeed', 'Gets the mocked price from a Mock Price Feed').setA
 
     const accounts: SignerWithAddress[] = await hre.ethers.getSigners()
     const signer: SignerWithAddress = accounts[0]
+    console.log('signer: ', { signer })
 
     const priceFeedConsumerDeployment = await hre.deployments.get('PriceFeedConsumer')
 
