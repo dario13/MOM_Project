@@ -12,16 +12,10 @@ export const parameters = {
   },
 }
 
-export const args = { dataTheme: 'light' }
+export const args = { dataTheme: 'dark' }
 
 export const decorators = [
-  (Story, options) => {
-    const { toggle, theme } = useTheme()
-
-    useEffect(() => {
-      toggle()
-    }, [options.args.dataTheme])
-
+  (Story) => {
     return (
       <ThemeProvider>
         <Story />
