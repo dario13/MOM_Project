@@ -1,40 +1,65 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect } from 'react'
 import { ethers } from 'ethers'
 import { useWalletStore } from '@/store/wallet/wallet.store'
+import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
 
 export type useWalletType = {
   connect: () => void
   disconnect: () => void
   isWalletInstalled: boolean
   isWalletConnected: boolean
-  error?: Error
-  signer?: ethers.Signer
+  signer?: SignerWithAddress
 }
 
 export const useWallet = (): useWalletType => {
-  const { isConnected, disconnected, connected } = useWalletStore()
-  const [isWalletInstalled, setIsWalletInstalled] = useState(false)
-  const [error, setError] = useState<Error>()
-  const [signer, setSigner] = useState()
+  const { isConnected, isInstalled, signer, disconnect } = useWalletStore()
+
+  const fetchSigner = useCallback(async () => {
+    try {
+      if (!isConnected) {
+        return
+      }
+      const provider = new ethers.providers.Web3Provider(window.ethereum as any, 'any')
+
+      const signerWithAddress = await SignerWithAddress.create(provider.getSigner() as any)
+
+      useWalletStore.setState({ signer: signerWithAddress })
+    } catch (e) {
+      console.error(e)
+    }
+  }, [isConnected])
 
   useEffect(() => {
-    const checkIfWalletIsInstalled = () =>
-      typeof window.ethereum !== 'undefined'
-        ? setIsWalletInstalled(true)
-        : setIsWalletInstalled(false)
+    fetchSigner()
+  }, [fetchSigner])
 
+  useEffect(() => {
+    const checkIfWalletIsInstalled = () => {
+      typeof window.ethereum !== 'undefined'
+        ? useWalletStore.setState({ isInstalled: true })
+        : useWalletStore.setState({ isInstalled: false })
+    }
+    checkIfWalletIsInstalled()
+  }, [])
+
+  useEffect(() => {
     const checkIfWalletHasChanged = () => {
       window.ethereum?.on('accountsChanged', () => {
-        disconnected()
+        disconnect()
+      })
+      window.ethereum?.on('chainChanged', () => {
+        disconnect()
       })
     }
-
-    checkIfWalletIsInstalled()
     checkIfWalletHasChanged()
+    return () => {
+      window.ethereum?.removeAllListeners()
+    }
   })
 
-  async function connect() {
-    if (isWalletInstalled) {
+  const connect = async () => {
+    if (isConnected) return
+    if (isInstalled) {
       try {
         await window.ethereum.request({
           method: 'wallet_requestPermissions',
@@ -45,22 +70,20 @@ export const useWallet = (): useWalletType => {
           ],
         })
 
-        const provider = new ethers.providers.Web3Provider(window.ethereum as any)
-
-        setSigner(provider.getSigner() as any)
-        connected()
-      } catch (e: any) {
-        setError(e)
+        useWalletStore.setState({
+          isConnected: true,
+        })
+      } catch (e) {
+        console.error(e)
       }
     }
   }
 
   return {
-    connect,
-    disconnect: () => disconnected(),
-    isWalletInstalled,
+    connect: () => connect(),
+    disconnect: () => disconnect(),
+    isWalletInstalled: isInstalled,
     isWalletConnected: isConnected,
-    error,
     signer,
   }
 }
