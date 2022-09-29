@@ -7,12 +7,16 @@ import '@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol';
 contract Exchange {
     using SafeERC20 for IERC20;
     uint256 public weiBalance;
+    uint256 public minimumAmountToExchange;
     address public owner;
     IERC20 public token;
+
+    event Bought(address buyer, uint256 amount);
 
     constructor(address _owner, IERC20 _token) {
         owner = _owner;
         token = _token;
+        minimumAmountToExchange = 0.0001 ether;
     }
 
     modifier onlyOwner() {
@@ -20,11 +24,15 @@ contract Exchange {
         _;
     }
 
+    function setMinimumAmountToExchange(uint256 _minimumAmountToExchange) external onlyOwner {
+        minimumAmountToExchange = _minimumAmountToExchange;
+    }
+
     function setToken(IERC20 _token) external onlyOwner {
         token = _token;
     }
 
-    function deposit() external payable {
+    function depositWei() external payable {
         weiBalance += msg.value;
     }
 
@@ -36,8 +44,8 @@ contract Exchange {
         return weiBalance;
     }
 
-    function getTokenBalance() public view returns (uint256) {
-        return token.balanceOf(address(this));
+    function getContractTokenBalance() public view returns (uint256) {
+        return token.balanceOf(getCurrentContractAddress());
     }
 
     function getCurrentContractAddress() public view returns (address) {
@@ -51,24 +59,39 @@ contract Exchange {
         weiBalance -= amount;
     }
 
-    function withdrawERC20(uint256 amount, address to) public onlyOwner {
-        uint256 erc20balance = token.balanceOf(getCurrentContractAddress());
-        require(amount <= erc20balance, 'balance is low');
-        token.transfer(to, amount);
+    function withdrawToken(uint256 amount, address to) public onlyOwner {
+        require(amount <= getContractTokenBalance(), 'Insufficient funds');
+        token.safeTransfer(to, amount);
     }
 
-    function buy() public payable {
+    function _weiToToken(uint256 amount) internal view returns (uint256) {
+        return (amount / minimumAmountToExchange);
+    }
+
+    function _tokenToWei(uint256 amount) internal view returns (uint256) {
+        return (amount * minimumAmountToExchange);
+    }
+
+    function _isNotFractionOfToken(uint256 amount) internal view returns (bool) {
+        return (amount % minimumAmountToExchange == 0);
+    }
+
+    function buyToken() public payable {
         uint256 amountTobuy = msg.value;
-        require(amountTobuy > 0, 'You need to send some ether');
-        require(getTokenBalance() >= amountTobuy, 'Not enough tokens in the reserve');
-        token.safeTransfer(msg.sender, amountTobuy);
+        require(amountTobuy >= minimumAmountToExchange, 'The minimum amount to buy is not enough');
+        require(
+            _weiToToken(amountTobuy) <= getContractTokenBalance(),
+            'Not enough tokens in the reserve'
+        );
+        require(_isNotFractionOfToken(amountTobuy), 'Only whole tokens can be bought');
+        token.safeTransfer(msg.sender, _weiToToken(amountTobuy));
     }
 
-    function sell() public payable {
-        uint256 amountToSell = msg.value;
-        require(amountToSell > 0, 'You need to send some MOMToken');
-        require(amountToSell < getWeiBalance(), 'Not enough wei in the reserve');
-        token.safeTransferFrom(msg.sender, getCurrentContractAddress(), amountToSell);
-        payable(msg.sender).transfer(amountToSell);
+    function sellToken(uint256 amount) public {
+        require(amount > 0, "The amount of tokens to sell couldn't be 0");
+        uint256 allowance = token.allowance(msg.sender, getCurrentContractAddress());
+        require(allowance >= amount, 'The token allowance is not enough');
+        token.safeTransferFrom(msg.sender, getCurrentContractAddress(), amount);
+        payable(msg.sender).transfer(_tokenToWei(amount));
     }
 }
