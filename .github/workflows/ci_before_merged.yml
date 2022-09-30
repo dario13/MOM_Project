@@ -3,9 +3,6 @@ on:
   pull_request:
     types: [labeled]
 
-env:
-  PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
-
 jobs:
   pre-publish:
     name: Pre-publish
@@ -32,6 +29,8 @@ jobs:
 
         - name: Run tests
           run: yarn test
+          env:
+            PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
 
         - name: Initialize CodeQL
           uses: github/codeql-action/init@v2
