@@ -21,6 +21,11 @@ jobs:
         - name: Install dependencies
           run: npm install --global yarn && yarn install --frozen-lockfile
 
+        - name: Create .env file
+          uses: ozaytsev86/create-env-file@v1
+          with:
+            ENV_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+
         - name: Run lint
           run: yarn lint
 
@@ -29,8 +34,6 @@ jobs:
 
         - name: Run tests
           run: yarn test
-          env:
-            PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
 
         - name: Initialize CodeQL
           uses: github/codeql-action/init@v2
