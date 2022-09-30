@@ -4,10 +4,10 @@
   "publishConfig": {
     "@dario13:registry": "https://npm.pkg.github.com/dario13"
   },
-  "version": "0.0.13",
+  "version": "0.0.14",
   "license": "MIT",
   "dependencies": {
-    "@dario13/backend": "0.0.13",
+    "@dario13/backend": "^0.0.14",
     "@tailwindcss/typography": "^0.5.2",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
