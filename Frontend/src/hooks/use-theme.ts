@@ -1,7 +1,7 @@
-import { initialDefaultTheme, ThemeContext } from '@/contexts/theme/theme-context'
+import { ThemeContext } from '@/contexts/theme/theme-context'
 import { DataTheme } from '@/contexts/theme/theme-type'
 import { useThemeStore } from '@/store/theme/theme.store'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 import debounce from 'lodash.debounce'
 
 export type useThemeType = {
@@ -11,19 +11,15 @@ export type useThemeType = {
 
 export const useTheme = (): useThemeType => {
   const context = useContext(ThemeContext)
-  const { persistedTheme, persistTheme } = useThemeStore()
-  // The next useState is a workaround for the issue related to hydrate the state of the persisted theme.
-  const [theme, setTheme] = useState(initialDefaultTheme)
+  const { theme, setTheme } = useThemeStore()
 
   useEffect(() => {
-    context.theme = persistedTheme as DataTheme
-    setTheme(persistedTheme)
+    context.theme = theme as DataTheme
   })
 
   const toggle = () => {
     const theme = context.theme === 'light' ? 'dark' : 'light'
     context.theme = theme
-    persistTheme(theme)
     setTheme(theme)
   }
 

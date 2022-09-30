@@ -1,7 +1,12 @@
-Frontend/node_modules
 Frontend/.next
 Frontend/build
 .vscode
 node_modules
 lerna-debug.log
 yarn-error.log
+cache/
+build/
+artifacts/
+coverage*
+deployments/
+.env

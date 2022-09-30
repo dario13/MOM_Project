@@ -45,5 +45,7 @@ module.exports = {
   },
   rules: {
     'react/prop-types': 'off',
+    camelcase: 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
   },
 }

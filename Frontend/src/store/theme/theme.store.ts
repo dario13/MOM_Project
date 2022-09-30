@@ -3,22 +3,22 @@ import create from 'zustand'
 import { persist } from 'zustand/middleware'
 
 const initialState = {
-  persistedTheme: initialDefaultTheme,
+  theme: initialDefaultTheme,
 }
 
 type ThemeState = {
-  persistedTheme: string
-  persistTheme: (theme: string) => void
+  theme: string
+  setTheme: (theme: string) => void
 }
 
 export const useThemeStore = create<ThemeState>()(
   persist(
     (set) => ({
-      ...initialState,
-      persistTheme: (theme: string) => set({ persistedTheme: theme }),
+      theme: initialState.theme,
+      setTheme: (theme: string) => set({ theme }),
     }),
     {
-      name: 'theme-storage',
+      name: 'theme',
     },
   ),
 )

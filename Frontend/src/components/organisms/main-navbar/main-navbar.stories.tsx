@@ -8,7 +8,7 @@ export default {
 } as ComponentMeta<typeof MainNavbar>
 
 const Template: ComponentStory<typeof MainNavbar> = (args) => {
-  return <MainNavbar {...args} />
+  return <MainNavbar />
 }
 
 export const Primary = Template.bind({})

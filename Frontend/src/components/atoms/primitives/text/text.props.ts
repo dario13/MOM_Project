@@ -9,7 +9,7 @@ export type TextAlignmentType = typeof textAlignments[number]
 
 export type TextProps = Omit<NativeTextProps, 'color'> &
   IComponentBaseProps & {
-    size?: ComponentSize
+    size?: 'IIIxl' | 'IIxl' | 'xl' | ComponentSize
     align?: TextAlignmentType
     bold?: boolean
     italic?: boolean
