@@ -8,10 +8,10 @@ import * as dotenv from 'dotenv'
 
 dotenv.config({ path: '../.env' })
 
-const GOERLI_RPC_URL = process.env.GOERLI_RPC_URL
-const PRIVATE_KEY = process.env.PRIVATE_KEY
-const MAINNET_RPC_URL = process.env.MAINNET_RPC_URL
-const FORKING_BLOCK_NUMBER = process.env.FORKING_BLOCK_NUMBER
+const GOERLI_RPC_URL = process.env.GOERLI_RPC_URL || ''
+const PRIVATE_KEY = process.env.PRIVATE_KEY || ''
+const MAINNET_RPC_URL = process.env.MAINNET_RPC_URL || ''
+const FORKING_BLOCK_NUMBER = process.env.FORKING_BLOCK_NUMBER || '0'
 
 const config: HardhatUserConfig = {
   namedAccounts: {
