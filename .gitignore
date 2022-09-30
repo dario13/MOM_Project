@@ -6,7 +6,6 @@ lerna-debug.log
 yarn-error.log
 cache/
 build/
-typechain-types/
 artifacts/
 coverage*
 deployments/
