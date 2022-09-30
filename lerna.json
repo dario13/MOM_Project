@@ -1,8 +1,5 @@
 {
-  "packages": [
-    "Frontend/*",
-    "Backend/*"
-  ],
+  "packages": ["Frontend/*", "Backend/*"],
   "useNx": false,
   "npmClient": "yarn",
   "useWorkspaces": true,

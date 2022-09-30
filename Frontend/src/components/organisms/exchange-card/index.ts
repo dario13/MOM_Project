@@ -1,1 +1,1 @@
-export * from './exchange-card';
+export * from './exchange-card'
