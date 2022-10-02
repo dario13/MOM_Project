@@ -92,6 +92,7 @@ contract Exchange {
         uint256 allowance = token.allowance(msg.sender, getCurrentContractAddress());
         require(allowance >= amount, 'The token allowance is not enough');
         token.safeTransferFrom(msg.sender, getCurrentContractAddress(), amount);
-        payable(msg.sender).transfer(_tokenToWei(amount));
+        (bool success, ) = msg.sender.call{value: (_tokenToWei(amount))}('');
+        require(success, 'Failed to send Ether');
     }
 }
