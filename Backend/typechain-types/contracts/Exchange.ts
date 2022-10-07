@@ -33,9 +33,7 @@ export interface ExchangeInterface extends utils.Interface {
     "buyToken()": FunctionFragment;
     "depositWei()": FunctionFragment;
     "getContractTokenBalance()": FunctionFragment;
-    "getCurrentContractAddress()": FunctionFragment;
     "getOwner()": FunctionFragment;
-    "getWeiBalance()": FunctionFragment;
     "minimumAmountToExchange()": FunctionFragment;
     "owner()": FunctionFragment;
     "sellToken(uint256)": FunctionFragment;
@@ -52,9 +50,7 @@ export interface ExchangeInterface extends utils.Interface {
       | "buyToken"
       | "depositWei"
       | "getContractTokenBalance"
-      | "getCurrentContractAddress"
       | "getOwner"
-      | "getWeiBalance"
       | "minimumAmountToExchange"
       | "owner"
       | "sellToken"
@@ -75,15 +71,7 @@ export interface ExchangeInterface extends utils.Interface {
     functionFragment: "getContractTokenBalance",
     values?: undefined
   ): string;
-  encodeFunctionData(
-    functionFragment: "getCurrentContractAddress",
-    values?: undefined
-  ): string;
   encodeFunctionData(functionFragment: "getOwner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "getWeiBalance",
-    values?: undefined
-  ): string;
   encodeFunctionData(
     functionFragment: "minimumAmountToExchange",
     values?: undefined
@@ -121,15 +109,7 @@ export interface ExchangeInterface extends utils.Interface {
     functionFragment: "getContractTokenBalance",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "getCurrentContractAddress",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "getOwner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "getWeiBalance",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(
     functionFragment: "minimumAmountToExchange",
     data: BytesLike
@@ -204,11 +184,7 @@ export interface Exchange extends BaseContract {
 
     getContractTokenBalance(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getCurrentContractAddress(overrides?: CallOverrides): Promise<[string]>;
-
     getOwner(overrides?: CallOverrides): Promise<[string]>;
-
-    getWeiBalance(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     minimumAmountToExchange(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -256,11 +232,7 @@ export interface Exchange extends BaseContract {
 
   getContractTokenBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getCurrentContractAddress(overrides?: CallOverrides): Promise<string>;
-
   getOwner(overrides?: CallOverrides): Promise<string>;
-
-  getWeiBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
   minimumAmountToExchange(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -304,11 +276,7 @@ export interface Exchange extends BaseContract {
 
     getContractTokenBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getCurrentContractAddress(overrides?: CallOverrides): Promise<string>;
-
     getOwner(overrides?: CallOverrides): Promise<string>;
-
-    getWeiBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
     minimumAmountToExchange(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -362,11 +330,7 @@ export interface Exchange extends BaseContract {
 
     getContractTokenBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getCurrentContractAddress(overrides?: CallOverrides): Promise<BigNumber>;
-
     getOwner(overrides?: CallOverrides): Promise<BigNumber>;
-
-    getWeiBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
     minimumAmountToExchange(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -417,13 +381,7 @@ export interface Exchange extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    getCurrentContractAddress(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     getOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    getWeiBalance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     minimumAmountToExchange(
       overrides?: CallOverrides

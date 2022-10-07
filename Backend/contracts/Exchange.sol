@@ -3,6 +3,7 @@ pragma solidity ^0.8.0;
 import 'hardhat/console.sol';
 
 import '@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol';
+import {NotOwner, InsufficientTokensInReserve, InsufficientWeiInReserve, MinimumAmountNotReached, TokenFraction, InvalidTokenAmount, TokenAllowanceNotEnough, EthersTransferFailed} from './Errors.sol';
 
 contract Exchange {
     using SafeERC20 for IERC20;
@@ -20,7 +21,7 @@ contract Exchange {
     }
 
     modifier onlyOwner() {
-        require(msg.sender == owner, 'Only owner can perform this operation');
+        if (msg.sender != owner) revert NotOwner();
         _;
     }
 
@@ -40,27 +41,22 @@ contract Exchange {
         return owner;
     }
 
-    function getWeiBalance() public view returns (uint256) {
-        return weiBalance;
-    }
-
     function getContractTokenBalance() public view returns (uint256) {
-        return token.balanceOf(getCurrentContractAddress());
+        return token.balanceOf(address(this));
     }
 
-    function getCurrentContractAddress() public view returns (address) {
-        return (address(this));
-    }
+    function withdrawWei(uint256 amount, address destAddr) public onlyOwner {
+        if (amount > weiBalance) revert InsufficientWeiInReserve();
 
-    function withdrawWei(uint256 amount, address payable destAddr) public onlyOwner {
-        require(amount < weiBalance, 'Insufficient funds');
-
-        destAddr.transfer(amount);
         weiBalance -= amount;
+
+        (bool success, ) = destAddr.call{value: amount}('');
+        if (!success) revert EthersTransferFailed();
     }
 
     function withdrawToken(uint256 amount, address to) public onlyOwner {
-        require(amount <= getContractTokenBalance(), 'Insufficient funds');
+        if (amount > getContractTokenBalance()) revert InsufficientTokensInReserve();
+
         token.safeTransfer(to, amount);
     }
 
@@ -72,27 +68,25 @@ contract Exchange {
         return (amount * minimumAmountToExchange);
     }
 
-    function _isNotFractionOfToken(uint256 amount) internal view returns (bool) {
-        return (amount % minimumAmountToExchange == 0);
+    function _isFractionOfToken(uint256 amount) internal view returns (bool) {
+        return (amount % minimumAmountToExchange != 0);
     }
 
     function buyToken() public payable {
         uint256 amountTobuy = msg.value;
-        require(amountTobuy >= minimumAmountToExchange, 'The minimum amount to buy is not enough');
-        require(
-            _weiToToken(amountTobuy) <= getContractTokenBalance(),
-            'Not enough tokens in the reserve'
-        );
-        require(_isNotFractionOfToken(amountTobuy), 'Only whole tokens can be bought');
+        if (amountTobuy < minimumAmountToExchange) revert MinimumAmountNotReached();
+        if (_weiToToken(amountTobuy) > getContractTokenBalance())
+            revert InsufficientTokensInReserve();
+        if (_isFractionOfToken(amountTobuy)) revert TokenFraction();
         token.safeTransfer(msg.sender, _weiToToken(amountTobuy));
     }
 
     function sellToken(uint256 amount) public {
-        require(amount > 0, "The amount of tokens to sell couldn't be 0");
-        uint256 allowance = token.allowance(msg.sender, getCurrentContractAddress());
-        require(allowance >= amount, 'The token allowance is not enough');
-        token.safeTransferFrom(msg.sender, getCurrentContractAddress(), amount);
+        if (amount == 0) revert InvalidTokenAmount();
+        uint256 allowance = token.allowance(msg.sender, address(this));
+        if (allowance < amount) revert TokenAllowanceNotEnough();
+        token.safeTransferFrom(msg.sender, address(this), amount);
         (bool success, ) = msg.sender.call{value: (_tokenToWei(amount))}('');
-        require(success, 'Failed to send Ether');
+        if (!success) revert EthersTransferFailed();
     }
 }

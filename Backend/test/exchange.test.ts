@@ -53,9 +53,9 @@ describe('Exchange contract tests', () => {
     const amount = { value: ethers.utils.parseEther('1.0') }
 
     // When
-    const balanceBeforeDeposit = await Exchange.getWeiBalance()
+    const balanceBeforeDeposit = await Exchange.weiBalance()
     await userA.Exchange.depositWei(amount)
-    const balanceAfterDeposit = await Exchange.getWeiBalance()
+    const balanceAfterDeposit = await Exchange.weiBalance()
 
     // Then
     expect(balanceAfterDeposit).to.equal(amount.value.add(balanceBeforeDeposit))
@@ -68,9 +68,9 @@ describe('Exchange contract tests', () => {
     const amount = ethers.utils.parseEther('1.0')
 
     // When
-    const balanceBeforeWithdrawal = await Exchange.getWeiBalance()
+    const balanceBeforeWithdrawal = await Exchange.weiBalance()
     await tokenOwner.Exchange.withdrawWei(amount, tokenOwner.address)
-    const balanceAfterWithdrawal = await Exchange.getWeiBalance()
+    const balanceAfterWithdrawal = await Exchange.weiBalance()
 
     // Then
     expect(balanceAfterWithdrawal).to.equal(balanceBeforeWithdrawal.sub(amount))
@@ -88,7 +88,7 @@ describe('Exchange contract tests', () => {
       await userA.Exchange.withdrawWei(amount.value, userA.address)
 
     // Then
-    expect(WitdhDrawTransaction()).to.be.revertedWith('Only owner can perform this operation')
+    expect(WitdhDrawTransaction()).to.be.revertedWith('NotOwner()')
   })
 
   it('an user with ethers should be able to buy MOM tokens', async () => {
