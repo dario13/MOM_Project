@@ -9,9 +9,9 @@ import * as dotenv from 'dotenv'
 
 dotenv.config({ path: '../.env' })
 
-const GOERLI_RPC_URL = process.env.GOERLI_RPC_URL
+const GOERLI_RPC_URL = process.env.GOERLI_RPC_URL || ''
 const ADMIN_PRIVATE_KEY = process.env.ADMIN_PRIVATE_KEY
-const MAINNET_RPC_URL = process.env.MAINNET_RPC_URL
+const MAINNET_RPC_URL = process.env.MAINNET_RPC_URL || ''
 const FORKING_BLOCK_NUMBER = process.env.FORKING_BLOCK_NUMBER || '0'
 
 const config: HardhatUserConfig = {
@@ -33,7 +33,7 @@ const config: HardhatUserConfig = {
     hardhat: {
       chainId: 31337,
       forking: {
-        url: MAINNET_RPC_URL!,
+        url: MAINNET_RPC_URL,
         blockNumber: Number(FORKING_BLOCK_NUMBER),
         enabled: false,
       },
