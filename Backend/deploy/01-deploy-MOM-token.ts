@@ -1,30 +1,39 @@
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { DeployFunction } from 'hardhat-deploy/types'
 import { NetWorkInfo } from 'tasks'
-import { run } from 'hardhat'
+import { ethers, run, upgrades } from 'hardhat'
+import { MOMTokenV1__factory } from 'typechain-types'
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  const { deployments, getNamedAccounts } = hre
-  const { deploy, log } = deployments
+  const { deployments } = hre
+  const { log, save } = deployments
 
-  const { deployer, tokenOwner } = await getNamedAccounts()
+  const MOMTokenFactory: MOMTokenV1__factory = await ethers.getContractFactory('MOMTokenV1')
 
-  const { fundAmount, blockConfirmations, isLocalNetwork }: NetWorkInfo = await run('networkInfo')
+  const { fundAmount, ownerAddress }: NetWorkInfo = await run('networkInfo')
 
-  // Only differentiate between token owner and deployer in local network
-  const tknOwner = isLocalNetwork ? tokenOwner : deployer
-
-  log('----------------------------------------------------')
+  log('-----------------MomToken-Deployment----------------')
 
   try {
-    await deploy('MOMToken', {
-      from: deployer,
-      args: [tknOwner, fundAmount],
-      log: true,
-      waitConfirmations: blockConfirmations,
+    const MOMTokenProxy = await upgrades.deployProxy(MOMTokenFactory, [ownerAddress, fundAmount], {
+      initializer: 'initialize',
     })
+    await MOMTokenProxy.deployed()
+    log('MOMToken Proxy deployed at:', MOMTokenProxy.address)
+
+    const MOMTokenImp = await upgrades.upgradeProxy(MOMTokenProxy, MOMTokenFactory) // await upgrades.erc1967.getImplementationAddress(MOMTokenProxy.address)
+
+    log('MOMToken Implementation deployed at:', MOMTokenImp.address)
+
+    const artifact = await deployments.getArtifact('MOMTokenV1')
+    const MOMTokenDeployment = {
+      address: MOMTokenProxy.address,
+      ...artifact,
+    }
+
+    await save('MOMTokenV1', MOMTokenDeployment)
   } catch (error) {
-    log('Error deploying MOMToken...')
+    log('Error deploying proxys...')
     log(error)
   }
 
@@ -32,4 +41,4 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 }
 
 export default func
-func.tags = ['MOMToken']
+func.tags = ['MOMTokenV1']

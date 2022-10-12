@@ -18,3 +18,4 @@ error MinimumAmountNotReached();
 error InsufficientWeiInReserve();
 
 // Game errors
+error DepositAlreadyMade();
