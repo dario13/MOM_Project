@@ -7,16 +7,17 @@
   "version": "0.0.14",
   "license": "MIT",
   "scripts": {
-    "preinstall": "mkdir tasksCopy && cp -r tasks/* tasksCopy && rm -rf tasks && mkdir tasks && touch tasks/index.ts",
-    "postinstall": "yarn compile && cp -r tasksCopy/* tasks && rm -rf tasksCopy",
     "lint": "eslint --fix --ext .ts",
     "test": "hardhat test",
     "compile": "hardhat compile",
+    "copyTasks": "mkdir tasksCopy && cp -r tasks/* tasksCopy && rm -rf tasks && mkdir tasks && touch tasks/index.ts",
+    "retrieveTasks": "cp -r tasksCopy/* tasks && rm -rf tasksCopy",
+    "ci:compile": "yarn copyTasks && yarn compile && yarn retrieveTasks",
     "deploy": "hardhat deploy",
-    "clean": "yarn preinstall && yarn hardhat clean && yarn hardhat typechain && yarn postinstall"
+    "clean": "yarn copyTasks && yarn hardhat clean && yarn hardhat typechain && yarn retrieveTasks"
   },
   "devDependencies": {
-    "@defi-wonderland/smock": "^2.2.0",
+    "@defi-wonderland/smock": "2.3.0",
     "@nomicfoundation/hardhat-chai-matchers": "^1.0.2",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.3",
     "@nomicfoundation/hardhat-toolbox": "^1.0.1",

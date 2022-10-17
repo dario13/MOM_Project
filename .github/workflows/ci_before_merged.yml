@@ -21,6 +21,9 @@ jobs:
         - name: Install dependencies
           run: npm install --global yarn && yarn install --frozen-lockfile
 
+        - name: Compile
+          run: yarn ci:compile
+
         - name: Run lint
           run: yarn lint
 
