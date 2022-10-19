@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.7;
+pragma solidity ^0.8.7;
 
 // General purpose errors
 error InvalidInput();
@@ -10,6 +10,7 @@ error InsufficientTokensInReserve();
 error InvalidTokenAmount();
 error InvalidTokenAddress();
 error TokenAllowanceNotEnough();
+error IncorrectTokenAllowance();
 error TokenFraction();
 
 // Exchange errors
@@ -18,4 +19,8 @@ error MinimumAmountNotReached();
 error InsufficientWeiInReserve();
 
 // Game errors
+error DepositNotMade();
 error DepositAlreadyMade();
+error OnlyPlayerCanCallThisFunction();
+error GameIsOver();
+error NoMatchCreated();

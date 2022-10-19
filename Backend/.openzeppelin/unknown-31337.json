@@ -11,8 +11,33 @@
       "kind": "transparent"
     },
     {
+      "address": "0xA51c1fc2f0D1a1b8494Ed1FE312d7C3a78Ed91C0",
+      "txHash": "0xa68d1c8201653d87d60b3561deeb14f36a9e2b710e55030861363dcf5b3d1b0f",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82",
+      "txHash": "0xadbf66e38084b09ad38c7dccd53306c3166609554b0b3b77c69bb1200cd4aae1",
+      "kind": "transparent"
+    },
+    {
       "address": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
       "txHash": "0xe771b90087c730728c6b13d6957ca8ae54b5f4daed364a2948536d468a029685",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x8A791620dd6260079BF849Dc5567aDC3F2FdC318",
+      "txHash": "0x162a0e8cef81eeed3433803e0e914340ecaeda39b7c500a2f663f9d8f4e30a4b",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x9A9f2CCfdE556A7E9Ff0848998Aa4a0CFD8863AE",
+      "txHash": "0xa43f8841ea2f58d498ab1fedca09965c0138dd68e57f14626d707aee1715b713",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x9A676e781A523b5d0C0e43731313A708CB607508",
+      "txHash": "0x2466b927542034632c70eeb9427cf055c94d7428c0655319f16c5e97084226ca",
       "kind": "transparent"
     },
     {
@@ -22,17 +47,32 @@
     },
     {
       "address": "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707",
-      "txHash": "0x19b5c4e5b871300dda9c3b0a7ce6973979c5fe7a79797cdca085ca767064bbd7",
+      "txHash": "0x55866b5c437f2d6e02a98f74e158ea59c761e4163452242bc04f8e6a1cf07645",
       "kind": "transparent"
     },
     {
       "address": "0x0165878A594ca255338adfa4d48449f69242Eb8F",
-      "txHash": "0xf7c930cd9979d8dac2fe0479ea8074f252afbce17a32b221dc1c2760b7013751",
+      "txHash": "0xe04f8859be33b8d5e0fa108afed4f6e0d976a15fbf95915aaf9e66846d1987a6",
       "kind": "transparent"
     },
     {
       "address": "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853",
-      "txHash": "0x893e9616627163fc842f03a147420b8fec7c7091f0d2d04c9deaca62a3a25ab3",
+      "txHash": "0x78c34b6ae8d777411f9366b3781ae57a63f1ff275f3c50ae8ced540424dae640",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x610178dA211FEF7D417bC0e6FeD39F05609AD788",
+      "txHash": "0xd8ed796c9a84b4988007be9f5512c6c525b801248f9ea47f99e9fd23b61addf3",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e",
+      "txHash": "0x115e58cd2a6b732bbbb29162e0428740760b160f0cabb240f46be94504d512e4",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x0B306BF915C4d645ff596e518fAf3F9669b97016",
+      "txHash": "0x4c41ebb14b15651556c75eb966bead05618c11ab787e1ee5306a78e9344e4e10",
       "kind": "transparent"
     }
   ],
@@ -157,9 +197,9 @@
         }
       }
     },
-    "b214b90230944071ed5a34bc79b849900e0485ef6249c84ea3f4fa15087f9ee9": {
+    "dd92755f690e7366759aca8ebce8a6bde559850729e8e89939892989c73f23bd": {
       "address": "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
-      "txHash": "0xc0d36b782ca904f1d10ac32f49ba124f48f39d99b6e9c5693e00e1b6b40dd2f9",
+      "txHash": "0x0f7c9012cc05f23e9dc4a14ec1b3244ece7311074ee3400a9f4f87181c4f4307",
       "layout": {
         "solcVersion": "0.8.7",
         "storage": [
@@ -210,7 +250,7 @@
             "slot": "101",
             "type": "t_uint256",
             "contract": "ExchangeV1",
-            "src": "contracts/ExchangeV1.sol:13"
+            "src": "contracts/ExchangeV1.sol:12"
           },
           {
             "label": "token",
@@ -218,7 +258,7 @@
             "slot": "102",
             "type": "t_contract(IERC20Upgradeable)378",
             "contract": "ExchangeV1",
-            "src": "contracts/ExchangeV1.sol:14"
+            "src": "contracts/ExchangeV1.sol:13"
           }
         ],
         "types": {
@@ -241,6 +281,177 @@
           "t_contract(IERC20Upgradeable)378": {
             "label": "contract IERC20Upgradeable",
             "numberOfBytes": "20"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "00278d0dbaac525388ef43ecc8f4bac218df269785c75702b1ff7d36102df46f": {
+      "address": "0x8A791620dd6260079BF849Dc5567aDC3F2FdC318",
+      "txHash": "0x40a8cf1621890a07c928a14c9815d79654a1aac9d043a417e70b8381f7cb3c01",
+      "layout": {
+        "solcVersion": "0.8.7",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "token",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_contract(IERC20Upgradeable)378",
+            "contract": "GameV1",
+            "src": "contracts/GameV1.sol:17"
+          },
+          {
+            "label": "deposits",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_mapping(t_address,t_struct(DepositRegister)1087_storage)",
+            "contract": "GameV1",
+            "src": "contracts/GameV1.sol:22"
+          },
+          {
+            "label": "matches",
+            "offset": 0,
+            "slot": "103",
+            "type": "t_mapping(t_address,t_array(t_struct(MatchRegister)1101_storage)dyn_storage)",
+            "contract": "GameV1",
+            "src": "contracts/GameV1.sol:28"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_struct(MatchRegister)1101_storage)dyn_storage": {
+            "label": "struct GameV1.MatchRegister[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IERC20Upgradeable)378": {
+            "label": "contract IERC20Upgradeable",
+            "numberOfBytes": "20"
+          },
+          "t_contract(Match)1876": {
+            "label": "contract Match",
+            "numberOfBytes": "20"
+          },
+          "t_enum(Difficulty)1074": {
+            "label": "enum GameV1.Difficulty",
+            "members": [
+              "Easy",
+              "Medium",
+              "Hard"
+            ],
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_array(t_struct(MatchRegister)1101_storage)dyn_storage)": {
+            "label": "mapping(address => struct GameV1.MatchRegister[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(DepositRegister)1087_storage)": {
+            "label": "mapping(address => struct GameV1.DepositRegister)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(DepositRegister)1087_storage": {
+            "label": "struct GameV1.DepositRegister",
+            "members": [
+              {
+                "label": "isDepositMade",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "difficulty",
+                "type": "t_enum(Difficulty)1074",
+                "offset": 1,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(MatchRegister)1101_storage": {
+            "label": "struct GameV1.MatchRegister",
+            "members": [
+              {
+                "label": "matchContract",
+                "type": "t_contract(Match)1876",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "difficulty",
+                "type": "t_enum(Difficulty)1074",
+                "offset": 20,
+                "slot": "0"
+              },
+              {
+                "label": "awardRequested",
+                "type": "t_bool",
+                "offset": 21,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
           },
           "t_uint256": {
             "label": "uint256",
