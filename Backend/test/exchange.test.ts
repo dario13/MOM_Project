@@ -64,9 +64,9 @@ describe('Exchange contract tests', () => {
     const amount = { value: ethers.utils.parseEther('1.0') }
 
     // When
-    const balanceBeforeDeposit = await Exchange.getContractWeiBalance()
+    const balanceBeforeDeposit = await Exchange.getExchangeWeiBalance()
     await userA.Exchange.depositWei(amount)
-    const balanceAfterDeposit = await Exchange.getContractWeiBalance()
+    const balanceAfterDeposit = await Exchange.getExchangeWeiBalance()
 
     // Then
     expect(balanceAfterDeposit).to.equal(amount.value.add(balanceBeforeDeposit))
@@ -79,9 +79,9 @@ describe('Exchange contract tests', () => {
     const amount = ethers.utils.parseEther('1.0')
 
     // When
-    const balanceBeforeWithdrawal = await Exchange.getContractWeiBalance()
+    const balanceBeforeWithdrawal = await Exchange.getExchangeWeiBalance()
     await owner.Exchange.withdrawWei(amount, owner.address)
-    const balanceAfterWithdrawal = await Exchange.getContractWeiBalance()
+    const balanceAfterWithdrawal = await Exchange.getExchangeWeiBalance()
 
     // Then
     expect(balanceAfterWithdrawal).to.equal(balanceBeforeWithdrawal.sub(amount))
@@ -107,10 +107,6 @@ describe('Exchange contract tests', () => {
     const { MOMToken, users } = await setup()
     const { userA } = users
     const amountToBuy = { value: BigNumber.from(100000000000000) }
-    console.log(
-      'exchange balance before buy',
-      await (await userA.Exchange.getContractTokenBalance()).toString(),
-    )
 
     // When
     await userA.Exchange.buyToken(amountToBuy)
@@ -137,15 +133,15 @@ describe('Exchange contract tests', () => {
 
     // When
     await userA.MOMToken.approve(Exchange.address, amountToSell)
-    await userA.Exchange.sellToken(amountToSell)
+    await userA.Exchange.sellToken(amountToSell, userAaddress)
     const userAtokensBalanceAfterSell = await userA.MOMToken.balanceOf(userAaddress)
-    const userAgetContractWeiBalanceAfterSell = await provider.getBalance(userAaddress)
+    const userAgetWeiBalanceAfterSell = await provider.getBalance(userAaddress)
     const exchangeTokensBalanceAfterSell = await MOMToken.balanceOf(Exchange.address)
     const exchangeEthBalanceAfterSell = await provider.getBalance(Exchange.address)
 
     // Then
     expect(userAtokensBalanceAfterSell).to.equal(userAtokensBalanceBeforeSell.sub(amountToSell))
-    expect(userAgetContractWeiBalanceAfterSell).to.be.gt(userAgetContractWeiBalanceBeforeSell)
+    expect(userAgetWeiBalanceAfterSell).to.be.gt(userAgetContractWeiBalanceBeforeSell)
     expect(exchangeEthBalanceAfterSell).to.be.lt(exchangeEthBalanceBeforeSell)
     expect(exchangeTokensBalanceAfterSell).to.equal(
       exchangeTokensBalanceBeforeSell.add(amountToSell),

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.7;
 
 import '@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol';
 
@@ -12,12 +12,12 @@ interface IExchange {
     /**
      * @dev Get the contract wei balance
      */
-    function getContractWeiBalance() external view returns (uint256);
+    function getExchangeWeiBalance() external view returns (uint256);
 
     /**
      * @dev Get the contract token balance
      */
-    function getContractTokenBalance() external view returns (uint256);
+    function getExchangeTokenBalance() external view returns (uint256);
 
     /**
      * @dev Withdraw a wei amount from the contract to a destination address
@@ -37,7 +37,7 @@ interface IExchange {
     /**
      * @dev Exchange tokens for wei
      */
-    function sellToken(uint256 _amount) external;
+    function sellToken(uint256 amount, address payable _to) external payable;
 
     /**
      * @dev Deposit wei to the contract

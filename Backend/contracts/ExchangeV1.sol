@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
-import 'hardhat/console.sol';
 
 import '@openzeppelin/contracts-upgradeable/token/ERC20/utils/SafeERC20Upgradeable.sol';
 import '@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol';
@@ -35,23 +34,23 @@ contract ExchangeV1 is Ownership, IExchange {
         minimumAmountToExchange = _minimumAmountToExchange;
     }
 
-    function getContractWeiBalance() public view override returns (uint256) {
+    function getExchangeWeiBalance() public view override returns (uint256) {
         return address(this).balance;
     }
 
-    function getContractTokenBalance() public view override returns (uint256) {
+    function getExchangeTokenBalance() public view override returns (uint256) {
         return token.balanceOf(address(this));
     }
 
     function withdrawWei(uint256 amount, address destAddr) public override onlyOwner {
-        if (amount > getContractWeiBalance()) revert InsufficientWeiInReserve();
+        if (amount > getExchangeWeiBalance()) revert InsufficientWeiInReserve();
 
         (bool success, ) = destAddr.call{value: amount}('');
         if (!success) revert EthersTransferFailed();
     }
 
     function withdrawToken(uint256 amount, address destAddr) public override onlyOwner {
-        if (amount > getContractTokenBalance()) revert InsufficientTokensInReserve();
+        if (amount > getExchangeTokenBalance()) revert InsufficientTokensInReserve();
 
         token.safeTransfer(destAddr, amount);
     }
@@ -71,21 +70,21 @@ contract ExchangeV1 is Ownership, IExchange {
     function buyToken() public payable override {
         uint256 amountTobuy = msg.value;
         if (amountTobuy < minimumAmountToExchange) revert MinimumAmountNotReached();
-        if (_weiToToken(amountTobuy) > getContractTokenBalance())
+        if (_weiToToken(amountTobuy) > getExchangeTokenBalance())
             revert InsufficientTokensInReserve();
         if (_isFractionOfToken(amountTobuy)) revert TokenFraction();
         token.safeTransfer(msg.sender, _weiToToken(amountTobuy));
         emit Bought(msg.sender, _weiToToken(amountTobuy));
     }
 
-    function sellToken(uint256 amount) public override {
+    function sellToken(uint256 amount, address payable _to) public payable override {
         if (amount == 0) revert InvalidTokenAmount();
-        uint256 allowance = token.allowance(msg.sender, address(this));
+        uint256 allowance = token.allowance(_to, address(this));
         if (allowance < amount) revert TokenAllowanceNotEnough();
-        token.safeTransferFrom(msg.sender, address(this), amount);
-        (bool success, ) = msg.sender.call{value: (_tokenToWei(amount))}('');
+        token.safeTransferFrom(_to, address(this), amount);
+        (bool success, ) = _to.call{value: (_tokenToWei(amount))}('');
         if (!success) revert EthersTransferFailed();
-        emit Sold(msg.sender, _tokenToWei(amount));
+        emit Sold(_to, _tokenToWei(amount));
     }
 
     function depositWei() external payable override {
