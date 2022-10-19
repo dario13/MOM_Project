@@ -14,7 +14,8 @@
     "retrieveTasks": "cp -r tasksCopy/* tasks && rm -rf tasksCopy",
     "ci:compile": "yarn copyTasks && yarn compile && yarn retrieveTasks",
     "deploy": "hardhat deploy",
-    "clean": "yarn copyTasks && yarn hardhat clean && yarn hardhat typechain && yarn retrieveTasks"
+    "clean": "yarn copyTasks && yarn hardhat clean && yarn hardhat typechain && yarn retrieveTasks",
+    "toolbox": "docker run -it --rm -v ${PWD%/*}:/src trailofbits/eth-security-toolbox"
   },
   "devDependencies": {
     "@defi-wonderland/smock": "2.3.0",
