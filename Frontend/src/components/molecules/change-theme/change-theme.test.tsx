@@ -24,10 +24,11 @@ describe('ChangeTheme', () => {
     const { container } = renderedComponent()
 
     // When
-    const renderedTheme = container.querySelector('button[data-theme="light"]')
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const renderedTheme = container.querySelector('button[data-theme="light"]')!
 
     await act(async () => {
-      fireEvent.click(renderedTheme!)
+      fireEvent.click(renderedTheme)
     })
 
     // Then
