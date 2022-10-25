@@ -1,5 +1,5 @@
 import { task } from 'hardhat/config'
-import { MOMToken, MOMToken__factory } from '../../typechain-types'
+import { MOMTokenV1, MOMTokenV1__factory } from '../../typechain-types'
 
 task(
   'transferToken',
@@ -17,8 +17,11 @@ task(
     console.log('Transferring tokens to: ', to, 'from: ', owner)
 
     const signer = await ethers.getSigner(owner)
-    const momTokenDeployment = await hre.deployments.get('MOMToken')
-    const momTokenContract: MOMToken = MOMToken__factory.connect(momTokenDeployment.address, signer)
+    const momTokenDeployment = await hre.deployments.get('MOMTokenV1')
+    const momTokenContract: MOMTokenV1 = MOMTokenV1__factory.connect(
+      momTokenDeployment.address,
+      signer,
+    )
 
     console.log(
       'Balance of receiver before transfer',

@@ -11,8 +11,10 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const ExchangeFactory: ExchangeV1__factory = await ethers.getContractFactory('ExchangeV1')
 
   const { ownerAddress }: NetWorkInfo = await run('networkInfo')
+
+  log('-----------------Exchange-Deployment----------------')
+
   try {
-    log('-----------------Exchange-Deployment----------------')
     const MomTokenContract: MOMTokenV1 = await ethers.getContract('MOMTokenV1')
     const Exchange = await upgrades.deployProxy(
       ExchangeFactory,
@@ -23,6 +25,9 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     )
     await Exchange.deployed()
     log('Exchange deployed at:', Exchange.address)
+
+    const ExchangeImp = await upgrades.upgradeProxy(Exchange, ExchangeFactory)
+    log('Exchange Implementation deployed at:', ExchangeImp.address)
 
     const artifact = await deployments.getExtendedArtifact('ExchangeV1')
     const ExchangeDeployment = {
