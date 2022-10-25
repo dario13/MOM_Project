@@ -1,10 +1,10 @@
 import env from '@/config/env'
 import { useExchangeStore } from '@/store/exchange/exchange.store'
 import {
-  Exchange,
-  Exchange__factory,
-  MOMToken,
-  MOMToken__factory,
+  ExchangeV1,
+  ExchangeV1__factory,
+  MOMTokenV1,
+  MOMTokenV1__factory,
 } from '@dario13/backend/typechain-types'
 import { convertEthToWei } from '@dario13/backend/utils/token-conversion'
 import { BigNumber } from 'ethers'
@@ -36,7 +36,7 @@ export const useExchange = (): useExchangeType => {
 
     try {
       setTransactionInProgress(true)
-      const exchangeContract: Exchange = Exchange__factory.connect(exchangeContractAddr, signer)
+      const exchangeContract: ExchangeV1 = ExchangeV1__factory.connect(exchangeContractAddr, signer)
 
       const amountInWei = convertEthToWei(amount)
 
@@ -57,13 +57,13 @@ export const useExchange = (): useExchangeType => {
     }
     try {
       setTransactionInProgress(true)
-      const exchangeContract: Exchange = Exchange__factory.connect(exchangeContractAddr, signer)
+      const exchangeContract: ExchangeV1 = ExchangeV1__factory.connect(exchangeContractAddr, signer)
 
-      const momTokenContract: MOMToken = MOMToken__factory.connect(momTokenContractAddr, signer)
+      const momTokenContract: MOMTokenV1 = MOMTokenV1__factory.connect(momTokenContractAddr, signer)
 
       await momTokenContract.approve(exchangeContractAddr, amount)
 
-      const transaction = await exchangeContract.sellToken(amount)
+      const transaction = await exchangeContract.sellToken(amount, signer.address)
       await transaction.wait(blockConfirmations)
       setTransactionInProgress(false)
     } catch (error) {
@@ -75,7 +75,7 @@ export const useExchange = (): useExchangeType => {
   const getMomBalance = useCallback(async () => {
     if (!signer) return
 
-    const momTokenContract: MOMToken = MOMToken__factory.connect(momTokenContractAddr, signer)
+    const momTokenContract: MOMTokenV1 = MOMTokenV1__factory.connect(momTokenContractAddr, signer)
     const balance = await momTokenContract.balanceOf(signer.address)
     setMomBalance(balance.toString())
   }, [transactionInProgress, signer])

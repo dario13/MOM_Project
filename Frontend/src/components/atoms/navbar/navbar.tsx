@@ -18,6 +18,7 @@ const Navbar = React.forwardRef<HTMLDivElement, NavbarProps>(
     } = navBarProps
     const classes = twMerge(
       'navbar',
+      className,
       clsx({
         'bg-base-100 shadow-xl rounded-box': background,
       }),

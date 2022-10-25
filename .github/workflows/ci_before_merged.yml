@@ -6,7 +6,7 @@ on:
 jobs:
   pre-publish:
     name: Pre-publish
-    if: github.event.label.name == 'ready-to-merge'
+    #if: github.event.label.name == 'ready-to-merge'
     runs-on: ubuntu-18.04
     steps:
         - name: Checkout
@@ -21,6 +21,9 @@ jobs:
         - name: Install dependencies
           run: npm install --global yarn && yarn install --frozen-lockfile
 
+        - name: Compile
+          run: yarn ci:compile
+
         - name: Run lint
           run: yarn lint
 
@@ -30,9 +33,9 @@ jobs:
         - name: Run tests
           run: yarn test
           env:
-            ENV_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
-            GOERLI_RPC_URL: ${{ secrets.GOERLI_RPC_URL }}
-            MAINNET_RPC_URL: ${{ secrets.MAINNET_RPC_URL }}
+            ENV_ADMIN_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+            ENV_GOERLI_RPC_URL: ${{ secrets.GOERLI_RPC_URL }}
+            ENV_MAINNET_RPC_URL: ${{ secrets.MAINNET_RPC_URL }}
 
         - name: Initialize CodeQL
           uses: github/codeql-action/init@v2

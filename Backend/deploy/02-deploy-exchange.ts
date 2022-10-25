@@ -1,28 +1,41 @@
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { DeployFunction } from 'hardhat-deploy/types'
 import { NetWorkInfo } from 'tasks'
-import { run } from 'hardhat'
+import { ethers, run, upgrades } from 'hardhat'
+import { ExchangeV1__factory, MOMTokenV1 } from 'typechain-types'
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  const { deployments, getNamedAccounts } = hre
-  const { deploy, log } = deployments
+  const { deployments } = hre
+  const { log, save } = deployments
 
-  const { deployer, tokenOwner } = await getNamedAccounts()
-  const momTokenContractAddress = (await deployments.get('MOMToken')).address
+  const ExchangeFactory: ExchangeV1__factory = await ethers.getContractFactory('ExchangeV1')
 
-  const { isLocalNetwork }: NetWorkInfo = await run('networkInfo')
+  const { ownerAddress }: NetWorkInfo = await run('networkInfo')
 
-  // Only differentiate between token owner and deployer in local network
-  const tknOwner = isLocalNetwork ? tokenOwner : deployer
-
-  log('----------------------------------------------------')
+  log('-----------------Exchange-Deployment----------------')
 
   try {
-    await deploy('Exchange', {
-      from: deployer,
-      args: [tknOwner, momTokenContractAddress],
-      log: true,
-    })
+    const MomTokenContract: MOMTokenV1 = await ethers.getContract('MOMTokenV1')
+    const Exchange = await upgrades.deployProxy(
+      ExchangeFactory,
+      [ownerAddress, MomTokenContract.address],
+      {
+        initializer: 'initialize',
+      },
+    )
+    await Exchange.deployed()
+    log('Exchange deployed at:', Exchange.address)
+
+    const ExchangeImp = await upgrades.upgradeProxy(Exchange, ExchangeFactory)
+    log('Exchange Implementation deployed at:', ExchangeImp.address)
+
+    const artifact = await deployments.getExtendedArtifact('ExchangeV1')
+    const ExchangeDeployment = {
+      address: Exchange.address,
+      ...artifact,
+    }
+
+    await save('ExchangeV1', ExchangeDeployment)
   } catch (error) {
     log('Error deploying Exchange...')
     log(error)
@@ -30,5 +43,6 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   log('----------------------------------------------------')
 }
+
 export default func
-func.tags = ['Exchange']
+func.tags = ['ExchangeV1']

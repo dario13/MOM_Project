@@ -7,7 +7,7 @@ export default {
   component: MainNavbar,
 } as ComponentMeta<typeof MainNavbar>
 
-const Template: ComponentStory<typeof MainNavbar> = (args) => {
+const Template: ComponentStory<typeof MainNavbar> = () => {
   return <MainNavbar />
 }
 
