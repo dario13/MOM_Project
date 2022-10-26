@@ -256,7 +256,7 @@
             "label": "token",
             "offset": 0,
             "slot": "102",
-            "type": "t_contract(IERC20Upgradeable)378",
+            "type": "t_contract(IERC20Upgradeable)1036",
             "contract": "ExchangeV1",
             "src": "contracts/ExchangeV1.sol:13"
           }
@@ -278,7 +278,7 @@
             "label": "bool",
             "numberOfBytes": "1"
           },
-          "t_contract(IERC20Upgradeable)378": {
+          "t_contract(IERC20Upgradeable)1036": {
             "label": "contract IERC20Upgradeable",
             "numberOfBytes": "20"
           },
@@ -344,7 +344,7 @@
             "label": "token",
             "offset": 0,
             "slot": "101",
-            "type": "t_contract(IERC20Upgradeable)378",
+            "type": "t_contract(IERC20Upgradeable)1036",
             "contract": "GameV1",
             "src": "contracts/GameV1.sol:17"
           },
@@ -352,7 +352,7 @@
             "label": "deposits",
             "offset": 0,
             "slot": "102",
-            "type": "t_mapping(t_address,t_struct(DepositRegister)1087_storage)",
+            "type": "t_mapping(t_address,t_struct(DepositRegister)2137_storage)",
             "contract": "GameV1",
             "src": "contracts/GameV1.sol:22"
           },
@@ -360,7 +360,7 @@
             "label": "matches",
             "offset": 0,
             "slot": "103",
-            "type": "t_mapping(t_address,t_array(t_struct(MatchRegister)1101_storage)dyn_storage)",
+            "type": "t_mapping(t_address,t_array(t_struct(MatchRegister)2151_storage)dyn_storage)",
             "contract": "GameV1",
             "src": "contracts/GameV1.sol:28"
           }
@@ -370,7 +370,7 @@
             "label": "address",
             "numberOfBytes": "20"
           },
-          "t_array(t_struct(MatchRegister)1101_storage)dyn_storage": {
+          "t_array(t_struct(MatchRegister)2151_storage)dyn_storage": {
             "label": "struct GameV1.MatchRegister[]",
             "numberOfBytes": "32"
           },
@@ -386,15 +386,15 @@
             "label": "bool",
             "numberOfBytes": "1"
           },
-          "t_contract(IERC20Upgradeable)378": {
+          "t_contract(IERC20Upgradeable)1036": {
             "label": "contract IERC20Upgradeable",
             "numberOfBytes": "20"
           },
-          "t_contract(Match)1876": {
+          "t_contract(Match)3015": {
             "label": "contract Match",
             "numberOfBytes": "20"
           },
-          "t_enum(Difficulty)1074": {
+          "t_enum(Difficulty)2124": {
             "label": "enum GameV1.Difficulty",
             "members": [
               "Easy",
@@ -403,15 +403,15 @@
             ],
             "numberOfBytes": "1"
           },
-          "t_mapping(t_address,t_array(t_struct(MatchRegister)1101_storage)dyn_storage)": {
+          "t_mapping(t_address,t_array(t_struct(MatchRegister)2151_storage)dyn_storage)": {
             "label": "mapping(address => struct GameV1.MatchRegister[])",
             "numberOfBytes": "32"
           },
-          "t_mapping(t_address,t_struct(DepositRegister)1087_storage)": {
+          "t_mapping(t_address,t_struct(DepositRegister)2137_storage)": {
             "label": "mapping(address => struct GameV1.DepositRegister)",
             "numberOfBytes": "32"
           },
-          "t_struct(DepositRegister)1087_storage": {
+          "t_struct(DepositRegister)2137_storage": {
             "label": "struct GameV1.DepositRegister",
             "members": [
               {
@@ -422,25 +422,25 @@
               },
               {
                 "label": "difficulty",
-                "type": "t_enum(Difficulty)1074",
+                "type": "t_enum(Difficulty)2124",
                 "offset": 1,
                 "slot": "0"
               }
             ],
             "numberOfBytes": "32"
           },
-          "t_struct(MatchRegister)1101_storage": {
+          "t_struct(MatchRegister)2151_storage": {
             "label": "struct GameV1.MatchRegister",
             "members": [
               {
                 "label": "matchContract",
-                "type": "t_contract(Match)1876",
+                "type": "t_contract(Match)3015",
                 "offset": 0,
                 "slot": "0"
               },
               {
                 "label": "difficulty",
-                "type": "t_enum(Difficulty)1074",
+                "type": "t_enum(Difficulty)2124",
                 "offset": 20,
                 "slot": "0"
               },
