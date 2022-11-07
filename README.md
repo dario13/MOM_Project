@@ -220,6 +220,20 @@ The context for executing each each tool is clarified in parentheses. <br>
   ```bash
   echidna-test /src/Backend/contracts/test/fuzzing/Match.test.sol --contract MatchTest --config /src/Backend/contracts/test/fuzzing/config.yml
   ```
+- **Mythril** _(Backend)_ \
+  To run mythril, you can do it with docker. First, you need to get the image:
+
+  ```bash
+  docker pull mythril/myth
+  ```
+
+  \
+  Then you can run it (one contract at a time) as follows:
+
+  ```bash
+  docker run -v ${PWD%/*}:/src mythril/myth analyze --solc-json /src/Backend/mythril-config.json /src/Backend/contracts/{contract_name}.sol
+  ```
+
 - **Storybook** _(Frontend)_ \
   To run storybook, you need to run the following command:
   ```bash

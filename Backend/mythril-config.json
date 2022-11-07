@@ -1,0 +1,6 @@
+{
+  "remappings": [
+    "@openzeppelin=/src/node_modules/@openzeppelin",
+    "@chainlink=/src/node_modules/@chainlink"
+  ]
+}
