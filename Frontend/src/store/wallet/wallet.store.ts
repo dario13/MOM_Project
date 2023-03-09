@@ -2,49 +2,37 @@ import create, { StateCreator } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
 
-const initialStatusState = {
-  isInstalled: false,
-  isConnected: false,
+type Wallet = {
+  readonly isInstalled: boolean
+  readonly isConnected: boolean
+  readonly signer?: SignerWithAddress
 }
 
-const initialSignerState = {
-  signer: undefined,
-}
-
-type StatusState = {
-  isInstalled: boolean
-  isConnected: boolean
+type WalletState = Wallet & {
+  setInstalled: (isInstalled: boolean) => void
+  setConnected: (isConnected: boolean) => void
+  setSigner: (signer: SignerWithAddress) => void
   disconnect: () => void
 }
 
-type SignerState = {
-  signer?: SignerWithAddress
+const initialState: Wallet = {
+  isInstalled: false,
+  isConnected: false,
+  signer: undefined,
 }
 
-type WalletState = StatusState & SignerState
-
-const createStatusSlice: StateCreator<WalletState, [], [], StatusState> = (set) => ({
-  ...initialStatusState,
-  disconnect: () => set({ isConnected: false }),
+const stateCreator: StateCreator<WalletState, [['zustand/persist', unknown]], []> = (set) => ({
+  ...initialState,
+  setInstalled: (isInstalled: boolean) => set((state) => ({ ...state, isInstalled })),
+  setConnected: (isConnected: boolean) => set((state) => ({ ...state, isConnected })),
+  setSigner: (signer: SignerWithAddress) => set((state) => ({ ...state, signer })),
+  disconnect: () => set(initialState),
 })
 
-const createSignerSlice: StateCreator<WalletState, [], [], SignerState> = (set) => ({
-  ...initialSignerState,
-  set,
-})
+const persistConfig = {
+  name: 'wallet',
+}
 
-export const useWalletStore = create<WalletState>()(
-  persist(
-    (arg1, arg2, arg3, arg4) => ({
-      ...createStatusSlice(arg1, arg2, arg3, arg4 as any),
-      ...createSignerSlice(arg1, arg2, arg3, arg4 as any),
-    }),
-    {
-      name: 'wallet-storage',
-      partialize: (state: WalletState) => ({
-        isConnected: state.isConnected,
-        isInstalled: state.isInstalled,
-      }),
-    },
-  ),
-)
+const useWalletStore = create<WalletState>()(persist(stateCreator, persistConfig))
+
+export { useWalletStore }

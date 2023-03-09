@@ -12,7 +12,8 @@ export type useWalletType = {
 }
 
 export const useWallet = (): useWalletType => {
-  const { isConnected, isInstalled, signer, disconnect } = useWalletStore()
+  const { isConnected, isInstalled, signer, setConnected, setInstalled, setSigner, disconnect } =
+    useWalletStore()
 
   const fetchSigner = useCallback(async () => {
     try {
@@ -23,7 +24,7 @@ export const useWallet = (): useWalletType => {
 
       const signerWithAddress = await SignerWithAddress.create(provider.getSigner() as any)
 
-      useWalletStore.setState({ signer: signerWithAddress })
+      setSigner(signerWithAddress)
     } catch (e) {
       console.error(e)
     }
@@ -35,9 +36,7 @@ export const useWallet = (): useWalletType => {
 
   useEffect(() => {
     const checkIfWalletIsInstalled = () => {
-      typeof window.ethereum !== 'undefined'
-        ? useWalletStore.setState({ isInstalled: true })
-        : useWalletStore.setState({ isInstalled: false })
+      typeof window.ethereum !== 'undefined' ? setInstalled(true) : setInstalled(false)
     }
     checkIfWalletIsInstalled()
   }, [])
@@ -70,9 +69,7 @@ export const useWallet = (): useWalletType => {
           ],
         })
 
-        useWalletStore.setState({
-          isConnected: true,
-        })
+        setConnected(true)
       } catch (e) {
         console.error(e)
       }
