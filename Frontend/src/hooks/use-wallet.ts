@@ -3,7 +3,7 @@ import { ethers } from 'ethers'
 import { useWalletStore } from '@/store/wallet/wallet.store'
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
 
-export type useWalletType = {
+export type WalletState = {
   connect: () => void
   disconnect: () => void
   isWalletInstalled: boolean
@@ -11,7 +11,7 @@ export type useWalletType = {
   signer?: SignerWithAddress
 }
 
-export const useWallet = (): useWalletType => {
+export const useWallet = (): WalletState => {
   const { isConnected, isInstalled, signer, setConnected, setInstalled, setSigner, disconnect } =
     useWalletStore()
 

@@ -1,9 +1,9 @@
-import { useWallet, useWalletType } from '@/hooks/use-wallet'
+import { useWallet, WalletState } from '@/hooks/use-wallet'
 
-export const useWalletMocked = (...options: Partial<useWalletType>[]) => {
-  const mockUseWallet = useWallet as jest.Mock<useWalletType>
+export const useWalletMocked = (...options: Partial<WalletState>[]) => {
+  const mockUseWallet = useWallet as jest.Mock<WalletState>
 
-  const defaultValues: useWalletType = {
+  const defaultValues: WalletState = {
     connect: () => ({}),
     disconnect: () => ({}),
     isWalletInstalled: false,
