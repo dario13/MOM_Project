@@ -1,23 +1,27 @@
 import { useCallback, useEffect } from 'react'
 import { ethers } from 'ethers'
-import { useWalletStore } from '@/store/wallet/wallet.store'
+import { Wallet, useWalletStore } from '@/store/wallet/wallet.store'
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
 
-export type WalletState = {
-  connect: () => void
-  disconnect: () => void
-  isWalletInstalled: boolean
-  isWalletConnected: boolean
-  signer?: SignerWithAddress
+export type WalletState = Wallet & {
+  connectWallet: () => void
+  disconnectWallet: () => void
 }
 
 export const useWallet = (): WalletState => {
-  const { isConnected, isInstalled, signer, setConnected, setInstalled, setSigner, disconnect } =
-    useWalletStore()
+  const {
+    isWalletConnected,
+    isWalletInstalled,
+    signer,
+    setWalletConnected,
+    setWalletInstalled,
+    setSigner,
+    disconnect,
+  } = useWalletStore()
 
   const fetchSigner = useCallback(async () => {
     try {
-      if (!isConnected) {
+      if (!isWalletConnected) {
         return
       }
       const provider = new ethers.providers.Web3Provider(window.ethereum as any, 'any')
@@ -28,7 +32,7 @@ export const useWallet = (): WalletState => {
     } catch (e) {
       console.error(e)
     }
-  }, [isConnected])
+  }, [isWalletConnected])
 
   useEffect(() => {
     fetchSigner()
@@ -36,7 +40,7 @@ export const useWallet = (): WalletState => {
 
   useEffect(() => {
     const checkIfWalletIsInstalled = () => {
-      typeof window.ethereum !== 'undefined' ? setInstalled(true) : setInstalled(false)
+      typeof window.ethereum !== 'undefined' ? setWalletInstalled(true) : setWalletInstalled(false)
     }
     checkIfWalletIsInstalled()
   }, [])
@@ -57,8 +61,8 @@ export const useWallet = (): WalletState => {
   })
 
   const connect = async () => {
-    if (isConnected) return
-    if (isInstalled) {
+    if (isWalletConnected) return
+    if (isWalletInstalled) {
       try {
         await window.ethereum.request({
           method: 'wallet_requestPermissions',
@@ -69,7 +73,7 @@ export const useWallet = (): WalletState => {
           ],
         })
 
-        setConnected(true)
+        setWalletConnected(true)
       } catch (e) {
         console.error(e)
       }
@@ -77,10 +81,10 @@ export const useWallet = (): WalletState => {
   }
 
   return {
-    connect: () => connect(),
-    disconnect: () => disconnect(),
-    isWalletInstalled: isInstalled,
-    isWalletConnected: isConnected,
+    connectWallet: () => connect(),
+    disconnectWallet: () => disconnect(),
+    isWalletInstalled,
+    isWalletConnected,
     signer,
   }
 }

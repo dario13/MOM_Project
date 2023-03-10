@@ -18,7 +18,7 @@ const disconnectWalletMessage =
   "Do you want to disconnect? You won't be able to use the app but you won't lose your tokens and you can always connect again."
 
 const WalletButton = () => {
-  const { connect, disconnect, isWalletInstalled, isWalletConnected } = useWallet()
+  const { connectWallet, disconnectWallet, isWalletInstalled, isWalletConnected } = useWallet()
   const { momBalance, transactionInProgress } = useExchange()
   const [showModalInstallWallet, setShowModalInstallWallet] = useState(false)
   const [showModalDisconnectWallet, setShowModalDisconnectWallet] = useState(false)
@@ -30,7 +30,7 @@ const WalletButton = () => {
     if (!isWalletInstalled) {
       return setShowModalInstallWallet(true)
     }
-    connect()
+    connectWallet()
   }
 
   const onClickConnected = () => {
@@ -38,7 +38,7 @@ const WalletButton = () => {
   }
 
   const onClickDisconnect = () => {
-    disconnect()
+    disconnectWallet()
     setShowModalDisconnectWallet(false)
   }
 
