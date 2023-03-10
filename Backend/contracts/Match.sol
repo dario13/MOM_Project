@@ -31,7 +31,7 @@ contract Match is IMatch {
     // [0][12] - K (king)
     // and indicates which cards have been dealt to the player in each hand of the match
     bool[13][4] private _cards;
-    event CardDealt(uint8 card, uint8 suit, uint8 hand);
+    event DealtCard(uint8 suit, uint8 value, uint8 hand);
     event BetResult(bool won, uint8 hand);
 
     constructor(address _player, uint8 _cardsToWin) {
@@ -100,7 +100,7 @@ contract Match is IMatch {
         }
         _cards[suit][value] = true;
         hand++;
-        emit CardDealt(value, suit, hand);
+        emit DealtCard(suit, value, hand);
         lastCard = _cardToNumber(suit, value);
     }
 
