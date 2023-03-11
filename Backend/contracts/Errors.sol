@@ -19,8 +19,6 @@ error MinimumAmountNotReached();
 error InsufficientWeiInReserve();
 
 // Game errors
-error DepositNotMade();
-error DepositAlreadyMade();
 error OnlyPlayerCanCallThisFunction();
 error GameIsOver();
 error NoMatchCreated();
