@@ -25,9 +25,7 @@ export const useExchange = (): useExchangeType => {
     useExchangeStore()
   const [error, setError] = useState<boolean>(false)
 
-  const exchangeContractAddr = env.EXCHANGE_CONTRACT_ADDRESS
-  const momTokenContractAddr = env.MOM_TOKEN_CONTRACT_ADDRESS
-  const blockConfirmations = env.BLOCK_CONFIRMATIONS
+  const { EXCHANGE_CONTRACT_ADDRESS, MOM_TOKEN_CONTRACT_ADDRESS, BLOCK_CONFIRMATIONS } = env
 
   const buyToken = async (amount: string) => {
     if (!signer) {
@@ -36,14 +34,17 @@ export const useExchange = (): useExchangeType => {
 
     try {
       setTransactionInProgress(true)
-      const exchangeContract: ExchangeV1 = ExchangeV1__factory.connect(exchangeContractAddr, signer)
+      const exchangeContract: ExchangeV1 = ExchangeV1__factory.connect(
+        EXCHANGE_CONTRACT_ADDRESS,
+        signer,
+      )
 
       const amountInWei = convertEthToWei(amount)
 
       const amountToBuy = { value: BigNumber.from(amountInWei) }
 
       const transaction = await exchangeContract.buyToken(amountToBuy)
-      await transaction.wait(blockConfirmations)
+      await transaction.wait(BLOCK_CONFIRMATIONS)
       setTransactionInProgress(false)
     } catch (error) {
       setError(true)
@@ -57,14 +58,20 @@ export const useExchange = (): useExchangeType => {
     }
     try {
       setTransactionInProgress(true)
-      const exchangeContract: ExchangeV1 = ExchangeV1__factory.connect(exchangeContractAddr, signer)
+      const exchangeContract: ExchangeV1 = ExchangeV1__factory.connect(
+        EXCHANGE_CONTRACT_ADDRESS,
+        signer,
+      )
 
-      const momTokenContract: MOMTokenV1 = MOMTokenV1__factory.connect(momTokenContractAddr, signer)
+      const momTokenContract: MOMTokenV1 = MOMTokenV1__factory.connect(
+        MOM_TOKEN_CONTRACT_ADDRESS,
+        signer,
+      )
 
-      await momTokenContract.approve(exchangeContractAddr, amount)
+      await momTokenContract.approve(EXCHANGE_CONTRACT_ADDRESS, amount)
 
       const transaction = await exchangeContract.sellToken(amount, signer.address)
-      await transaction.wait(blockConfirmations)
+      await transaction.wait(BLOCK_CONFIRMATIONS)
       setTransactionInProgress(false)
     } catch (error) {
       setError(true)
@@ -75,7 +82,10 @@ export const useExchange = (): useExchangeType => {
   const getMomBalance = useCallback(async () => {
     if (!signer) return
 
-    const momTokenContract: MOMTokenV1 = MOMTokenV1__factory.connect(momTokenContractAddr, signer)
+    const momTokenContract: MOMTokenV1 = MOMTokenV1__factory.connect(
+      MOM_TOKEN_CONTRACT_ADDRESS,
+      signer,
+    )
     const balance = await momTokenContract.balanceOf(signer.address)
     setMomBalance(balance.toString())
   }, [transactionInProgress, signer])

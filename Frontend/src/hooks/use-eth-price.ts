@@ -11,13 +11,13 @@ export type useEthPriceType = {
 export const useEthPrice = (): useEthPriceType => {
   const { signer } = useWallet()
   const [ethUsdPrice, setEthUsdPrice] = useState('')
-  const priceFeedContractAddr = env.PRICE_FEED_CONTRACT_ADDRESS
+  const { PRICE_FEED_CONTRACT_ADDRESS } = env
 
   const getUsdPrice = useCallback(async () => {
     if (!signer) return
 
     const priceFeedConsumerContract: PriceFeedConsumer = PriceFeedConsumer__factory.connect(
-      priceFeedContractAddr,
+      PRICE_FEED_CONTRACT_ADDRESS,
       signer,
     )
 
