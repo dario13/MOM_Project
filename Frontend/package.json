@@ -8,6 +8,8 @@
   "license": "MIT",
   "dependencies": {
     "@dario13/backend": "^0.0.15",
+    "@react-spring/types": "^9.7.1",
+    "@react-spring/web": "^9.7.1",
     "@tailwindcss/typography": "^0.5.2",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
@@ -31,7 +33,7 @@
     "ts-loader": "^9.3.1",
     "typescript": "^4.7.2",
     "web-vitals": "^2.1.4",
-    "zustand": "^4.0.0"
+    "zustand": "4.3.6"
   },
   "scripts": {
     "start": "next start",
