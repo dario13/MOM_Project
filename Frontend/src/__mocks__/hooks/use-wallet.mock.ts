@@ -5,9 +5,10 @@ export const useWalletMocked = (...options: Partial<WalletState>[]) => {
 
   const defaultValues: WalletState = {
     connectWallet: () => ({}),
-    disconnectWallet: () => ({}),
+    disconnectAccount: () => ({}),
     isWalletInstalled: false,
-    isWalletConnected: false,
+    isAccountConnected: false,
+    isAccountLoggedOut: false,
     signer: undefined,
   }
 

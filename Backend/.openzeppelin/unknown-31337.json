@@ -11,11 +11,6 @@
       "kind": "transparent"
     },
     {
-      "address": "0xA51c1fc2f0D1a1b8494Ed1FE312d7C3a78Ed91C0",
-      "txHash": "0xa68d1c8201653d87d60b3561deeb14f36a9e2b710e55030861363dcf5b3d1b0f",
-      "kind": "transparent"
-    },
-    {
       "address": "0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82",
       "txHash": "0xadbf66e38084b09ad38c7dccd53306c3166609554b0b3b77c69bb1200cd4aae1",
       "kind": "transparent"
@@ -31,6 +26,11 @@
       "kind": "transparent"
     },
     {
+      "address": "0x0B306BF915C4d645ff596e518fAf3F9669b97016",
+      "txHash": "0x4c41ebb14b15651556c75eb966bead05618c11ab787e1ee5306a78e9344e4e10",
+      "kind": "transparent"
+    },
+    {
       "address": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
       "txHash": "0x062b8718c42b239909e9cdb98309e330e9f20a8617a24e617a587fd5aa9fc4e4",
       "kind": "transparent"
@@ -42,22 +42,32 @@
     },
     {
       "address": "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853",
-      "txHash": "0x78c34b6ae8d777411f9366b3781ae57a63f1ff275f3c50ae8ced540424dae640",
+      "txHash": "0xe63f94d0624deffab5b83db6e9d0e4f07fa7af637c2f5ae996fc04937c89c911",
       "kind": "transparent"
     },
     {
-      "address": "0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e",
-      "txHash": "0x115e58cd2a6b732bbbb29162e0428740760b160f0cabb240f46be94504d512e4",
+      "address": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+      "txHash": "0x04358ee374bd6cb1bfd3480062b4394d1de2f5774fc908438c8b722d3794f8d9",
       "kind": "transparent"
     },
     {
-      "address": "0x0B306BF915C4d645ff596e518fAf3F9669b97016",
-      "txHash": "0x4c41ebb14b15651556c75eb966bead05618c11ab787e1ee5306a78e9344e4e10",
+      "address": "0xA51c1fc2f0D1a1b8494Ed1FE312d7C3a78Ed91C0",
+      "txHash": "0x67eb08952d5d5be214614ca8863fe7ddb39e8c2cd131c65a70fdbcf627cc77fc",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x959922bE3CAee4b8Cd9a407cc3ac1C251C2007B1",
+      "txHash": "0xb673fffe61a25ade258a03aff0a5a038ae2e2a8792b8827533e0ae5b65d7a048",
       "kind": "transparent"
     },
     {
       "address": "0x8A791620dd6260079BF849Dc5567aDC3F2FdC318",
-      "txHash": "0xa498dfb73363290e27dab27453aa584b68f3f129a1152bac986f0331b5a793c4",
+      "txHash": "0xd02ffde52d531a3bf9f93e58845a5cdb7c46b8e10498d4871685a9ff8e11e3f4",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x610178dA211FEF7D417bC0e6FeD39F05609AD788",
+      "txHash": "0x57a5046ad03b8dca683044f7a5478c9ebf8b486eaee2bef96e7991bb0c50b906",
       "kind": "transparent"
     },
     {
@@ -71,8 +81,8 @@
       "kind": "transparent"
     },
     {
-      "address": "0x610178dA211FEF7D417bC0e6FeD39F05609AD788",
-      "txHash": "0x0ea547694af7eadf00bb02e7c1ba4c5614899bdf0044224886a486d0d9f65ac1",
+      "address": "0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e",
+      "txHash": "0xaf0308e01f30c39eccc3e95f056ac7692ecc0a6a2ab8d41862441116f2fd71f6",
       "kind": "transparent"
     }
   ],
@@ -199,7 +209,7 @@
     },
     "dd92755f690e7366759aca8ebce8a6bde559850729e8e89939892989c73f23bd": {
       "address": "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707",
-      "txHash": "0x3dcda5cd1a83525a117e254f60b379aa5d9bba22883a0632a12ebd9bfe1127ff",
+      "txHash": "0x26f2a19a65672b9fcf238fa98929511f80d2fb9dc2fd83280ab0c34a3e17ce93",
       "layout": {
         "solcVersion": "0.8.7",
         "storage": [
@@ -256,7 +266,7 @@
             "label": "token",
             "offset": 0,
             "slot": "102",
-            "type": "t_contract(IERC20Upgradeable)1036",
+            "type": "t_contract(IERC20Upgradeable)378",
             "contract": "ExchangeV1",
             "src": "contracts/ExchangeV1.sol:13"
           }
@@ -278,7 +288,7 @@
             "label": "bool",
             "numberOfBytes": "1"
           },
-          "t_contract(IERC20Upgradeable)1036": {
+          "t_contract(IERC20Upgradeable)378": {
             "label": "contract IERC20Upgradeable",
             "numberOfBytes": "20"
           },
@@ -293,9 +303,9 @@
         }
       }
     },
-    "00278d0dbaac525388ef43ecc8f4bac218df269785c75702b1ff7d36102df46f": {
-      "address": "0x8A791620dd6260079BF849Dc5567aDC3F2FdC318",
-      "txHash": "0x355a58eae33258276a40faf9c71e006578a77b61167b43b0a58aea46a6e339dd",
+    "fbb8d95259ec1e7fae4fb22151a392a234f2154ee7c0e72649112629e74ec620": {
+      "address": "0x610178dA211FEF7D417bC0e6FeD39F05609AD788",
+      "txHash": "0x8a7b120d57dd2f05a457d00bb36ed2fc71fcba5524867e42eec52b3705f2c747",
       "layout": {
         "solcVersion": "0.8.7",
         "storage": [
@@ -344,25 +354,17 @@
             "label": "token",
             "offset": 0,
             "slot": "101",
-            "type": "t_contract(IERC20Upgradeable)1036",
+            "type": "t_contract(IERC20Upgradeable)378",
             "contract": "GameV1",
             "src": "contracts/GameV1.sol:17"
           },
           {
-            "label": "deposits",
-            "offset": 0,
-            "slot": "102",
-            "type": "t_mapping(t_address,t_struct(DepositRegister)2137_storage)",
-            "contract": "GameV1",
-            "src": "contracts/GameV1.sol:22"
-          },
-          {
             "label": "matches",
             "offset": 0,
-            "slot": "103",
-            "type": "t_mapping(t_address,t_array(t_struct(MatchRegister)2151_storage)dyn_storage)",
+            "slot": "102",
+            "type": "t_mapping(t_address,t_array(t_struct(MatchRegister)1084_storage)dyn_storage)",
             "contract": "GameV1",
-            "src": "contracts/GameV1.sol:28"
+            "src": "contracts/GameV1.sol:23"
           }
         ],
         "types": {
@@ -370,7 +372,7 @@
             "label": "address",
             "numberOfBytes": "20"
           },
-          "t_array(t_struct(MatchRegister)2151_storage)dyn_storage": {
+          "t_array(t_struct(MatchRegister)1084_storage)dyn_storage": {
             "label": "struct GameV1.MatchRegister[]",
             "numberOfBytes": "32"
           },
@@ -386,15 +388,15 @@
             "label": "bool",
             "numberOfBytes": "1"
           },
-          "t_contract(IERC20Upgradeable)1036": {
+          "t_contract(IERC20Upgradeable)378": {
             "label": "contract IERC20Upgradeable",
             "numberOfBytes": "20"
           },
-          "t_contract(Match)3015": {
+          "t_contract(Match)1822": {
             "label": "contract Match",
             "numberOfBytes": "20"
           },
-          "t_enum(Difficulty)2124": {
+          "t_enum(Difficulty)1068": {
             "label": "enum GameV1.Difficulty",
             "members": [
               "Easy",
@@ -403,44 +405,22 @@
             ],
             "numberOfBytes": "1"
           },
-          "t_mapping(t_address,t_array(t_struct(MatchRegister)2151_storage)dyn_storage)": {
+          "t_mapping(t_address,t_array(t_struct(MatchRegister)1084_storage)dyn_storage)": {
             "label": "mapping(address => struct GameV1.MatchRegister[])",
             "numberOfBytes": "32"
           },
-          "t_mapping(t_address,t_struct(DepositRegister)2137_storage)": {
-            "label": "mapping(address => struct GameV1.DepositRegister)",
-            "numberOfBytes": "32"
-          },
-          "t_struct(DepositRegister)2137_storage": {
-            "label": "struct GameV1.DepositRegister",
-            "members": [
-              {
-                "label": "isDepositMade",
-                "type": "t_bool",
-                "offset": 0,
-                "slot": "0"
-              },
-              {
-                "label": "difficulty",
-                "type": "t_enum(Difficulty)2124",
-                "offset": 1,
-                "slot": "0"
-              }
-            ],
-            "numberOfBytes": "32"
-          },
-          "t_struct(MatchRegister)2151_storage": {
+          "t_struct(MatchRegister)1084_storage": {
             "label": "struct GameV1.MatchRegister",
             "members": [
               {
                 "label": "matchContract",
-                "type": "t_contract(Match)3015",
+                "type": "t_contract(Match)1822",
                 "offset": 0,
                 "slot": "0"
               },
               {
                 "label": "difficulty",
-                "type": "t_enum(Difficulty)2124",
+                "type": "t_enum(Difficulty)1068",
                 "offset": 20,
                 "slot": "0"
               },

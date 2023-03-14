@@ -10,12 +10,13 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const ExchangeFactory: ExchangeV1__factory = await ethers.getContractFactory('ExchangeV1')
 
-  const { ownerAddress }: NetWorkInfo = await run('networkInfo')
+  const { ownerAddress, isLocalNetwork }: NetWorkInfo = await run('networkInfo')
 
   log('-----------------Exchange-Deployment----------------')
 
   try {
     const MomTokenContract: MOMTokenV1 = await ethers.getContract('MOMTokenV1')
+    console.log('MomTokenContract.address', MomTokenContract.address)
     const Exchange = await upgrades.deployProxy(
       ExchangeFactory,
       [ownerAddress, MomTokenContract.address],
@@ -28,6 +29,17 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
     const ExchangeImp = await upgrades.upgradeProxy(Exchange, ExchangeFactory)
     log('Exchange Implementation deployed at:', ExchangeImp.address)
+
+    // Transfer 100eth to Exchange, in local network
+    if (isLocalNetwork) {
+      const [owner] = await ethers.getSigners()
+      await owner.sendTransaction({
+        to: ExchangeImp.address,
+        value: ethers.utils.parseEther('100'),
+      })
+    }
+
+    log('Exchange balance: ', (await ethers.provider.getBalance(Exchange.address)).toString())
 
     const artifact = await deployments.getExtendedArtifact('ExchangeV1')
     const ExchangeDeployment = {
