@@ -82,9 +82,10 @@ describe('Game contract tests', () => {
     await player.Game.createMatch(difficulty)
     const matchAddress = await player.Game.getLastMatch()
     const matchEvent = await Game.queryFilter(Game.filters.MatchCreated())
+    const mostRecentMatch = matchEvent[0]?.args?.matchContract
 
     // Then
-    expect(matchAddress).to.equal(matchEvent[0]?.args?.matchContract)
+    expect(matchAddress).to.equal(mostRecentMatch)
   })
 
   it('if a player did not give the token allowance, then should not be able to create a match', async () => {

@@ -17,6 +17,11 @@ const setup = async () => {
   const MatchContract: Match = await MatchFactory.deploy(playerA, cardsToWin)
   const match = MatchContract.connect(provider.getSigner(playerA))
 
+  enum betOptions {
+    higher = 0,
+    lower = 1,
+  }
+
   return {
     match,
     cardsToWin,
@@ -24,6 +29,7 @@ const setup = async () => {
     playerA,
     playerB,
     provider,
+    betOptions,
   }
 }
 
@@ -43,11 +49,11 @@ describe('Match contract tests', () => {
 
   it('only match`s player can make a bet', async () => {
     // Given
-    const { playerB, provider, match } = await setup()
+    const { playerB, provider, match, betOptions } = await setup()
 
     // When
-    const playerAmakesBet = await match.bet(true)
-    const playerBmakesBet = match.connect(provider.getSigner(playerB)).bet(true)
+    const playerAmakesBet = await match.bet(betOptions.higher)
+    const playerBmakesBet = match.connect(provider.getSigner(playerB)).bet(betOptions.higher)
 
     // Then
     await expect(playerAmakesBet).to.emit(match, 'BetResult')
@@ -56,7 +62,7 @@ describe('Match contract tests', () => {
 
   it('if a match is over, the player cannot continue playing', async () => {
     // Given
-    const { playerA, provider, MockedMatchFactory } = await setup()
+    const { playerA, provider, MockedMatchFactory, betOptions } = await setup()
 
     const mockedMatchContract = MockedMatchFactory.connect(provider.getSigner(playerA))
     const mockedMatch = await mockedMatchContract.deploy(playerA, 3)
@@ -64,7 +70,9 @@ describe('Match contract tests', () => {
     await mockedMatch.setVariable('_gameOver', true)
 
     // When
-    const playerAtriesToBet = mockedMatch.connect(provider.getSigner(playerA)).bet(true)
+    const playerAtriesToBet = mockedMatch
+      .connect(provider.getSigner(playerA))
+      .bet(betOptions.higher)
 
     // Then
     await expect(playerAtriesToBet).to.be.revertedWith('GameIsOver()')

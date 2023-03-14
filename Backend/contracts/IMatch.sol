@@ -1,8 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
 
+enum BetOptions {
+    Higher,
+    Lower
+}
+
 interface IMatch {
-    function bet(bool _higher) external;
+    function bet(BetOptions betOption) external;
 
     function gameWon() external view returns (bool);
 

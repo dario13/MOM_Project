@@ -2,7 +2,7 @@
 pragma solidity ^0.8.7;
 
 import {GameIsOver, OnlyPlayerCanCallThisFunction} from './Errors.sol';
-import {IMatch} from './IMatch.sol';
+import {IMatch, BetOptions} from './IMatch.sol';
 
 contract Match is IMatch {
     uint8 public immutable cardsToWin;
@@ -83,9 +83,9 @@ contract Match is IMatch {
     function _isItAWinningBet(
         uint8 _currentCard,
         uint8 _lastCard,
-        bool _higher
+        BetOptions betOption
     ) private pure returns (bool) {
-        if (_higher) {
+        if (betOption == BetOptions.Higher) {
             return _isHigherThan(_currentCard, _lastCard);
         }
         return !_isHigherThan(_currentCard, _lastCard);
@@ -105,13 +105,13 @@ contract Match is IMatch {
     }
 
     // This function is called by the player to make a bet on the next card
-    // if _higher is true indicates that the player bets that the next card will be higher than the last one
-    // if _higher is false indicates that the player bets that the next card will be lower than the last one
-    function bet(bool _higher) external override onlyPlayer {
+    // if it is higuer indicates that the player bets that the next card will be higher than the last one
+    // if it is lower indicates that the player bets that the next card will be lower than the last one
+    function bet(BetOptions betOption) external override onlyPlayer {
         if (_gameOver) revert GameIsOver();
         uint8 currentCard = lastCard;
         _dealCard();
-        bool betWon = _isItAWinningBet(currentCard, lastCard, _higher);
+        bool betWon = _isItAWinningBet(currentCard, lastCard, betOption);
         if (betWon) {
             if (cardsToWin == hand) {
                 _gameOver = true;
