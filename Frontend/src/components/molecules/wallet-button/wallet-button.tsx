@@ -13,18 +13,18 @@ const notWalletInstalledTitle = 'No wallet installed'
 const notWalletInstalledMessage =
   'Please check if Metamask is installed and is connected to the correct network.'
 
-const disconnectWalletTitle = 'Your wallet is connected'
-const disconnectWalletMessage =
+const disconnectAccountTitle = 'Your wallet is connected'
+const disconnectAccountMessage =
   "Do you want to disconnect? You won't be able to use the app but you won't lose your tokens and you can always connect again."
 
 const WalletButton = () => {
-  const { connectWallet, disconnectWallet, isWalletInstalled, isWalletConnected } = useWallet()
+  const { connectWallet, disconnectAccount, isWalletInstalled, isAccountConnected } = useWallet()
   const { momBalance, transactionInProgress } = useExchange()
   const [showModalInstallWallet, setShowModalInstallWallet] = useState(false)
-  const [showModalDisconnectWallet, setShowModalDisconnectWallet] = useState(false)
+  const [showModalDisconnectAccount, setShowModalDisconnectAccount] = useState(false)
 
   const onClickStart = () => {
-    if (isWalletConnected) {
+    if (isAccountConnected) {
       return
     }
     if (!isWalletInstalled) {
@@ -34,12 +34,12 @@ const WalletButton = () => {
   }
 
   const onClickConnected = () => {
-    setShowModalDisconnectWallet(true)
+    setShowModalDisconnectAccount(true)
   }
 
   const onClickDisconnect = () => {
-    disconnectWallet()
-    setShowModalDisconnectWallet(false)
+    disconnectAccount()
+    setShowModalDisconnectAccount(false)
   }
 
   const modalInstallWallet = () => {
@@ -53,16 +53,16 @@ const WalletButton = () => {
     )
   }
 
-  const modalDisconnectWallet = () => {
+  const modalDisconnectAccount = () => {
     return (
       <AlertDialog
-        visible={showModalDisconnectWallet}
+        visible={showModalDisconnectAccount}
         actions={{
           main: { text: 'Disconnect', color: 'error', onPress: () => onClickDisconnect() },
-          dismiss: { text: 'Cancel', onPress: () => setShowModalDisconnectWallet(false) },
+          dismiss: { text: 'Cancel', onPress: () => setShowModalDisconnectAccount(false) },
         }}
-        title={disconnectWalletTitle}
-        message={disconnectWalletMessage}
+        title={disconnectAccountTitle}
+        message={disconnectAccountMessage}
       />
     )
   }
@@ -76,7 +76,7 @@ const WalletButton = () => {
     if (transactionInProgress) {
       return
     }
-    if (isWalletConnected) {
+    if (isAccountConnected) {
       return showBalance()
     }
     return actionWalletButtonText.start
@@ -87,12 +87,12 @@ const WalletButton = () => {
       <Button
         responsive={false}
         text={renderTextButton()}
-        color={isWalletConnected ? 'success' : 'primary'}
-        onClick={isWalletConnected ? onClickConnected : onClickStart}
+        color={isAccountConnected ? 'success' : 'primary'}
+        onClick={isAccountConnected ? onClickConnected : onClickStart}
         loading={transactionInProgress}
       />
       {modalInstallWallet()}
-      {modalDisconnectWallet()}
+      {modalDisconnectAccount()}
     </>
   )
 }

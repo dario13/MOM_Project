@@ -5,44 +5,49 @@ import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
 
 export type WalletState = Wallet & {
   connectWallet: () => void
-  disconnectWallet: () => void
+  disconnectAccount: () => void
 }
 
 export const useWallet = (): WalletState => {
   const {
-    isWalletConnected,
+    isAccountConnected,
     isWalletInstalled,
+    isAccountLoggedOut,
     signer,
-    setWalletConnected,
+    setAccountConnected,
     setWalletInstalled,
+    setAccountLoggedOut,
     setSigner,
     disconnect,
   } = useWalletStore()
 
+  const checkIfWalletIsInstalled = () => {
+    return typeof window.ethereum !== 'undefined'
+  }
+
   const fetchSigner = useCallback(async () => {
     try {
-      if (!isWalletConnected) {
-        return
-      }
+      if (isAccountLoggedOut) return
+
       const provider = new ethers.providers.Web3Provider(window.ethereum as any, 'any')
 
       const signerWithAddress = await SignerWithAddress.create(provider.getSigner() as any)
 
+      setAccountConnected(true)
       setSigner(signerWithAddress)
     } catch (e) {
       console.error(e)
     }
-  }, [isWalletConnected])
+  }, [])
 
   useEffect(() => {
-    fetchSigner()
-  }, [fetchSigner])
-
-  useEffect(() => {
-    const checkIfWalletIsInstalled = () => {
-      typeof window.ethereum !== 'undefined' ? setWalletInstalled(true) : setWalletInstalled(false)
+    if (!checkIfWalletIsInstalled()) {
+      setWalletInstalled(false)
+      return
     }
-    checkIfWalletIsInstalled()
+
+    setWalletInstalled(true)
+    fetchSigner()
   }, [])
 
   useEffect(() => {
@@ -61,7 +66,7 @@ export const useWallet = (): WalletState => {
   })
 
   const connect = async () => {
-    if (isWalletConnected) return
+    if (isAccountConnected) return
     if (isWalletInstalled) {
       try {
         await window.ethereum.request({
@@ -72,8 +77,8 @@ export const useWallet = (): WalletState => {
             },
           ],
         })
-
-        setWalletConnected(true)
+        setAccountConnected(true)
+        setAccountLoggedOut(false)
       } catch (e) {
         console.error(e)
       }
@@ -82,9 +87,10 @@ export const useWallet = (): WalletState => {
 
   return {
     connectWallet: () => connect(),
-    disconnectWallet: () => disconnect(),
+    disconnectAccount: () => disconnect(),
     isWalletInstalled,
-    isWalletConnected,
+    isAccountLoggedOut,
+    isAccountConnected,
     signer,
   }
 }
