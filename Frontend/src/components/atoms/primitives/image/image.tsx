@@ -1,9 +1,13 @@
 import React from 'react'
-import { ImageProps } from './image.props'
-import * as ImageNext from 'next/image'
+import { Props } from './image.props'
+import NextImage from 'next/image'
 
-const Image = (props: ImageProps) => {
-  return <ImageNext.default {...props} data-testid="Image" />
+const Image = ({ ...rest }: Props) => {
+  return (
+    <a>
+      <NextImage {...rest} />
+    </a>
+  )
 }
 
 Image.displayName = 'Image'

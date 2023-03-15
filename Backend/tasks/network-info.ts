@@ -1,11 +1,13 @@
 import { task } from 'hardhat/config'
 import { HardhatRuntimeEnvironment, TaskArguments } from 'hardhat/types'
 import { networkConfig, NetworkConfigItem } from '../helper-hardhat-config'
+import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
 
 export type NetWorkInfo = {
   isLocalNetwork: boolean
   isLocalHost: boolean
   chainId: number
+  owner: SignerWithAddress
 } & NetworkConfigItem
 
 task(
@@ -24,10 +26,13 @@ task(
 
     const isLocalHost: boolean = hre.network.name === 'localhost'
 
+    const [, owner] = await hre.ethers.getSigners()
+
     return {
       isLocalNetwork,
       isLocalHost,
       chainId: Number(chainId),
+      owner,
       ...config,
     }
   },

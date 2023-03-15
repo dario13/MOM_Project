@@ -24,4 +24,5 @@ export type ButtonProps = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'c
     children?: ReactNode
     startIcon?: ReactNode
     endIcon?: ReactNode
+    href?: string
   }

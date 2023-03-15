@@ -10,13 +10,12 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const ExchangeFactory: ExchangeV1__factory = await ethers.getContractFactory('ExchangeV1')
 
-  const { ownerAddress, isLocalNetwork }: NetWorkInfo = await run('networkInfo')
+  const { ownerAddress, isLocalNetwork, owner }: NetWorkInfo = await run('networkInfo')
 
   log('-----------------Exchange-Deployment----------------')
 
   try {
     const MomTokenContract: MOMTokenV1 = await ethers.getContract('MOMTokenV1')
-    console.log('MomTokenContract.address', MomTokenContract.address)
     const Exchange = await upgrades.deployProxy(
       ExchangeFactory,
       [ownerAddress, MomTokenContract.address],
@@ -30,13 +29,22 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     const ExchangeImp = await upgrades.upgradeProxy(Exchange, ExchangeFactory)
     log('Exchange Implementation deployed at:', ExchangeImp.address)
 
-    // Transfer 100eth to Exchange, in local network
     if (isLocalNetwork) {
-      const [owner] = await ethers.getSigners()
+      // Transfer 100eth to Exchange
       await owner.sendTransaction({
         to: ExchangeImp.address,
         value: ethers.utils.parseEther('100'),
       })
+
+      // Transfer 1000000 tokens to Exchange
+      await MomTokenContract.connect(owner).transfer(ExchangeImp.address, 1000000000)
+
+      // Show MOM token balance of Exchange and owner
+      log(
+        'Exchange MOM token balance: ',
+        (await MomTokenContract.balanceOf(Exchange.address)).toString(),
+      )
+      log('Owner MOM token balance: ', (await MomTokenContract.balanceOf(ownerAddress)).toString())
     }
 
     log('Exchange balance: ', (await ethers.provider.getBalance(Exchange.address)).toString())

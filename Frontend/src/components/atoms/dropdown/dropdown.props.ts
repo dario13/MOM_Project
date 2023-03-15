@@ -3,7 +3,8 @@ import React, { ReactNode } from 'react'
 
 export type Item = {
   label: string
-  onClick: () => void
+  onClick?: () => void
+  href?: string
   color?: ComponentColor
   startIcon?: ReactNode
   endIcon?: ReactNode
