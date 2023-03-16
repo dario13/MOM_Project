@@ -85,10 +85,10 @@ contract Match is IMatch {
         uint8 _lastCard,
         BetOptions betOption
     ) private pure returns (bool) {
-        if (betOption == BetOptions.Higher) {
-            return _isHigherThan(_currentCard, _lastCard);
-        }
-        return !_isHigherThan(_currentCard, _lastCard);
+        return
+            betOption == BetOptions.Higher
+                ? _isHigherThan(_currentCard, _lastCard)
+                : !_isHigherThan(_currentCard, _lastCard);
     }
 
     // This function deals a card to the player and saves it in the cards array to prevent the player from receiving the same card twice
