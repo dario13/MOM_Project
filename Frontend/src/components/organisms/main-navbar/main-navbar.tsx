@@ -7,6 +7,7 @@ import logoMobile from '../../../../public/images/favicon/android-chrome-192x192
 import { Menu } from '@/components/atoms/dropdown/dropdown.props'
 import { ChangeTheme } from '@/components/molecules/change-theme'
 import { WalletButton } from '@/components/molecules/wallet-button'
+import Navigate from '@/components/atoms/primitives/navigate/navigate'
 
 const MainNavbar = () => {
   const { isMobile } = useMedia()
@@ -14,17 +15,20 @@ const MainNavbar = () => {
   const menuItems: Menu = [
     {
       label: 'Play',
-      onClick: () => {
-        console.log('Play')
-      },
+      href: '/play',
     },
   ]
 
   const renderLogo = () => {
-    return isMobile ? (
-      <Image src={logoMobile} width={50} height={50} title="logo" />
-    ) : (
-      <Image src={logoDesktop} width={120} height={60} title="logo" />
+    return (
+      <Navigate href="/" asAButton>
+        <Image
+          src={isMobile ? logoMobile : logoDesktop}
+          width={isMobile ? 50 : 120}
+          height={isMobile ? 50 : 60}
+          title="logo"
+        />
+      </Navigate>
     )
   }
 
@@ -52,12 +56,13 @@ const MainNavbar = () => {
   const renderMenu = () => {
     return (
       <FlexBox flexDirection="row" paddingRight="1.5rem" gap="1rem" justifyContent="flex-end">
-        {menuItems.map(({ label, onClick, active, color, endIcon, startIcon }) => (
+        {menuItems.map(({ label, onClick, href, active, color, endIcon, startIcon }) => (
           <Button
             color={color || 'ghost'}
             key={label}
             text={label}
             onClick={onClick}
+            href={href}
             active={active}
             endIcon={endIcon}
             startIcon={startIcon}

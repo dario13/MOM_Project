@@ -40,11 +40,19 @@ const setup = async () => {
   await users.owner.MOMToken.transfer(GameContract.address, MOMTokenAmount)
   await users.owner.MOMToken.transfer(users.userA.address, MOMTokenAmount)
 
+  // Declare the difficulty
+  enum Difficulty {
+    Easy = 0,
+    Medium = 1,
+    Hard = 2,
+  }
+
   return {
     ...contracts,
     users,
     provider,
     MockedGameFactory,
+    Difficulty,
   }
 }
 
@@ -61,44 +69,45 @@ describe('Game contract tests', () => {
     expect(contractOwner).to.equal(owner)
   })
 
-  it('if a player made a deposit then should be able to join a match', async () => {
+  it('if a player gave the correct token allowance, then should be able to join a match', async () => {
     // Given
-    const { Game, users } = await setup()
+    const { Game, users, Difficulty } = await setup()
     const { userA: player } = users
+    const difficulty = Difficulty.Easy
 
-    const difficulty = 0 // 0 = easy, 1 = medium, 2 = hard
     const { tokensToPlay } = await player.Game.functions.getRules(difficulty)
     await player.MOMToken.approve(Game.address, tokensToPlay)
-    await player.Game.depositTokens(difficulty)
 
     // When
-    await player.Game.createMatch()
+    await player.Game.createMatch(difficulty)
     const matchAddress = await player.Game.getLastMatch()
     const matchEvent = await Game.queryFilter(Game.filters.MatchCreated())
+    const mostRecentMatch = matchEvent[0]?.args?.matchContract
 
     // Then
-    expect(matchAddress).to.equal(matchEvent[0]?.args?.matchContract)
+    expect(matchAddress).to.equal(mostRecentMatch)
   })
 
-  it('if a player did not make a deposit then should not be able to create a match', async () => {
+  it('if a player did not give the token allowance, then should not be able to create a match', async () => {
     // Given
-    const { users } = await setup()
+    const { users, Difficulty } = await setup()
     const { userA: player } = users
+    const difficulty = Difficulty.Easy
 
     // When
-    const createMatch = player.Game.createMatch()
+    const createMatch = player.Game.createMatch(difficulty)
 
     // Then
-    await expect(createMatch).to.be.revertedWith('DepositNotMade()')
+    await expect(createMatch).to.be.revertedWith('IncorrectTokenAllowance()')
   })
 
   it('if a player won a match then should be able to withdraw the prize', async () => {
     // Given
-    const { users, MockedGameFactory, provider } = await setup()
+    const { users, MockedGameFactory, provider, Difficulty } = await setup()
     const { userA: player, owner } = users
 
     const playerAddress = player.address
-    const difficulty = 0 // 0 = easy, 1 = medium, 2 = hard
+    const difficulty = Difficulty.Easy
     const { tokensPrize } = await player.Game.functions.getRules(difficulty)
 
     // Mock the game contract and the match contract to make the player win
@@ -128,11 +137,11 @@ describe('Game contract tests', () => {
 
   it('if a player lost a match then should not be able to withdraw the prize', async () => {
     // Given
-    const { users, MockedGameFactory, provider } = await setup()
+    const { users, MockedGameFactory, provider, Difficulty } = await setup()
     const { userA: player, owner } = users
 
     const playerAddress = player.address
-    const difficulty = 0 // 0 = easy, 1 = medium, 2 = hard
+    const difficulty = Difficulty.Easy
     const { tokensPrize } = await player.Game.functions.getRules(difficulty)
 
     // Mock the game contract and the match contract to make the player lose

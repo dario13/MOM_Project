@@ -1,4 +1,5 @@
-import Image from 'next/image'
-import React from 'react'
+import { ImageProps } from 'next/image'
 
-export type ImageProps = React.ComponentProps<typeof Image>
+export type Props = ImageProps & {
+  alt?: string
+}

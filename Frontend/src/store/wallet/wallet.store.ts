@@ -1,50 +1,52 @@
-import create, { StateCreator } from 'zustand'
+import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
 
-const initialStatusState = {
-  isInstalled: false,
-  isConnected: false,
+export type Wallet = {
+  readonly isWalletInstalled: boolean
+  readonly isAccountConnected: boolean
+  readonly isAccountLoggedOut: boolean
+  readonly signer?: SignerWithAddress | undefined
 }
 
-const initialSignerState = {
-  signer: undefined,
-}
-
-type StatusState = {
-  isInstalled: boolean
-  isConnected: boolean
+export type WalletStoreState = Wallet & {
+  setWalletInstalled: (isWalletInstalled: boolean) => void
+  setAccountConnected: (isAccountConnected: boolean) => void
+  setAccountLoggedOut: (isAccountLoggedOut: boolean) => void
+  setSigner: (signer: SignerWithAddress | undefined) => void
   disconnect: () => void
 }
 
-type SignerState = {
-  signer?: SignerWithAddress
+const initialState: Wallet = {
+  isWalletInstalled: false,
+  isAccountConnected: false,
+  isAccountLoggedOut: false,
+  signer: undefined,
 }
 
-type WalletState = StatusState & SignerState
-
-const createStatusSlice: StateCreator<WalletState, [], [], StatusState> = (set) => ({
-  ...initialStatusState,
-  disconnect: () => set({ isConnected: false }),
-})
-
-const createSignerSlice: StateCreator<WalletState, [], [], SignerState> = (set) => ({
-  ...initialSignerState,
-  set,
-})
-
-export const useWalletStore = create<WalletState>()(
+const useWalletStore = create<WalletStoreState>()(
   persist(
-    (arg1, arg2, arg3, arg4) => ({
-      ...createStatusSlice(arg1, arg2, arg3, arg4 as any),
-      ...createSignerSlice(arg1, arg2, arg3, arg4 as any),
+    (set) => ({
+      ...initialState,
+      setWalletInstalled: (isWalletInstalled: boolean) =>
+        set((state) => ({ ...state, isWalletInstalled })),
+      setAccountConnected: (isAccountConnected: boolean) =>
+        set((state) => ({ ...state, isAccountConnected })),
+      setAccountLoggedOut: (isAccountLoggedOut: boolean) =>
+        set((state) => ({ ...state, isAccountLoggedOut })),
+      setSigner: (signer: SignerWithAddress | undefined) => set((state) => ({ ...state, signer })),
+      disconnect: () =>
+        set({ isWalletInstalled: true, isAccountConnected: false, isAccountLoggedOut: true }),
     }),
     {
-      name: 'wallet-storage',
-      partialize: (state: WalletState) => ({
-        isConnected: state.isConnected,
-        isInstalled: state.isInstalled,
+      name: 'wallet',
+      partialize: (state) => ({
+        isWalletInstalled: state.isWalletInstalled,
+        isAccountConnected: state.isAccountConnected,
+        isAccountLoggedOut: state.isAccountLoggedOut,
       }),
     },
   ),
 )
+
+export { useWalletStore }

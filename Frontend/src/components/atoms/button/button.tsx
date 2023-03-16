@@ -4,6 +4,7 @@ import React, { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 import { ButtonProps } from './button.props'
+import Navigate from '../primitives/navigate/navigate'
 
 const buttonColor = {
   primary: 'btn-primary',
@@ -52,6 +53,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       dataTheme,
       className,
       style,
+      href,
       ...props
     } = buttonProps
     const btnSize = size ? buttonSize[size] : ''
@@ -72,7 +74,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const classes = twMerge('btn', className, conditionalClasses)
 
-    return (
+    const renderButton = () => (
       <button
         {...props}
         ref={ref}
@@ -87,6 +89,8 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {endIcon && endIcon}
       </button>
     )
+
+    return href ? <Navigate href={href}>{renderButton()}</Navigate> : renderButton()
   },
 )
 

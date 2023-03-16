@@ -13,7 +13,7 @@ describe('WalletButton', () => {
   it("when the wallet isn't connected, the start button must be rendered", () => {
     // Given
     const buttonTitle = actionWalletButtonText.start
-    useWalletMocked({ isWalletConnected: false })
+    useWalletMocked({ isAccountConnected: false })
     const { getByRole } = renderedComponent()
 
     // When
@@ -26,7 +26,7 @@ describe('WalletButton', () => {
   it('when the wallet is connected, the button should show the balance', async () => {
     // Given
     const buttonTitle = actionWalletButtonText.balance
-    useWalletMocked({ isWalletConnected: true, isWalletInstalled: true })
+    useWalletMocked({ isAccountConnected: true, isWalletInstalled: true })
     const { getByRole } = renderedComponent()
 
     // When

@@ -75,6 +75,7 @@ const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
               {
                 <Button
                   text={item.label}
+                  href={item.href}
                   onClick={item.onClick}
                   startIcon={item.startIcon}
                   endIcon={item.endIcon}
