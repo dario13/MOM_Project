@@ -22,3 +22,4 @@ error InsufficientWeiInReserve();
 error OnlyPlayerCanCallThisFunction();
 error GameIsOver();
 error NoMatchCreated();
+error GameAlreadyStarted();

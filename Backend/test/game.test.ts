@@ -7,7 +7,7 @@ import { networkConfig } from '../helper-hardhat-config'
 import { GameV1__factory, Match, MOMTokenV1 } from 'typechain-types'
 
 const setup = async () => {
-  await deployments.fixture(['GameV1', 'MOMTokenV1'])
+  await deployments.fixture(['GameV1', 'MOMTokenV1', 'RandomUtils'])
 
   const provider = ethers.provider
 
@@ -15,10 +15,12 @@ const setup = async () => {
 
   const MomTokenContract: MOMTokenV1 = await ethers.getContract('MOMTokenV1')
 
+  const RandomUtilsContract = await ethers.getContract('RandomUtils')
+
   const GameFactory: GameV1__factory = await ethers.getContractFactory('GameV1')
   const GameContract = await upgrades.deployProxy(
     GameFactory,
-    [config.ownerAddress, MomTokenContract.address],
+    [config.ownerAddress, MomTokenContract.address, RandomUtilsContract.address],
     {
       initializer: 'initialize',
     },
@@ -31,7 +33,9 @@ const setup = async () => {
     MOMToken: MomTokenContract,
   }
 
-  const users = await setupNamedUsers(await getNamedAccounts(), contracts)
+  const { userA, owner } = await getNamedAccounts()
+
+  const users = await setupNamedUsers({ userA, owner }, contracts)
 
   // Put some ethers and tokens into the Game Contract
   const weiAmount = { value: ethers.utils.parseEther('100.0') }
