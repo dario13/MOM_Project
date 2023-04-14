@@ -13,7 +13,7 @@ export type WalletStoreState = Wallet & {
   setWalletInstalled: (isWalletInstalled: boolean) => void
   setAccountConnected: (isAccountConnected: boolean) => void
   setAccountLoggedOut: (isAccountLoggedOut: boolean) => void
-  setSigner: (signer: SignerWithAddress | undefined) => void
+  setSigner: (signer: SignerWithAddress) => void
   disconnect: () => void
 }
 
@@ -34,9 +34,14 @@ const useWalletStore = create<WalletStoreState>()(
         set((state) => ({ ...state, isAccountConnected })),
       setAccountLoggedOut: (isAccountLoggedOut: boolean) =>
         set((state) => ({ ...state, isAccountLoggedOut })),
-      setSigner: (signer: SignerWithAddress | undefined) => set((state) => ({ ...state, signer })),
+      setSigner: (signer: SignerWithAddress) => set((state) => ({ ...state, signer })),
       disconnect: () =>
-        set({ isWalletInstalled: true, isAccountConnected: false, isAccountLoggedOut: true }),
+        set({
+          isWalletInstalled: true,
+          isAccountConnected: false,
+          isAccountLoggedOut: true,
+          signer: undefined,
+        }),
     }),
     {
       name: 'wallet',
