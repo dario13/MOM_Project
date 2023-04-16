@@ -47,5 +47,7 @@ module.exports = {
     'react/prop-types': 'off',
     camelcase: 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': ['error'],
   },
 }
