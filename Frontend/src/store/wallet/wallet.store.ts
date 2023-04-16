@@ -1,19 +1,25 @@
+import { Signer } from 'ethers'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
+import { NullSigner } from './null-signer'
+import { zeroAddress } from '@/utils/zero-address'
 
 export type Wallet = {
   readonly isWalletInstalled: boolean
   readonly isAccountConnected: boolean
   readonly isAccountLoggedOut: boolean
-  readonly signer?: SignerWithAddress | undefined
+  readonly signer: Signer
+  readonly signerAddress: string
+  readonly momBalance: string
 }
 
 export type WalletStoreState = Wallet & {
   setWalletInstalled: (isWalletInstalled: boolean) => void
   setAccountConnected: (isAccountConnected: boolean) => void
   setAccountLoggedOut: (isAccountLoggedOut: boolean) => void
-  setSigner: (signer: SignerWithAddress) => void
+  setSigner: (signer: Signer) => void
+  setSignerAddress: (signerAddress: string) => void
+  setMomBalance: (momBalance: string) => void
   disconnect: () => void
 }
 
@@ -21,7 +27,9 @@ const initialState: Wallet = {
   isWalletInstalled: false,
   isAccountConnected: false,
   isAccountLoggedOut: false,
-  signer: undefined,
+  signer: new NullSigner(),
+  momBalance: '0',
+  signerAddress: zeroAddress,
 }
 
 const useWalletStore = create<WalletStoreState>()(
@@ -34,13 +42,16 @@ const useWalletStore = create<WalletStoreState>()(
         set((state) => ({ ...state, isAccountConnected })),
       setAccountLoggedOut: (isAccountLoggedOut: boolean) =>
         set((state) => ({ ...state, isAccountLoggedOut })),
-      setSigner: (signer: SignerWithAddress) => set((state) => ({ ...state, signer })),
+      setSigner: (signer: Signer) => set((state) => ({ ...state, signer })),
+      setSignerAddress: (signerAddress: string) => set((state) => ({ ...state, signerAddress })),
+      setMomBalance: (momBalance: string) => set((state) => ({ ...state, momBalance })),
       disconnect: () =>
         set({
           isWalletInstalled: true,
           isAccountConnected: false,
           isAccountLoggedOut: true,
-          signer: undefined,
+          momBalance: '0',
+          signer: new NullSigner(),
         }),
     }),
     {
