@@ -5,15 +5,32 @@ import userEvent from '@testing-library/user-event'
 
 import { useMediaMocked } from '@/__mocks__/hooks/use-media.mock'
 import { minimumMOMToBuyInETH, minimumMOMToSell } from './buy-and-sell-card'
+import { useWalletMocked } from '@/__mocks__/hooks/use-wallet.mock'
+import { useExchangeMocked } from '@/__mocks__/hooks/use-exchange.mock'
+import { useContractConnectionMocked } from '@/__mocks__/hooks/use-contract-connection.mock'
+import { useEthPriceMocked } from '@/__mocks__/hooks/use-eth-price.mock'
 
 const renderedComponent = () => {
   return render(<ExchangeCard />)
 }
 
+jest.mock('@/hooks/use-exchange')
+jest.mock('@/hooks/use-wallet')
+jest.mock('@/hooks/use-wallet-balance')
+jest.mock('@/hooks/use-contract-connection')
+jest.mock('@/hooks/use-eth-price')
+
 describe('ExchangeCard', () => {
+  beforeEach(() => {
+    useMediaMocked({ isDesktop: true })
+    useExchangeMocked()
+    useWalletMocked()
+    useContractConnectionMocked()
+    useEthPriceMocked()
+  })
+
   it('if the amount input is empty, the confirm button should be disabled', () => {
     // Given
-    useMediaMocked({ isDesktop: true })
     const { getByText } = renderedComponent()
 
     // When
@@ -25,7 +42,6 @@ describe('ExchangeCard', () => {
 
   it('if the exchange mode is buy and amount input is correct, the confirm button should be enabled', async () => {
     // Given
-    useMediaMocked({ isDesktop: true })
     const { container, getByText } = renderedComponent()
 
     // When
@@ -39,7 +55,6 @@ describe('ExchangeCard', () => {
 
   it('if the exchange mode is sell and amount input is correct, the confirm button should be enabled', async () => {
     // Given
-    useMediaMocked({ isDesktop: true })
     const { container, getByText } = renderedComponent()
 
     // When
@@ -55,7 +70,6 @@ describe('ExchangeCard', () => {
 
   it('if the exchange mode is buy and amount input is incorrect, the confirm button should be disabled', async () => {
     // Given
-    useMediaMocked({ isDesktop: true })
     const { container, getByText } = renderedComponent()
 
     // When
@@ -69,7 +83,6 @@ describe('ExchangeCard', () => {
 
   it('if the exchange mode is sell and amount input is incorrect, the confirm button should be disabled', async () => {
     // Given
-    useMediaMocked({ isDesktop: true })
     const { container, getByText } = renderedComponent()
 
     // When

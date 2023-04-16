@@ -4,9 +4,22 @@ import { MainNavbar } from './main-navbar'
 
 import { useMediaMocked } from '@/__mocks__/hooks/use-media.mock'
 
+import { useWalletMocked } from '@/__mocks__/hooks/use-wallet.mock'
+
+import { useWalletBalanceMocked } from '@/__mocks__/hooks/use-wallet-balance'
+
+jest.mock('@/hooks/use-wallet')
+jest.mock('@/hooks/use-wallet-balance')
+
 const renderedComponent = () => {
   return render(<MainNavbar />)
 }
+
+beforeEach(() => {
+  useMediaMocked({ isDesktop: true })
+  useWalletMocked()
+  useWalletBalanceMocked()
+})
 
 describe('MainNavbar', () => {
   it('when the screen size is desktop, the logo must be rendered and the hamburguer menu must not be rendered', () => {
