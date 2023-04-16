@@ -5,4 +5,7 @@ module.exports = withTM({
   images: {
     domains: ['placeimg.com'],
   },
+  compiler: {
+    styledComponents: true,
+  },
 })
