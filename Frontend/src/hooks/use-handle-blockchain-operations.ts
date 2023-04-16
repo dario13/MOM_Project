@@ -5,7 +5,7 @@ const { BLOCK_CONFIRMATIONS } = env
 
 type HandleBlockchainOperationsType = {
   handleTransaction: (transactionPromise: Promise<any>) => Promise<void>
-  handleCall: <T>(callPromise: Promise<T>) => Promise<T | undefined>
+  handleCall: <T>(callPromise: Promise<T>, recordProgress?: boolean) => Promise<T | undefined>
   operationInProgress: boolean
   error: boolean
 }
@@ -26,15 +26,18 @@ export const useHandleBlockchainOperations = (): HandleBlockchainOperationsType 
     }
   }
 
-  const handleCall = async <T>(callPromise: Promise<T>): Promise<T | undefined> => {
+  const handleCall = async <T>(
+    callPromise: Promise<T>,
+    recordProgress = true,
+  ): Promise<T | undefined> => {
     try {
-      setOperationInProgress(true)
+      recordProgress && setOperationInProgress(true)
       const result = await callPromise
-      setOperationInProgress(false)
+      recordProgress && setOperationInProgress(false)
       return result
     } catch (error) {
       setError(true)
-      setOperationInProgress(false)
+      recordProgress && setOperationInProgress(false)
     }
   }
 
