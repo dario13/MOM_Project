@@ -1,16 +1,15 @@
+import { DataTheme } from '@/components'
 import React from 'react'
-
-import { DataTheme } from './theme-type'
 
 export type ThemeContextType = {
   theme: DataTheme
   toggle: () => void
 }
 
-export const initialDefaultTheme = 'light'
+export const initialTheme = DataTheme.light
 
 export const initialStateThemeContext: ThemeContextType = {
-  theme: initialDefaultTheme,
+  theme: initialTheme,
   toggle: () => ({}),
 }
 
