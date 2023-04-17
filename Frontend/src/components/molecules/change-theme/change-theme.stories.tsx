@@ -1,15 +1,15 @@
-import React from 'react'
-import { ComponentStory, ComponentMeta } from '@storybook/react'
+import { Meta, Story } from '@/stories/story-types'
 import { ChangeTheme } from './change-theme'
 
-export default {
+const meta: Meta<typeof ChangeTheme> = {
   title: 'Molecules/ChangeTheme',
   component: ChangeTheme,
-} as ComponentMeta<typeof ChangeTheme>
-
-const Template: ComponentStory<typeof ChangeTheme> = () => {
-  return <ChangeTheme />
 }
 
-export const Primary = Template.bind({})
-Primary.args = {}
+type ChangeThemeStory = Story<typeof ChangeTheme>
+
+export const Primary: ChangeThemeStory = {
+  args: {},
+}
+
+export default meta

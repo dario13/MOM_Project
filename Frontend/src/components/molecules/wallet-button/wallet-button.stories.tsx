@@ -1,13 +1,15 @@
-import React from 'react'
-import { ComponentStory, ComponentMeta } from '@storybook/react'
+import { Meta, Story } from '@/stories/story-types'
 import { WalletButton } from './wallet-button'
 
-export default {
+const meta: Meta<typeof WalletButton> = {
   title: 'Molecules/WalletButton',
   component: WalletButton,
-} as ComponentMeta<typeof WalletButton>
+}
 
-const Template: ComponentStory<typeof WalletButton> = () => <WalletButton />
+type WalletButtonStory = Story<typeof WalletButton>
 
-export const Primary = Template.bind({})
-Primary.args = {}
+export const Primary: WalletButtonStory = {
+  args: {},
+}
+
+export default meta

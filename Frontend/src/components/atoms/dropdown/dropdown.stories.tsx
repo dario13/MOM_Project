@@ -1,16 +1,22 @@
 import React from 'react'
-import { ComponentStory, ComponentMeta } from '@storybook/react'
+import { Meta, Story } from '@/stories/story-types'
+import { withTemplate } from '@/stories/with-template'
 import { Dropdown } from './dropdown'
 import { FlexBox, Text } from '../primitives'
 import { Button } from '../button'
 import { Card } from '../card'
+import { DropdownProps } from './dropdown.props'
 
-export default {
+const meta: Meta<DropdownProps> = {
   title: 'Atoms/Dropdown',
   component: Dropdown,
-} as ComponentMeta<typeof Dropdown>
+}
 
-const WIthMenuTemplate: ComponentStory<typeof Dropdown> = (args) => (
+type DropdownStory = Story<DropdownProps>
+
+export default meta
+
+const WithMenuTemplate: React.FC<DropdownProps> = (args) => (
   <FlexBox
     alignItems="center"
     justifyContent="center"
@@ -31,10 +37,12 @@ const WIthMenuTemplate: ComponentStory<typeof Dropdown> = (args) => (
   </FlexBox>
 )
 
-export const WithMenu = WIthMenuTemplate.bind({})
-WithMenu.args = {}
+export const WithMenu: DropdownStory = {
+  render: withTemplate(WithMenuTemplate),
+  args: {},
+}
 
-const WIthCardTemplate: ComponentStory<typeof Dropdown> = (args) => (
+const WithCardTemplate: React.FC<DropdownProps> = (args) => (
   <FlexBox
     alignItems="center"
     justifyContent="center"
@@ -58,5 +66,7 @@ const WIthCardTemplate: ComponentStory<typeof Dropdown> = (args) => (
   </FlexBox>
 )
 
-export const WithCard = WIthCardTemplate.bind({})
-WithCard.args = {}
+export const WithCard: DropdownStory = {
+  render: withTemplate(WithCardTemplate),
+  args: {},
+}

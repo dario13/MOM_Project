@@ -1,15 +1,21 @@
 import React, { useState } from 'react'
-import { ComponentStory, ComponentMeta } from '@storybook/react'
+import { Meta, Story } from '@/stories/story-types'
+import { withTemplate } from '@/stories/with-template'
 import { Modal } from './modal'
 import { Button } from '@/components/atoms/button'
 import { FlexBox } from '@/components/atoms'
+import { ModalProps } from './modal.props'
 
-export default {
+const meta: Meta<ModalProps> = {
   title: 'Atoms/Modal',
   component: Modal,
-} as ComponentMeta<typeof Modal>
+}
 
-const Template: ComponentStory<typeof Modal> = (args) => {
+type ModalStory = Story<ModalProps>
+
+export default meta
+
+const ModalTemplate: React.FC<ModalProps> = (args) => {
   const [visible, setVisible] = useState<boolean>(false)
 
   const toggleVisible = () => {
@@ -28,5 +34,7 @@ const Template: ComponentStory<typeof Modal> = (args) => {
   )
 }
 
-export const Primary = Template.bind({})
-Primary.args = {}
+export const Primary: ModalStory = {
+  render: withTemplate(ModalTemplate),
+  args: {},
+}

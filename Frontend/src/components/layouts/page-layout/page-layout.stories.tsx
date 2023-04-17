@@ -1,16 +1,24 @@
 import React from 'react'
-import { ComponentStory, ComponentMeta } from '@storybook/react'
+import { Meta, Story } from '@/stories/story-types'
+import { withTemplate } from '@/stories/with-template'
 import { PageLayout } from './page-layout'
 import { FlexBox } from '@/components/atoms'
+import { PageLayoutProps } from './page-layout.props'
 
-export default {
+const meta: Meta<PageLayoutProps> = {
   title: 'Layout/PageLayout',
   component: PageLayout,
-} as ComponentMeta<typeof PageLayout>
+}
 
-const Template: ComponentStory<typeof PageLayout> = (args) => <PageLayout {...args} />
+type PageLayoutStory = Story<PageLayoutProps>
 
-export const Primary = Template.bind({})
-Primary.args = {
-  content: <FlexBox className="bg-base100" height="100vh" minHeight="100vh"></FlexBox>,
+export default meta
+
+const PageLayoutTemplate: React.FC<PageLayoutProps> = (args) => <PageLayout {...args} />
+
+export const Primary: PageLayoutStory = {
+  render: withTemplate(PageLayoutTemplate),
+  args: {
+    content: <FlexBox className="bg-base100" height="100vh" minHeight="100vh"></FlexBox>,
+  },
 }

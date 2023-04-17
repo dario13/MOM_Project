@@ -1,14 +1,20 @@
 import React from 'react'
-import { ComponentStory, ComponentMeta } from '@storybook/react'
+import { Meta, Story } from '@/stories/story-types'
+import { withTemplate } from '@/stories/with-template'
 import { Divider } from './divider'
 import { FlexBox } from '../primitives'
+import { DividerProps } from './divider.props'
 
-export default {
+const meta: Meta<DividerProps> = {
   title: 'Atoms/Divider',
   component: Divider,
-} as ComponentMeta<typeof Divider>
+}
 
-const Template: ComponentStory<typeof Divider> = (args) => (
+type DividerStory = Story<DividerProps>
+
+export default meta
+
+const DividerTemplate: React.FC<DividerProps> = (args) => (
   <FlexBox width="50vw" height="80vh" flexDirection={args.vertical ? 'row' : 'column'}>
     <FlexBox className="bg-primary"></FlexBox>
     <Divider {...args} />
@@ -16,9 +22,11 @@ const Template: ComponentStory<typeof Divider> = (args) => (
   </FlexBox>
 )
 
-export const Primary = Template.bind({})
-Primary.args = {
-  vertical: false,
-  color: 'base100',
-  size: 'xs',
+export const Primary: DividerStory = {
+  render: withTemplate(DividerTemplate),
+  args: {
+    vertical: false,
+    color: 'base100',
+    size: 'xs',
+  },
 }

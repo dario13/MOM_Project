@@ -1,15 +1,15 @@
-import React from 'react'
-import { ComponentStory, ComponentMeta } from '@storybook/react'
+import { Meta, Story } from '@/stories/story-types'
 import { MainNavbar } from './main-navbar'
 
-export default {
+const meta: Meta<typeof MainNavbar> = {
   title: 'Organisms/MainNavbar',
   component: MainNavbar,
-} as ComponentMeta<typeof MainNavbar>
-
-const Template: ComponentStory<typeof MainNavbar> = () => {
-  return <MainNavbar />
 }
 
-export const Primary = Template.bind({})
-Primary.args = {}
+type MainNavbarStory = Story<typeof MainNavbar>
+
+export const Primary: MainNavbarStory = {
+  args: {},
+}
+
+export default meta
