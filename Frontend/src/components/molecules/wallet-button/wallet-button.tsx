@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { Button } from '@/components/atoms'
-import { useExchange } from '@/hooks/use-exchange'
 import { useWallet } from '@/hooks/use-wallet'
 import { AlertDialog } from '../alert-dialog'
+import { useWalletBalance } from '@/hooks/use-wallet-balance'
+import { useHandleBlockchainOperations } from '@/hooks/use-handle-blockchain-operations'
 
 const actionWalletButtonText = {
   start: 'Start!',
@@ -19,7 +20,8 @@ const disconnectAccountMessage =
 
 const WalletButton = () => {
   const { connectWallet, disconnectAccount, isWalletInstalled, isAccountConnected } = useWallet()
-  const { momBalance, transactionInProgress } = useExchange()
+  const { momBalance } = useWalletBalance()
+  const { operationInProgress } = useHandleBlockchainOperations()
   const [showModalInstallWallet, setShowModalInstallWallet] = useState(false)
   const [showModalDisconnectAccount, setShowModalDisconnectAccount] = useState(false)
 
@@ -68,12 +70,11 @@ const WalletButton = () => {
   }
 
   const showBalance = () => {
-    const balance = momBalance || '0'
-    return `${balance} ${actionWalletButtonText.balance}`
+    return `${momBalance} ${actionWalletButtonText.balance}`
   }
 
   const renderTextButton = () => {
-    if (transactionInProgress) {
+    if (operationInProgress) {
       return
     }
     if (isAccountConnected) {
@@ -89,7 +90,7 @@ const WalletButton = () => {
         text={renderTextButton()}
         color={isAccountConnected ? 'success' : 'primary'}
         onClick={isAccountConnected ? onClickConnected : onClickStart}
-        loading={transactionInProgress}
+        loading={operationInProgress}
       />
       {modalInstallWallet()}
       {modalDisconnectAccount()}

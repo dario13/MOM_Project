@@ -1,10 +1,9 @@
 import { FlexBox, Text } from '@/components/atoms'
 import clsx from 'clsx'
-import React, { forwardRef, useEffect, useState } from 'react'
+import React, { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { InputProps } from './input.props'
-import { useIMask } from 'react-imask'
-import { useMergeRefs } from '@/hooks/use-merge-refs'
+import { MaskedInput } from './masked-input'
 
 const inputColor = {
   primary: 'input-primary',
@@ -17,7 +16,7 @@ const inputColor = {
   ghost: 'input-ghost',
 }
 
-const inputSize = {
+const inputPredefinedSize = {
   xs: 'input-xs',
   sm: 'input-sm',
   md: 'input-md',
@@ -31,7 +30,7 @@ const preffixAndSuffixSize = {
   lg: 'input-group-lg',
 }
 
-const Input = forwardRef<HTMLInputElement, InputProps>(
+const InputComponent = forwardRef<HTMLInputElement, InputProps>(
   (inputProps: InputProps, ref): JSX.Element => {
     const {
       value,
@@ -46,78 +45,77 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       type,
       mask = { options: { mask: '' } },
       onChange,
-      size = 'md',
+      inputSize = 'md',
       defaultValue,
       ...props
     } = inputProps
-
-    const [opts, setOpts] = useState(mask.options)
-
-    const {
-      ref: imaskRef,
-      value: inputMaskedValue,
-      setValue,
-    } = useIMask(opts, {
-      onComplete(value, maskRef) {
-        mask.onComplete && mask.onComplete(value, maskRef)
-      },
-      onAccept(value, maskRef) {
-        mask.onAccept && mask.onAccept(value, maskRef)
-      },
-    })
-
-    const mergedRefs = useMergeRefs(imaskRef, ref)
-
-    useEffect(() => {
-      setOpts(mask.options)
-
-      return () => {
-        setValue('')
-      }
-    }, [mask.options])
 
     const inpColor = color ? inputColor[color] : ''
 
     const conditionalInputClasses = clsx({
       [inpColor]: color,
-      [inputSize[size]]: size,
+      [inputPredefinedSize[inputSize]]: inputSize,
       'input-bordered': bordered,
       'focus:outline-offset-0': true,
     })
 
     const conditionalPrexifAndSuffixClass = clsx({
-      [preffixAndSuffixSize[size]]: size,
+      [preffixAndSuffixSize[inputSize]]: inputSize,
     })
 
     const inputClasses = twMerge('input input-group', conditionalInputClasses, className)
     const preffixAndSuffixClasses = twMerge('input-group', conditionalPrexifAndSuffixClass)
 
+    const hasMask = !!mask.options.mask
+
+    const renderMaskedInput = () => {
+      return (
+        <MaskedInput
+          ref={ref}
+          type={type}
+          data-theme={dataTheme}
+          data-testid="Input"
+          className={inputClasses}
+          options={mask.options}
+          onAccept={mask.onAccept}
+          onComplete={mask.onComplete}
+          placeholder={placeholder}
+        ></MaskedInput>
+      )
+    }
+
+    const renderInput = () => {
+      return (
+        <input
+          {...props}
+          ref={ref}
+          type={type}
+          data-theme={dataTheme}
+          data-testid="Input"
+          className={inputClasses}
+          onChange={onChange}
+          placeholder={placeholder}
+          value={value}
+          defaultValue={defaultValue}
+        />
+      )
+    }
+
     return (
       <FlexBox gap="0.2rem">
-        {label && <Text size={size} bold={true} text={label} />}
+        {label && <Text size={inputSize} bold={true} text={label} />}
         <FlexBox flexDirection="row" className={preffixAndSuffixClasses} flex={'0'}>
-          {prefix && <Text size={size} text={prefix} />}
+          {prefix && <Text size={inputSize} text={prefix} />}
 
-          <input
-            {...props}
-            ref={mergedRefs}
-            type={type}
-            placeholder={placeholder}
-            data-theme={dataTheme}
-            data-testid="Input"
-            value={value}
-            className={inputClasses}
-            onChange={mask.options.mask ? undefined : onChange}
-            defaultValue={mask.options.mask ? inputMaskedValue : defaultValue}
-          />
+          {hasMask ? renderMaskedInput() : renderInput()}
 
-          {suffix && <Text size={size} text={suffix} />}
+          {suffix && <Text size={inputSize} text={suffix} />}
         </FlexBox>
       </FlexBox>
     )
   },
 )
 
-Input.displayName = 'Input'
+InputComponent.displayName = 'Input'
 
-export { Input }
+export const Input = React.memo(InputComponent)

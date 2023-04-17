@@ -3,11 +3,7 @@ import { Props } from './image.props'
 import NextImage from 'next/image'
 
 const Image = ({ ...rest }: Props) => {
-  return (
-    <a>
-      <NextImage {...rest} />
-    </a>
-  )
+  return <NextImage data-testid="Image" {...rest} />
 }
 
 Image.displayName = 'Image'
