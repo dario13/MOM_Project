@@ -46,14 +46,29 @@ contract Match is IMatch {
         return card;
     }
 
+    function _cardToValue(uint8 card) private pure returns (uint8) {
+        return card % 13;
+    }
+
+    function _cardToSuit(uint8 card) private pure returns (uint8) {
+        return card / 13;
+    }
+
     function _isItAWinningBet(
         uint8 _previousCard,
         uint8 _lastCard,
         BetOptions betOption
     ) private pure returns (bool) {
-        bool isHigher = _lastCard > _previousCard;
+        uint8 previousValue = _cardToValue(_previousCard);
+        uint8 lastValue = _cardToValue(_lastCard);
+        uint8 previousSuit = _cardToSuit(_previousCard);
+        uint8 lastSuit = _cardToSuit(_lastCard);
 
-        return betOption == BetOptions.Higher ? isHigher : !isHigher;
+        bool isHigherValue = lastValue > previousValue;
+        bool isSameValueAndHigherSuit = (lastValue == previousValue) && (lastSuit > previousSuit);
+        bool isHigherCard = isHigherValue || isSameValueAndHigherSuit;
+
+        return betOption == BetOptions.Higher ? isHigherCard : !isHigherCard;
     }
 
     // This function deals a card to the player and saves it in the cards array to prevent the player from receiving the same card twice

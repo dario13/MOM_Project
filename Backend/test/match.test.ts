@@ -98,10 +98,10 @@ describe('Match contract tests', () => {
     // Given
     const { Match, RandomUtils, betOptions } = await setup()
 
-    RandomUtils.getRandomValue.returns(11)
+    RandomUtils.getRandomValue.returns(26)
     await Match.startMatch()
     const hand = 1
-    RandomUtils.getRandomValue.returns(12)
+    RandomUtils.getRandomValue.returns(4)
 
     // When
     const firstBet = () => Match.bet(betOptions.higher)
@@ -114,11 +114,41 @@ describe('Match contract tests', () => {
     await expect(firstBet())
       .to.emit(Match, 'BetResult')
       .withArgs(true, hand + 1)
-    RandomUtils.getRandomValue.returns(13)
+    RandomUtils.getRandomValue.returns(10)
     await expect(secondBet())
       .to.emit(Match, 'BetResult')
       .withArgs(true, hand + 2)
-    RandomUtils.getRandomValue.returns(8)
+    RandomUtils.getRandomValue.returns(14)
+    await expect(thirdBet())
+      .to.emit(Match, 'BetResult')
+      .withArgs(true, hand + 3)
+    expect(await gameWon()).to.be.equal(true)
+  })
+  it('If the previous card has the same value that the current card, the suit defines the result', async function () {
+    // Given
+    const { Match, RandomUtils, betOptions } = await setup()
+
+    RandomUtils.getRandomValue.returns(13)
+    await Match.startMatch()
+    const hand = 1
+    RandomUtils.getRandomValue.returns(26)
+
+    // When
+    const firstBet = () => Match.bet(betOptions.higher)
+    const secondBet = () => Match.bet(betOptions.higher)
+    const thirdBet = () => Match.bet(betOptions.lower)
+    const gameWon = () => Match.gameWon()
+
+    // Then
+    // the event is expected to generate a message indicating that the hand was won
+    await expect(firstBet())
+      .to.emit(Match, 'BetResult')
+      .withArgs(true, hand + 1)
+    RandomUtils.getRandomValue.returns(39)
+    await expect(secondBet())
+      .to.emit(Match, 'BetResult')
+      .withArgs(true, hand + 2)
+    RandomUtils.getRandomValue.returns(0)
     await expect(thirdBet())
       .to.emit(Match, 'BetResult')
       .withArgs(true, hand + 3)
