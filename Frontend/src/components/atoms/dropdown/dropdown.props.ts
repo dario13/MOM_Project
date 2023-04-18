@@ -1,5 +1,5 @@
 import { ComponentBgColors, ComponentColor, IComponentBaseProps } from '@/components/types'
-import React, { ReactNode } from 'react'
+import { MouseEventHandler, ReactNode } from 'react'
 
 export type Item = {
   label: string
@@ -13,13 +13,14 @@ export type Item = {
 
 export type Menu = Item[]
 
-export type DropdownProps = React.HTMLAttributes<HTMLDivElement> &
-  IComponentBaseProps & {
-    toggleElement: ReactNode
-    content: Menu | ReactNode
-    bgColor?: ComponentBgColors
-    horizontal?: 'left' | 'center' | 'right'
-    vertical?: 'top' | 'middle' | 'end'
-    hover?: boolean
-    open?: boolean
-  }
+export type DropdownProps = IComponentBaseProps & {
+  toggleElement: ReactNode
+  content: Menu | ReactNode
+  bgColor?: ComponentBgColors
+  horizontal?: 'left' | 'center' | 'right'
+  vertical?: 'top' | 'middle' | 'end'
+  hover?: boolean
+  open?: boolean
+  tabIndex?: number
+  onClick?: MouseEventHandler<HTMLDivElement>
+}
