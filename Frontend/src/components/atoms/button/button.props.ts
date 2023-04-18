@@ -26,7 +26,7 @@ export type ButtonProps = IComponentBaseProps & {
   children?: ReactNode
   startIcon?: ReactNode
   endIcon?: ReactNode
-  onClick?: MouseEventHandler<HTMLButtonElement> | undefined
+  onClick?: MouseEventHandler<HTMLButtonElement>
   href?: string
   className?: string
 }
