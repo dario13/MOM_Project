@@ -2,7 +2,7 @@ import React from 'react'
 import { FlexBoxProps } from './flex-box.props'
 import { StyledFlexBox } from './flex-box.styles'
 
-const FlexBox = (props: FlexBoxProps) => {
+const FlexBoxComponent = (props: FlexBoxProps) => {
   const {
     alignItems,
     children,
@@ -46,6 +46,6 @@ const FlexBox = (props: FlexBoxProps) => {
   )
 }
 
-FlexBox.displayName = 'FlexBox'
+FlexBoxComponent.displayName = 'FlexBox'
 
-export { FlexBox }
+export const FlexBox = React.memo(FlexBoxComponent)

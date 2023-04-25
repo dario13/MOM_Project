@@ -22,30 +22,32 @@ const textAlignment = {
   end: 'text-end',
 }
 
-const Text = forwardRef<HTMLSpanElement, TextProps>((props: TextProps, ref): JSX.Element => {
-  const { align, size = 'md', text, italic, bold, className, style, children, dataTheme } = props
+const TextComponent = forwardRef<HTMLSpanElement, TextProps>(
+  (props: TextProps, ref): JSX.Element => {
+    const { align, size = 'md', text, italic, bold, className, style, children, dataTheme } = props
 
-  const conditionalClasses = {
-    [textSize[size]]: size,
-    'font-bold': bold,
-    italic,
-  }
+    const conditionalClasses = {
+      [textSize[size]]: size,
+      'font-bold': bold,
+      italic,
+    }
 
-  const classes = twMerge('text', className, clsx(conditionalClasses))
+    const classes = twMerge('text', className, clsx(conditionalClasses))
 
-  const renderOnlyText = (): JSX.Element => (
-    <span ref={ref} className={classes} style={style} data-testid="Text" data-theme={dataTheme}>
-      {text || children}
-    </span>
-  )
+    const renderOnlyText = (): JSX.Element => (
+      <span ref={ref} className={classes} style={style} data-testid="Text" data-theme={dataTheme}>
+        {text || children}
+      </span>
+    )
 
-  const renderTextAligned = (align: TextAlignmentType): JSX.Element => (
-    <div className={textAlignment[align]}>{renderOnlyText()}</div>
-  )
+    const renderTextAligned = (align: TextAlignmentType): JSX.Element => (
+      <div className={textAlignment[align]}>{renderOnlyText()}</div>
+    )
 
-  return <>{align ? renderTextAligned(align) : renderOnlyText()}</>
-})
+    return <>{align ? renderTextAligned(align) : renderOnlyText()}</>
+  },
+)
 
-Text.displayName = 'Text'
+TextComponent.displayName = 'Text'
 
-export { Text }
+export const Text = React.memo(TextComponent)
