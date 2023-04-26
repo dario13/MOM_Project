@@ -1,7 +1,7 @@
 import React from 'react'
 import { AnimatedCardProps } from './animated-card.props'
 import { useSpring, animated } from '@react-spring/web'
-import { PlayingCard } from '../playing-card/playing-card'
+import { PlayingCard } from '../playing-card'
 
 const AnimatedCard: React.FC<AnimatedCardProps> = ({ card }) => {
   const [isFlipped, setIsFlipped] = React.useState(false)
