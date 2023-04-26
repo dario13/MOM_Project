@@ -14,6 +14,7 @@ export enum buttonVariants {
 
 export type ButtonProps = IComponentBaseProps & {
   text?: string
+  type?: 'button' | 'reset' | 'submit' | undefined
   shape?: ComponentShape
   size?: ComponentSize
   variant?: buttonVariants
