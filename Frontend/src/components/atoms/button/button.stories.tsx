@@ -1,5 +1,5 @@
 import React from 'react'
-import { Meta, Story } from '@/stories/story-types'
+import { Meta, Story } from '@/ioc/stories/story-types'
 import { Button } from './button'
 import { WalletIcon } from '@/components/atoms/primitives/icons/wallet-icon'
 import { ButtonProps } from './button.props'

@@ -1,4 +1,4 @@
-import { Meta, Story } from '@/stories/story-types'
+import { Meta, Story } from '@/ioc/stories/story-types'
 import { MainNavbar } from './main-navbar'
 
 const meta: Meta<typeof MainNavbar> = {

@@ -1,6 +1,6 @@
 import React from 'react'
-import { Meta, Story } from '@/stories/story-types'
-import { withTemplate } from '@/stories/with-template'
+import { Meta, Story } from '@/ioc/stories/story-types'
+import { withTemplate } from '@/ioc/stories/with-template'
 import { PageLayout } from './page-layout'
 import { FlexBox } from '@/components/atoms'
 import { PageLayoutProps } from './page-layout.props'

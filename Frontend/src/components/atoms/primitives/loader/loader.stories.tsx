@@ -1,6 +1,6 @@
 import React from 'react'
-import { Meta, Story } from '@/stories/story-types'
-import { withTemplate } from '@/stories/with-template'
+import { Meta, Story } from '@/ioc/stories/story-types'
+import { withTemplate } from '@/ioc/stories/with-template'
 import { Loader } from './loader'
 import { LoaderProps } from './loader.props'
 

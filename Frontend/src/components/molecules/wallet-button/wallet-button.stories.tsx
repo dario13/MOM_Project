@@ -1,4 +1,4 @@
-import { Meta, Story } from '@/stories/story-types'
+import { Meta, Story } from '@/ioc/stories/story-types'
 import { WalletButton } from './wallet-button'
 
 const meta: Meta<typeof WalletButton> = {

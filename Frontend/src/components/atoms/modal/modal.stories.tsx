@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Meta, Story } from '@/stories/story-types'
-import { withTemplate } from '@/stories/with-template'
+import { Meta, Story } from '@/ioc/stories/story-types'
+import { withTemplate } from '@/ioc/stories/with-template'
 import { Modal } from './modal'
 import { Button } from '@/components/atoms/button'
 import { FlexBox } from '@/components/atoms'

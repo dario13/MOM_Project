@@ -1,5 +1,5 @@
 import React from 'react'
-import { Meta, Story } from '@/stories/story-types'
+import { Meta, Story } from '@/ioc/stories/story-types'
 import { Swap } from './swap'
 import { HamburguerIcon } from '../primitives/icons/hamburguer-icon'
 import { CloseIcon } from '../primitives/icons/close-icon'

@@ -1,6 +1,6 @@
 import React from 'react'
-import { Meta, Story } from '@/stories/story-types'
-import { withTemplate } from '@/stories/with-template'
+import { Meta, Story } from '@/ioc/stories/story-types'
+import { withTemplate } from '@/ioc/stories/with-template'
 import { Divider } from './divider'
 import { FlexBox } from '../primitives'
 import { DividerProps } from './divider.props'

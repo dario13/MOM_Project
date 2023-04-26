@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Meta, Story } from '@/stories/story-types'
-import { withTemplate } from '@/stories/with-template'
+import { Meta, Story } from '@/ioc/stories/story-types'
+import { withTemplate } from '@/ioc/stories/with-template'
 import { AlertDialog } from './alert-dialog'
 import { Button, FlexBox } from '@/components/atoms'
 import { AlertDialogProps } from './alert-dialog.props'
