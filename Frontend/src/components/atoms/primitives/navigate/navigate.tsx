@@ -2,7 +2,7 @@ import React from 'react'
 import { Props } from './navigate.props'
 import Link from 'next/link'
 
-const Navigate: React.FC<Props> = ({ href, className, children, asAButton }) => (
+const NavigateComponent: React.FC<Props> = ({ href, className, children, asAButton }) => (
   <Link href={href}>
     {asAButton ? (
       <button className={className}>{children}</button>
@@ -12,4 +12,6 @@ const Navigate: React.FC<Props> = ({ href, className, children, asAButton }) => 
   </Link>
 )
 
-export default Navigate
+NavigateComponent.displayName = 'NavigateComponent'
+
+export const Navigate = React.memo(NavigateComponent)

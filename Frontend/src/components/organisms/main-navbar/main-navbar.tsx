@@ -1,13 +1,9 @@
-import { Button, FlexBox, Image, Navbar } from '@/components/atoms'
-import { DropdownHamburger } from '@/components/molecules/dropdown-hamburger'
+import { Button, FlexBox, Image, Menu, Navbar, Navigate } from '@/components/atoms'
 import { useMedia } from '@/hooks/use-media'
 import React from 'react'
 import logoDesktop from '../../../../public/images/logo.png'
 import logoMobile from '../../../../public/images/favicon/android-chrome-192x192.png'
-import { Menu } from '@/components/atoms/dropdown/dropdown.props'
-import { ChangeTheme } from '@/components/molecules/change-theme'
-import { WalletButton } from '@/components/molecules/wallet-button'
-import Navigate from '@/components/atoms/primitives/navigate/navigate'
+import { ChangeTheme, DropdownHamburger, WalletButton } from '@/components/molecules'
 
 const MainNavbar = () => {
   const { isMobile } = useMedia()
