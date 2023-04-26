@@ -2,7 +2,7 @@ import React from 'react'
 import { PlayingCardProps } from './playing-card.props'
 import { Suit } from '@/store/game/game.types'
 
-const PlayingCardComponent: React.FC<PlayingCardProps> = ({ card, isFaceUp }) => {
+const PlayingCardComponent: React.FC<PlayingCardProps> = ({ card, isFaceUp, ariaLabel }) => {
   const suitSymbol = () => {
     if (!card) return
     switch (card.suit) {
@@ -27,7 +27,7 @@ const PlayingCardComponent: React.FC<PlayingCardProps> = ({ card, isFaceUp }) =>
   const renderFront = () => {
     if (!card) return
     return (
-      <svg width="100" height="150">
+      <svg width="100" height="150" aria-label={ariaLabel}>
         <rect width="100" height="150" fill="white" />
         <text x="10" y="20" fontSize="20" fill={textColor()}>
           {card.value}
@@ -44,7 +44,7 @@ const PlayingCardComponent: React.FC<PlayingCardProps> = ({ card, isFaceUp }) =>
 
   const renderBack = () => {
     return (
-      <svg width="100" height="150">
+      <svg width="100" height="150" aria-label={ariaLabel}>
         <rect width="100" height="150" fill="#4b0082" />
         <rect x="5" y="5" width="90" height="140" fill="#6a00b7" />
 
