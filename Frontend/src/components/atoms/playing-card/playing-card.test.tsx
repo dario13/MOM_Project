@@ -13,7 +13,7 @@ describe('PlayingCard', () => {
     }
 
     // When
-    render(<PlayingCard card={card} />)
+    render(<PlayingCard card={card} isFaceUp />)
 
     // Then
     const valueElements = screen.getAllByText(card.value, { selector: 'text[fill="red"]' })
@@ -30,7 +30,7 @@ describe('PlayingCard', () => {
     }
 
     // When
-    render(<PlayingCard card={card} />)
+    render(<PlayingCard card={card} isFaceUp />)
 
     // Then
     const valueElements = screen.getAllByText(card.value, { selector: 'text[fill="black"]' })
