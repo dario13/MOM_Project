@@ -7,7 +7,7 @@ import { FlexBox, Text } from '@/components/atoms'
 import { Controller, useForm } from 'react-hook-form'
 
 const meta: Meta<RadioButtonProps> = {
-  title: 'Atoms/RadioButton',
+  title: 'Molecules/RadioButton',
   component: RadioButton,
 }
 
