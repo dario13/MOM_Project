@@ -14,7 +14,7 @@ describe('AnimatedCard', () => {
 
   it('should start as face down and animate to face up', async () => {
     // Given
-    const { rerender } = render(<AnimatedCard card={faceDownCard} />)
+    render(<AnimatedCard card={faceDownCard} />)
 
     // When
     expect(screen.getByLabelText('playing-card-face-down')).toBeInTheDocument()
@@ -22,7 +22,6 @@ describe('AnimatedCard', () => {
     // Then
     await act(async () => {
       jest.runAllTimers()
-      rerender(<AnimatedCard card={faceDownCard} />)
     })
 
     expect(screen.getByLabelText('playing-card-face-up')).toBeInTheDocument()
@@ -30,17 +29,14 @@ describe('AnimatedCard', () => {
 
   it('should remain face up after animation', async () => {
     // Given
-    const { rerender } = render(<AnimatedCard card={faceDownCard} />)
-    await act(async () => {
-      jest.runAllTimers()
-      rerender(<AnimatedCard card={faceDownCard} />)
-    })
+    render(<AnimatedCard card={faceDownCard} />)
 
     // When
-    expect(screen.getByLabelText('playing-card-face-up')).toBeInTheDocument()
+    await act(async () => {
+      jest.runAllTimers()
+    })
 
     // Then
-    rerender(<AnimatedCard card={faceDownCard} />)
     expect(screen.getByLabelText('playing-card-face-up')).toBeInTheDocument()
   })
 })

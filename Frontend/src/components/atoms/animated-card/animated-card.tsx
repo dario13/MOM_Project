@@ -23,7 +23,7 @@ const AnimatedCard: React.FC<AnimatedCardProps> = ({ card }) => {
   }, [])
 
   return (
-    <>
+    <div data-testid="animated-card">
       {isFlipped ? (
         <animated.div
           style={{
@@ -41,7 +41,7 @@ const AnimatedCard: React.FC<AnimatedCardProps> = ({ card }) => {
           <PlayingCard isFaceUp={false} ariaLabel="playing-card-face-down" />
         </animated.div>
       )}
-    </>
+    </div>
   )
 }
 
