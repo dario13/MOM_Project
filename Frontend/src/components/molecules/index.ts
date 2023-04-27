@@ -1,5 +1,5 @@
 export * from './alert-dialog'
-export * from './card-radio-button'
+export * from './radio-button'
 export * from './change-theme'
 export * from './dropdown-hamburger'
 export * from './connect-your-wallet'

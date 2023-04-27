@@ -1,17 +1,17 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { RadioCardButton } from './card-radio-button'
+import { RadioButton } from './radio-button'
 
-describe('RadioCardButton', () => {
+describe('RadioButton', () => {
   const onChangeMock = jest.fn()
 
-  it('should render the RadioCardButton component with default values', () => {
+  it('should render the RadioButton component with default values', () => {
     // Given
     render(
-      <RadioCardButton onChange={onChangeMock} value="test">
+      <RadioButton onChange={onChangeMock} value="test">
         <div>Content</div>
-      </RadioCardButton>,
+      </RadioButton>,
     )
 
     // When
@@ -27,9 +27,9 @@ describe('RadioCardButton', () => {
   it('should call onChange with the value when the component is clicked', async () => {
     // Given
     render(
-      <RadioCardButton onChange={onChangeMock} value="test" color="primary">
+      <RadioButton onChange={onChangeMock} value="test" color="primary">
         <div>Content</div>
-      </RadioCardButton>,
+      </RadioButton>,
     )
 
     // When
@@ -41,12 +41,12 @@ describe('RadioCardButton', () => {
     expect(onChangeMock).toHaveBeenCalledWith('test')
   })
 
-  it('should render the RadioCardButton as checked when checked prop is true', () => {
+  it('should render the RadioButton as checked when checked prop is true', () => {
     // Given
     render(
-      <RadioCardButton onChange={onChangeMock} value="test" checked>
+      <RadioButton onChange={onChangeMock} value="test" checked>
         <div>Content</div>
-      </RadioCardButton>,
+      </RadioButton>,
     )
 
     // When
@@ -56,12 +56,12 @@ describe('RadioCardButton', () => {
     expect(radio).toBeChecked()
   })
 
-  it('should render the RadioCardButton as disabled when disabled prop is true', () => {
+  it('should render the RadioButton as disabled when disabled prop is true', () => {
     // Given
     render(
-      <RadioCardButton onChange={onChangeMock} value="test" disabled>
+      <RadioButton onChange={onChangeMock} value="test" disabled>
         <div>Content</div>
-      </RadioCardButton>,
+      </RadioButton>,
     )
 
     // When

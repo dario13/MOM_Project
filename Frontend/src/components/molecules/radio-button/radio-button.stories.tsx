@@ -1,22 +1,22 @@
 import React from 'react'
 import { Meta, Story } from '@/ioc/stories/story-types'
 import { withTemplate } from '@/ioc/stories/with-template'
-import { RadioCardButton } from './card-radio-button'
-import { RadioCardButtonProps } from './card-radio-button.props'
+import { RadioButton } from './radio-button'
+import { RadioButtonProps } from './radio-button.props'
 import { FlexBox, Text } from '@/components/atoms'
 import { Controller, useForm } from 'react-hook-form'
 
-const meta: Meta<RadioCardButtonProps> = {
+const meta: Meta<RadioButtonProps> = {
   title: 'Atoms/CardRadioButton',
-  component: RadioCardButton,
+  component: RadioButton,
 }
 
-type RadioCardButtonStory = Story<RadioCardButtonProps>
+type RadioCardButtonStory = Story<RadioButtonProps>
 
 const RadioCardTemplate: React.FC = () => (
-  <RadioCardButton value={'1'} onChange={() => ({})}>
+  <RadioButton value={'1'} onChange={() => ({})}>
     <Text>{'Test1'}</Text>
-  </RadioCardButton>
+  </RadioButton>
 )
 
 const options = [
@@ -35,13 +35,9 @@ const RadioCardFormTemplate: React.FC = () => {
           control={control}
           name="selectedOption"
           render={({ field: { onChange, value } }) => (
-            <RadioCardButton
-              value={option.value}
-              onChange={onChange}
-              checked={value === option.value}
-            >
+            <RadioButton value={option.value} onChange={onChange} checked={value === option.value}>
               {option.children}
-            </RadioCardButton>
+            </RadioButton>
           )}
         />
       ))}

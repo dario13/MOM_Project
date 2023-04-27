@@ -1,8 +1,8 @@
 import React from 'react'
-import { RadioCardButtonProps } from './card-radio-button.props'
+import { RadioButtonProps } from './radio-button.props'
 import { Card, FlexBox, Radio } from '@/components/atoms'
 
-const RadioCardButtonComponent: React.FC<RadioCardButtonProps> = (props: RadioCardButtonProps) => {
+const RadioButtonComponent: React.FC<RadioButtonProps> = (props: RadioButtonProps) => {
   const { children, onChange, disabled, checked, value, color } = props
 
   return (
@@ -19,6 +19,6 @@ const RadioCardButtonComponent: React.FC<RadioCardButtonProps> = (props: RadioCa
   )
 }
 
-RadioCardButtonComponent.displayName = 'RadioCard'
+RadioButtonComponent.displayName = 'RadioButton'
 
-export const RadioCardButton = React.memo(RadioCardButtonComponent)
+export const RadioButton = React.memo(RadioButtonComponent)
