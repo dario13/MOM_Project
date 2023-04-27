@@ -7,13 +7,13 @@ import { FlexBox, Text } from '@/components/atoms'
 import { Controller, useForm } from 'react-hook-form'
 
 const meta: Meta<RadioButtonProps> = {
-  title: 'Atoms/CardRadioButton',
+  title: 'Atoms/RadioButton',
   component: RadioButton,
 }
 
-type RadioCardButtonStory = Story<RadioButtonProps>
+type RadioButtonStory = Story<RadioButtonProps>
 
-const RadioCardTemplate: React.FC = () => (
+const RadioTemplate: React.FC = () => (
   <RadioButton value={'1'} onChange={() => ({})}>
     <Text>{'Test1'}</Text>
   </RadioButton>
@@ -25,7 +25,7 @@ const options = [
   { value: 'option3', name: 'option3', children: <Text>{'Test3'}</Text> },
 ]
 
-const RadioCardFormTemplate: React.FC = () => {
+const RadioFormTemplate: React.FC = () => {
   const { control } = useForm()
   return (
     <FlexBox flexDirection="row">
@@ -45,12 +45,12 @@ const RadioCardFormTemplate: React.FC = () => {
   )
 }
 
-export const Primary: RadioCardButtonStory = {
-  render: withTemplate(RadioCardTemplate),
+export const Primary: RadioButtonStory = {
+  render: withTemplate(RadioTemplate),
 }
 
-export const WithForm: RadioCardButtonStory = {
-  render: withTemplate(RadioCardFormTemplate),
+export const WithForm: RadioButtonStory = {
+  render: withTemplate(RadioFormTemplate),
 }
 
 export default meta
