@@ -13,7 +13,7 @@ const RadioButtonComponent: React.FC<RadioButtonProps> = (props: RadioButtonProp
 
   const cardColor = () => {
     if (disabled) return
-    return !checked ? color : 'primary'
+    return !checked ? color : 'secondary'
   }
 
   return (
@@ -25,7 +25,7 @@ const RadioButtonComponent: React.FC<RadioButtonProps> = (props: RadioButtonProp
       <Card border color={cardColor()}>
         <FlexBox padding="1rem" gap="1rem">
           {children}
-          <FlexBox alignItems="center">
+          <FlexBox alignItems="center" justifyContent="flex-end">
             <Radio
               value={value}
               name={name}
