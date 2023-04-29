@@ -19,7 +19,7 @@ export type FlexBoxProps = IComponentBaseProps & {
   flexWrap?: 'wrap' | 'nowrap' | 'wrap-reverse'
   alignItems?: 'stretch' | 'center' | 'flex-start' | 'flex-end' | 'baseline'
   /** **** Child Props ********/
-  flexGrow?: '0' | '1'
+  flexGrow?: '0' | '1' | '2'
   flexShrink?: '0' | '1'
   flexBasis?: string
   flex?: string
