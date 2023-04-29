@@ -49,7 +49,7 @@ export const useWallet = (): WalletState => {
     } catch (e) {
       console.error(e)
     }
-  }, [isAccountConnected])
+  }, [isAccountConnected, setSigner])
 
   useEffect(() => {
     fetchSigner()
@@ -105,7 +105,7 @@ export const useWallet = (): WalletState => {
 
   return {
     connectWallet,
-    disconnectAccount: () => disconnect(),
+    disconnectAccount: disconnect,
     isWalletInstalled,
     isAccountLoggedOut,
     isAccountConnected,
