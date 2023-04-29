@@ -11,7 +11,7 @@ const MainNavbar = () => {
   const menuItems: Menu = [
     {
       label: 'Play',
-      href: '/play',
+      href: '/play/difficulty',
     },
     {
       label: 'Exchange',
