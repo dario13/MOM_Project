@@ -11,8 +11,8 @@ import {
   PriceFeedConsumer__factory,
 } from '@dario13/backend/typechain-types'
 import { useCallback, useMemo } from 'react'
-import { useWallet } from './use-wallet'
 import env from '@/config/env'
+import { Signer } from 'ethers'
 
 export type ContractConnectionState = {
   gameContract: GameV1
@@ -22,9 +22,7 @@ export type ContractConnectionState = {
   priceFeedConsumerContract: PriceFeedConsumer
 }
 
-export const useContractConnection = (): ContractConnectionState => {
-  const { signer } = useWallet()
-
+export const useContractConnection = (signer: Signer): ContractConnectionState => {
   const {
     EXCHANGE_CONTRACT_ADDRESS,
     MOM_TOKEN_CONTRACT_ADDRESS,
