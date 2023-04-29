@@ -14,14 +14,14 @@ export const useWalletBalance = (): WalletBalance => {
 
   const { signerAddress, signer, isAccountLoggedOut } = useWallet()
 
-  const { handleCall, operationInProgress } = useHandleBlockchainOperations()
-  const { momTokenContract } = useContractConnection()
+  const { handleCall } = useHandleBlockchainOperations()
+  const { momTokenContract } = useContractConnection(signer)
 
   const getMomBalance = useCallback(async () => {
     if (signerAddress === zeroAddress) return
-    const balance = await handleCall(momTokenContract.balanceOf(signerAddress), false)
+    const balance = await handleCall(momTokenContract.balanceOf(signerAddress))
     setMomBalance(balance ? balance.toString() : '0')
-  }, [operationInProgress, signerAddress, signer, isAccountLoggedOut])
+  }, [signerAddress, signer, isAccountLoggedOut])
 
   useEffect(() => {
     getMomBalance()
