@@ -24,7 +24,6 @@ const MainNavbar = () => {
       <Navigate href="/" asAButton>
         <Image
           src={isMobile ? logoMobile : logoDesktop}
-          width={isMobile ? 50 : 120}
           height={isMobile ? 50 : 60}
           alt="logo"
           title="logo"
