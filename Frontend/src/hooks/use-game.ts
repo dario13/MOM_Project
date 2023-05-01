@@ -16,6 +16,7 @@ export type GameState = Game & {
   startGame: (difficulty: Difficulty) => Promise<void>
   bet: (betOption: BetOptions) => Promise<void>
   canPlay: (tokensToPlay: number) => boolean
+  claimPrize: () => Promise<void>
   resetGame: () => void
   operationInProgress: boolean
   gameError?: GameErrors
@@ -34,7 +35,11 @@ export const useGame = (): GameState => {
     bettingResults,
     chosenBets,
     difficulty,
+    isGameLost,
+    isGameWon,
     setRules,
+    setIsGameLost,
+    setIsGameWon,
     setDifficulty,
     setDealtCard,
     setBettingResult,
@@ -84,10 +89,14 @@ export const useGame = (): GameState => {
     }
   }, [matchContractAddress, isAccountConnected])
 
+  const isTheLastHand = (hand: number) => {
+    return hand === rules[difficulty].cardsToWin
+  }
+
   const registerDealtCards = () => {
     matchContract(matchContractAddress).on('DealtCard', (cardNumber: number, hand: number) => {
       setDealtCard(numberToCard(cardNumber), hand)
-      if (hand === rules[difficulty].cardsToWin) setIsGameOver(true)
+      if (isTheLastHand(hand)) setIsGameOver(true)
     })
   }
 
@@ -98,6 +107,11 @@ export const useGame = (): GameState => {
 
       if (result === BetResult.lost) {
         setIsGameOver(true)
+        setIsGameLost(true)
+      }
+
+      if (result === BetResult.won && isTheLastHand(hand)) {
+        setIsGameWon(true)
       }
     })
   }
@@ -157,11 +171,18 @@ export const useGame = (): GameState => {
   }
 
   const bet = async (betOption: BetOptions) => {
-    if (!matchContractAddress) return
+    if (!matchContractAddress || isGameOver) return
 
     setOperationInProgress(true)
     await handleTransaction(matchContract(matchContractAddress).bet(betOption))
     setChosenBet(dealtCards.length - 1, betOption)
+    setOperationInProgress(false)
+  }
+
+  const claimPrize = async () => {
+    if (!isGameWon) return
+    setOperationInProgress(true)
+    await handleTransaction(gameContract.claimPrize())
     setOperationInProgress(false)
   }
 
@@ -170,6 +191,9 @@ export const useGame = (): GameState => {
     bet,
     canPlay,
     resetGame,
+    claimPrize,
+    isGameLost,
+    isGameWon,
     operationInProgress,
     difficulty,
     isGameStarted,
