@@ -32,7 +32,7 @@ const InfoCard = (props: { exchangeMode: ExchangeMode }) => {
           gap="3.5rem"
         >
           <Text size="IIIxl" bold align="center" text={title} />
-          <Image src={image} width="100%" height={'95%'} />
+          <Image src={image} height={120} alt="info-image" />
           <Text size="xl" align="center" text={description} />
         </FlexBox>
       </Card>
