@@ -37,7 +37,7 @@
   "scripts": {
     "start": "next start",
     "build": "next build",
-    "lint": "eslint --fix --ext .ts,.tsx src",
+    "lint": "next lint",
     "dev": "next dev",
     "dev testnet": "MOM_ENV=testnet next dev",
     "test": "jest",

@@ -14,7 +14,7 @@ type ImageStory = Story<ImageProps>
 
 export default meta
 
-const ImageTemplate: React.FC<ImageProps> = (args) => <Image {...args} />
+const ImageTemplate: React.FC<ImageProps> = (args) => <Image {...args} alt="image" />
 
 export const Primary: ImageStory = {
   render: withTemplate(ImageTemplate),
