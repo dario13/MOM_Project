@@ -6,8 +6,8 @@ on:
 jobs:
   pre-publish:
     name: Pre-publish
-    #if: github.event.label.name == 'ready-to-merge'
-    runs-on: ubuntu-18.04
+    if: github.event.label.name == 'ready-to-merge'
+    runs-on: ubuntu-latest
     steps:
         - name: Checkout
           uses: actions/checkout@v3
