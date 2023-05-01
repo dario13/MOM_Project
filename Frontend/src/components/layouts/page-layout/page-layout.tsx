@@ -9,16 +9,8 @@ const PageLayout = (pageLayoutProps: PageLayoutProps) => {
 
   return (
     <ThemeProvider>
-      <FlexBox
-        gap="3.5rem"
-        paddingTop="1rem"
-        paddingLeft="0.8rem"
-        paddingRight="0.8rem"
-        className="bg-base-200"
-        height="100vh"
-        minHeight="100vh"
-      >
-        <FlexBox flex="0">
+      <FlexBox gap="5rem" className="bg-base-200" height="100vh" minHeight="100vh">
+        <FlexBox maxHeight="5%" paddingTop="1rem" paddingLeft="0.8rem" paddingRight="0.8rem">
           <MainNavbar />
         </FlexBox>
         <FlexBox>{content}</FlexBox>
