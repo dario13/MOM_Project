@@ -57,8 +57,6 @@ const useWalletStore = create<WalletStoreState>()(
     {
       name: 'wallet',
       partialize: (state) => ({
-        isWalletInstalled: state.isWalletInstalled,
-        isAccountConnected: state.isAccountConnected,
         isAccountLoggedOut: state.isAccountLoggedOut,
       }),
     },
