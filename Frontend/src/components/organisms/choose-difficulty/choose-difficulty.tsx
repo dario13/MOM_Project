@@ -27,7 +27,7 @@ const ChooseDifficultyComponent: React.FC = () => {
 
   useEffect(() => {
     if (isGameStarted) {
-      // router.push('/play/game')
+      router.push('/play/game')
     }
   }, [isGameStarted, router])
 
