@@ -85,6 +85,7 @@ and for the frontend:
 - **Provider**
 - **Composition**
 - **Hooks**
+- **Null pattern**
 
 <br>
 
