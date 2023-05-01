@@ -7,7 +7,6 @@ import { useMedia } from '@/hooks/use-media'
 import { convertEthToMom, convertMomToEth } from '@dario13/backend/utils/token-conversion'
 import { ExchangeMode } from './exchange-card.props'
 import { useExchange } from '@/hooks/use-exchange'
-import { useHandleBlockchainOperations } from '@/hooks/use-handle-blockchain-operations'
 
 const modalTitle = {
   buy: 'Buy MOM',
@@ -69,8 +68,7 @@ const BuyAndSellCard = (props: BuyAndSellCardProps) => {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false)
   const { isMobile } = useMedia()
   const { ethUsdPrice } = useEthPrice()
-  const { buyToken, sellToken } = useExchange()
-  const { operationInProgress } = useHandleBlockchainOperations()
+  const { buyToken, sellToken, operationInProgress } = useExchange()
   const isBuyMode = exchangeMode === 'buy'
   const mainColor = isBuyMode ? 'success' : 'error'
   const ethDecimals = minimumMOMToBuyInETH.toString().length - 2
