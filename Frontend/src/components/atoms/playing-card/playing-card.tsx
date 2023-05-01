@@ -32,7 +32,7 @@ const PlayingCardComponent: React.FC<PlayingCardProps> = ({ card, isFaceUp, aria
         <text x="10" y="20" fontSize="20" fill={textColor()}>
           {card.value}
         </text>
-        <text x="80" y="143" fontSize="20" fill={textColor()}>
+        <text x={card.value === 10 ? '74' : '80'} y="143" fontSize="20" fill={textColor()}>
           {card.value}
         </text>
         <text x="38" y="75" fontSize="30" fill={textColor()}>
