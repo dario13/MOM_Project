@@ -36,6 +36,7 @@
     "hardhat-deploy": "^0.11.12",
     "hardhat-gas-reporter": "^1.0.8",
     "solidity-coverage": "^0.7.21",
+    "ts-node": "^10.9.1",
     "typechain": "^8.1.0"
   },
   "dependencies": {
