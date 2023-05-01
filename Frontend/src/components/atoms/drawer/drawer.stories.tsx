@@ -1,20 +1,27 @@
 import React, { useState } from 'react'
-import { ComponentStory, ComponentMeta } from '@storybook/react'
+import { Meta, Story } from '@/ioc/stories/story-types'
+import { withTemplate } from '@/ioc/stories/with-template'
 import { Drawer } from './drawer'
 import { Button } from '../button'
 import { FlexBox } from '../primitives'
+import { DrawerProps } from './drawer.props'
 
-export default {
+const meta: Meta<DrawerProps> = {
   title: 'Atoms/Drawer',
   component: Drawer,
-} as ComponentMeta<typeof Drawer>
+}
 
-const Template: ComponentStory<typeof Drawer> = (args) => {
+type DrawerStory = Story<DrawerProps>
+
+export default meta
+
+const DrawerTemplate: React.FC<DrawerProps> = (args) => {
   const [visible, setVisible] = useState(false)
 
   const toggleVisible = () => {
     setVisible(!visible)
   }
+
   return (
     <Drawer {...args} open={visible} onClickOverlay={toggleVisible}>
       <FlexBox justifyContent="center" alignItems="center" height="100%">
@@ -24,5 +31,7 @@ const Template: ComponentStory<typeof Drawer> = (args) => {
   )
 }
 
-export const Primary = Template.bind({})
-Primary.args = {}
+export const Primary: DrawerStory = {
+  render: withTemplate(DrawerTemplate),
+  args: {},
+}

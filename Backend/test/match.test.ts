@@ -2,20 +2,38 @@ import { expect } from './chai-setup'
 import { ethers, getNamedAccounts } from 'hardhat'
 
 import { smock } from '@defi-wonderland/smock'
-import { Match, Match__factory } from 'typechain-types'
+import { Match__factory } from '../typechain-types'
+import { RandomUtils__factory } from 'typechain-types/factories/contracts/RandomUtils__factory'
 
 const setup = async () => {
   const provider = ethers.provider
 
-  const { userA: playerA, userB: playerB } = await getNamedAccounts()
+  const cardsToWin = 4
 
-  const MockedMatchFactory = await smock.mock<Match__factory>('Match')
+  // Get users
 
-  // PlayerA will be the owner of the match
-  const MatchFactory: Match__factory = await ethers.getContractFactory('Match')
-  const cardsToWin = 3
-  const MatchContract: Match = await MatchFactory.deploy(playerA, cardsToWin)
-  const match = MatchContract.connect(provider.getSigner(playerA))
+  const { userA, userB } = await getNamedAccounts()
+
+  const playerA = provider.getSigner(userA)
+
+  const playerB = provider.getSigner(userB)
+
+  // Mock the RandomUtils contract
+
+  const MockedRandomUtilsFactory = (await smock.mock<RandomUtils__factory>('RandomUtils')).connect(
+    playerA,
+  )
+
+  const RandomUtils = await MockedRandomUtilsFactory.deploy()
+
+  // Mock the Match contract
+  const MockedMatchFactory = (await smock.mock<Match__factory>('Match')).connect(playerA)
+
+  const Match = await MockedMatchFactory.deploy(
+    playerA.getAddress(),
+    cardsToWin,
+    RandomUtils.address,
+  )
 
   enum betOptions {
     higher = 0,
@@ -23,12 +41,13 @@ const setup = async () => {
   }
 
   return {
-    match,
+    Match,
+    RandomUtils,
     cardsToWin,
     MockedMatchFactory,
+    MockedRandomUtilsFactory,
     playerA,
     playerB,
-    provider,
     betOptions,
   }
 }
@@ -36,45 +55,103 @@ const setup = async () => {
 describe('Match contract tests', () => {
   it('when a match is created, the contract will have a variable indicating the player`s address and how many cards to guess', async () => {
     // Given
-    const { match, playerA, cardsToWin } = await setup()
+    const { Match, playerA, cardsToWin } = await setup()
+    const playerAaddress = await playerA.getAddress()
 
     // When
-    const player = await match.player()
-    const cards = await match.cardsToWin()
+    const player = await Match.player()
+    const cards = await Match.cardsToWin()
 
     // Then
-    expect(player).to.equal(playerA)
+    expect(player).to.equal(playerAaddress)
     expect(cards).to.equal(cardsToWin)
   })
 
   it('only match`s player can make a bet', async () => {
     // Given
-    const { playerB, provider, match, betOptions } = await setup()
+    const { playerB, Match, betOptions } = await setup()
+    await Match.startMatch()
 
     // When
-    const playerAmakesBet = await match.bet(betOptions.higher)
-    const playerBmakesBet = match.connect(provider.getSigner(playerB)).bet(betOptions.higher)
+    const playerAmakesBet = () => Match.bet(betOptions.higher)
+    const playerBmakesBet = () => Match.connect(playerB).bet(betOptions.higher)
 
     // Then
-    await expect(playerAmakesBet).to.emit(match, 'BetResult')
-    await expect(playerBmakesBet).to.be.revertedWith('OnlyPlayerCanCallThisFunction()')
+    await expect(playerAmakesBet()).to.emit(Match, 'BetResult')
+    await expect(playerBmakesBet()).to.be.revertedWith('OnlyPlayerCanCallThisFunction()')
   })
 
   it('if a match is over, the player cannot continue playing', async () => {
     // Given
-    const { playerA, provider, MockedMatchFactory, betOptions } = await setup()
-
-    const mockedMatchContract = MockedMatchFactory.connect(provider.getSigner(playerA))
-    const mockedMatch = await mockedMatchContract.deploy(playerA, 3)
-
-    await mockedMatch.setVariable('_gameOver', true)
+    const { Match, betOptions } = await setup()
+    await Match.startMatch()
+    await Match.setVariable('_gameOver', true)
 
     // When
-    const playerAtriesToBet = mockedMatch
-      .connect(provider.getSigner(playerA))
-      .bet(betOptions.higher)
+    const playerAtriesToBet = () => Match.bet(betOptions.higher)
 
     // Then
-    await expect(playerAtriesToBet).to.be.revertedWith('GameIsOver()')
+    await expect(playerAtriesToBet()).to.be.revertedWith('GameIsOver()')
+  })
+
+  it('Should win the game after completing all bets correctly', async function () {
+    // Given
+    const { Match, RandomUtils, betOptions } = await setup()
+
+    RandomUtils.getRandomValue.returns(26)
+    await Match.startMatch()
+    const hand = 1
+    RandomUtils.getRandomValue.returns(4)
+
+    // When
+    const firstBet = () => Match.bet(betOptions.higher)
+    const secondBet = () => Match.bet(betOptions.higher)
+    const thirdBet = () => Match.bet(betOptions.lower)
+    const gameWon = () => Match.gameWon()
+
+    // Then
+    // the event is expected to generate a message indicating that the hand was won
+    await expect(firstBet())
+      .to.emit(Match, 'BetResult')
+      .withArgs(true, hand + 1)
+    RandomUtils.getRandomValue.returns(10)
+    await expect(secondBet())
+      .to.emit(Match, 'BetResult')
+      .withArgs(true, hand + 2)
+    RandomUtils.getRandomValue.returns(14)
+    await expect(thirdBet())
+      .to.emit(Match, 'BetResult')
+      .withArgs(true, hand + 3)
+    expect(await gameWon()).to.be.equal(true)
+  })
+  it('If the previous card has the same value that the current card, the suit defines the result', async function () {
+    // Given
+    const { Match, RandomUtils, betOptions } = await setup()
+
+    RandomUtils.getRandomValue.returns(13)
+    await Match.startMatch()
+    const hand = 1
+    RandomUtils.getRandomValue.returns(26)
+
+    // When
+    const firstBet = () => Match.bet(betOptions.higher)
+    const secondBet = () => Match.bet(betOptions.higher)
+    const thirdBet = () => Match.bet(betOptions.lower)
+    const gameWon = () => Match.gameWon()
+
+    // Then
+    // the event is expected to generate a message indicating that the hand was won
+    await expect(firstBet())
+      .to.emit(Match, 'BetResult')
+      .withArgs(true, hand + 1)
+    RandomUtils.getRandomValue.returns(39)
+    await expect(secondBet())
+      .to.emit(Match, 'BetResult')
+      .withArgs(true, hand + 2)
+    RandomUtils.getRandomValue.returns(0)
+    await expect(thirdBet())
+      .to.emit(Match, 'BetResult')
+      .withArgs(true, hand + 3)
+    expect(await gameWon()).to.be.equal(true)
   })
 })

@@ -1,14 +1,20 @@
 import React, { useState } from 'react'
-import { ComponentStory, ComponentMeta } from '@storybook/react'
+import { Meta, Story } from '@/ioc/stories/story-types'
+import { withTemplate } from '@/ioc/stories/with-template'
 import { AlertDialog } from './alert-dialog'
 import { Button, FlexBox } from '@/components/atoms'
+import { AlertDialogProps } from './alert-dialog.props'
 
-export default {
+const meta: Meta<AlertDialogProps> = {
   title: 'Molecules/AlertDialog',
   component: AlertDialog,
-} as ComponentMeta<typeof AlertDialog>
+}
 
-const Template: ComponentStory<typeof AlertDialog> = (args) => {
+type AlertDialogStory = Story<AlertDialogProps>
+
+export default meta
+
+const AlertDialogTemplate: React.FC<AlertDialogProps> = (args) => {
   const [visible, setVisible] = useState<boolean>(false)
 
   const toggleVisible = () => {
@@ -39,7 +45,7 @@ const Template: ComponentStory<typeof AlertDialog> = (args) => {
   )
 }
 
-export const Primary = Template.bind({})
-Primary.args = {}
-
-// export const Secondary = () => <AlertDialog />;
+export const Primary: AlertDialogStory = {
+  render: withTemplate(AlertDialogTemplate),
+  args: {},
+}

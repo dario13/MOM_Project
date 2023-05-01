@@ -1,8 +1,10 @@
-const withTM = require('next-transpile-modules')(['@dario13/backend'])
-
-module.exports = withTM({
-  reactStrictMode: true,
+module.exports = {
+  reactStrictMode: false,
   images: {
     domains: ['placeimg.com'],
   },
-})
+  compiler: {
+    styledComponents: true,
+  },
+  transpilePackages: ['@dario13/backend'],
+}

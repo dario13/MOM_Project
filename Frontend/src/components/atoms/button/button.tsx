@@ -1,10 +1,9 @@
-import { Text } from '@/components/atoms/primitives'
+import { Navigate, Text } from '@/components/atoms/primitives'
 import clsx from 'clsx'
 import React, { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 import { ButtonProps } from './button.props'
-import Navigate from '../primitives/navigate/navigate'
 
 const buttonColor = {
   primary: 'btn-primary',
@@ -35,7 +34,7 @@ const buttonVariant = {
   link: 'btn-link',
 }
 
-const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+const ButtonComponent = forwardRef<HTMLButtonElement, ButtonProps>(
   (buttonProps: ButtonProps, ref): JSX.Element => {
     const {
       text,
@@ -52,7 +51,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       disabled,
       dataTheme,
       className,
-      style,
+      onClick,
       href,
       ...props
     } = buttonProps
@@ -61,27 +60,36 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const btnShape = shape ? buttonShape[shape] : ''
     const btnColor = color ? buttonColor[color] : ''
 
-    const conditionalClasses = clsx(((startIcon && !loading) || endIcon) && 'gap-2', {
-      [btnSize]: size,
-      [btnVariant]: variant,
-      [btnShape]: shape,
-      [btnColor]: color,
-      'btn-xs md:btn-sm lg:btn-md xl:btn-lg': responsive,
-      'btn-active': active,
-      'btn-disabled': disabled,
-      loading,
-    })
+    const isLink = (href: string | undefined): href is string => {
+      return href !== undefined
+    }
+
+    const conditionalClasses = clsx(
+      'btn',
+      className,
+      {
+        [btnSize]: size,
+        [btnVariant]: variant,
+        [btnShape]: shape,
+        [btnColor]: color,
+        'btn-xs md:btn-sm lg:btn-md xl:btn-lg': responsive,
+        'btn-active': active,
+        'btn-disabled': disabled,
+        loading,
+      },
+      ((startIcon && !loading) || endIcon) && 'gap-2',
+    )
 
     const classes = twMerge('btn', className, conditionalClasses)
 
     const renderButton = () => (
       <button
         {...props}
+        onClick={onClick}
         ref={ref}
         data-testid="Button"
         data-theme={dataTheme}
         className={classes}
-        style={style}
         disabled={disabled}
       >
         {startIcon && !loading && startIcon}
@@ -90,10 +98,10 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       </button>
     )
 
-    return href ? <Navigate href={href}>{renderButton()}</Navigate> : renderButton()
+    return isLink(href) ? <Navigate href={href}>{renderButton()}</Navigate> : renderButton()
   },
 )
 
-Button.displayName = 'Button'
+ButtonComponent.displayName = 'Button'
 
-export { Button }
+export const Button = React.memo(ButtonComponent)

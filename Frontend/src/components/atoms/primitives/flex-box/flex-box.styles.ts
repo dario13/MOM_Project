@@ -29,4 +29,5 @@ export const StyledFlexBox = styled.div<Omit<FlexBoxProps, 'children' | 'classNa
   min-height: ${(props) => props.minHeight};
   gap: ${(props) => props.gap};
   data-theme: ${(props) => props.theme};
+  role: ${(props) => props.role};
 `

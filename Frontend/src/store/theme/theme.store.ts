@@ -1,21 +1,22 @@
-import { initialDefaultTheme } from '@/contexts/theme/theme-context'
+import { DataTheme } from '@/components'
+import { initialTheme } from '@/contexts/theme/theme-context'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
 const initialState = {
-  theme: initialDefaultTheme,
+  theme: initialTheme,
 }
 
 type ThemeState = {
-  theme: string
-  setTheme: (theme: string) => void
+  theme: DataTheme
+  setTheme: (theme: DataTheme) => void
 }
 
 export const useThemeStore = create<ThemeState>()(
   persist(
     (set) => ({
       theme: initialState.theme,
-      setTheme: (theme: string) => set({ theme }),
+      setTheme: (theme: DataTheme) => set({ theme }),
     }),
     {
       name: 'theme',

@@ -7,6 +7,8 @@ enum BetOptions {
 }
 
 interface IMatch {
+    function startMatch() external;
+
     function bet(BetOptions betOption) external;
 
     function gameWon() external view returns (bool);

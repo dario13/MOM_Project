@@ -1,13 +1,21 @@
 import React from 'react'
-import { ComponentStory, ComponentMeta } from '@storybook/react'
+import { Meta, Story } from '@/ioc/stories/story-types'
+import { withTemplate } from '@/ioc/stories/with-template'
 import { Loader } from './loader'
+import { LoaderProps } from './loader.props'
 
-export default {
+const meta: Meta<LoaderProps> = {
   title: 'Atoms/Primitives/Loader',
   component: Loader,
-} as ComponentMeta<typeof Loader>
+}
 
-const Template: ComponentStory<typeof Loader> = (args) => <Loader {...args} />
+type LoaderStory = Story<LoaderProps>
 
-export const Primary = Template.bind({})
-Primary.args = {}
+export default meta
+
+const LoaderTemplate: React.FC<LoaderProps> = (args) => <Loader {...args} />
+
+export const Primary: LoaderStory = {
+  render: withTemplate(LoaderTemplate),
+  args: {},
+}

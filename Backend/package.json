@@ -19,7 +19,7 @@
     "toolbox": "docker run -it --rm -v ${PWD%/*}:/src trailofbits/eth-security-toolbox"
   },
   "devDependencies": {
-    "@defi-wonderland/smock": "2.3.0",
+    "@defi-wonderland/smock": "^2.3.4",
     "@nomicfoundation/hardhat-chai-matchers": "^1.0.2",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.3",
     "@nomicfoundation/hardhat-toolbox": "^1.0.1",
@@ -36,6 +36,7 @@
     "hardhat-deploy": "^0.11.12",
     "hardhat-gas-reporter": "^1.0.8",
     "solidity-coverage": "^0.7.21",
+    "ts-node": "^10.9.1",
     "typechain": "^8.1.0"
   },
   "dependencies": {

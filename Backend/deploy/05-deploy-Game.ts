@@ -14,9 +14,14 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   try {
     log('-----------------Game-Deployment--------------------')
     const MomTokenContract: MOMTokenV1 = await ethers.getContract('MOMTokenV1')
-    const Game = await upgrades.deployProxy(GameFactory, [ownerAddress, MomTokenContract.address], {
-      initializer: 'initialize',
-    })
+    const RandomUtilsContract = await ethers.getContract('RandomUtils')
+    const Game = await upgrades.deployProxy(
+      GameFactory,
+      [ownerAddress, MomTokenContract.address, RandomUtilsContract.address],
+      {
+        initializer: 'initialize',
+      },
+    )
     await Game.deployed()
     log('Game deployed at:', Game.address)
 

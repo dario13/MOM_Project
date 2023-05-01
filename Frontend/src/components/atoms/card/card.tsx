@@ -20,7 +20,7 @@ const cardColor = {
 }
 
 const Card = React.forwardRef<HTMLDivElement, CardProps>((props: CardProps, ref): JSX.Element => {
-  const { children, dataTheme, border, color = 'base100' } = props
+  const { children, border, color = 'base100' } = props
 
   const conditionalClasses = clsx({
     [cardColor[color]]: color,
@@ -31,7 +31,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>((props: CardProps, ref)
   const classes = twMerge('card', conditionalClasses)
 
   return (
-    <FlexBox data-theme={dataTheme} className={classes} display="inline-flex" ref={ref}>
+    <FlexBox className={classes} ref={ref}>
       {children}
     </FlexBox>
   )

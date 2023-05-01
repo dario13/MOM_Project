@@ -6,7 +6,7 @@ import logo from '../../../../public/images/logo.png'
 describe('Image', () => {
   test('should render an Image component', () => {
     // Given
-    render(<Image src={logo} />)
+    render(<Image src={logo} alt={'ImageTest'} />)
 
     // When
     const renderedImageComponent = screen.getByTestId('Image')

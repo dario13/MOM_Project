@@ -1,15 +1,21 @@
 import React from 'react'
-import { ComponentStory, ComponentMeta } from '@storybook/react'
+import { Meta, Story } from '@/ioc/stories/story-types'
+import { withTemplate } from '@/ioc/stories/with-template'
 import { Navbar } from './navbar'
 import { Button } from '../button'
 import { HamburguerIcon } from '../primitives/icons/hamburguer-icon'
+import { NavbarProps } from './navbar.props'
 
-export default {
+const meta: Meta<NavbarProps> = {
   title: 'Atoms/Navbar',
   component: Navbar,
-} as ComponentMeta<typeof Navbar>
+}
 
-const Template: ComponentStory<typeof Navbar> = (args) => {
+type NavbarStory = Story<NavbarProps>
+
+export default meta
+
+const NavbarTemplate: React.FC<NavbarProps> = (args) => {
   return (
     <Navbar
       {...args}
@@ -24,5 +30,7 @@ const Template: ComponentStory<typeof Navbar> = (args) => {
   )
 }
 
-export const Primary = Template.bind({})
-Primary.args = {}
+export const Primary: NavbarStory = {
+  render: withTemplate(NavbarTemplate),
+  args: {},
+}

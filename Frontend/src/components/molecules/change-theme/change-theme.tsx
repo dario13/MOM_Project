@@ -1,21 +1,21 @@
 import { Button, Swap } from '@/components/atoms'
 import { MoonIcon, SunIcon } from '@/components/atoms/primitives/icons'
+import { DataTheme } from '@/components/types'
 import { useTheme } from '@/hooks/use-theme'
 import debounce from 'lodash.debounce'
 import React, { useEffect, useState } from 'react'
 
 const ChangeTheme = () => {
   const { toggle, theme } = useTheme()
-  // const active = theme === 'light' // If theme is light, then active is true and the icon is the SunIcon
-  const [active, setActive] = useState(theme === 'light')
+  const [active, setActive] = useState(theme === DataTheme.light)
 
   const handleClick = () => {
     toggle()
-    setActive(theme === 'light')
+    setActive(theme === DataTheme.light)
   }
 
   useEffect(() => {
-    setActive(theme === 'light')
+    setActive(theme === DataTheme.light)
   }, [theme])
 
   const debouncedHandleClick = debounce(handleClick, 50)

@@ -29,7 +29,9 @@ const setup = async () => {
     MOMToken: MomTokenContract,
   }
 
-  const users = await setupNamedUsers(await getNamedAccounts(), contracts)
+  const { owner, userA } = await getNamedAccounts()
+
+  const users = await setupNamedUsers({ owner, userA }, contracts)
 
   // Put some ethers and tokens into the exchange
   const weiAmount = { value: ethers.utils.parseEther('100.0') }

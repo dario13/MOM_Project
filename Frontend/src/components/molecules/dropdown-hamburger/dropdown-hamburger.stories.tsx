@@ -1,20 +1,30 @@
 import React from 'react'
-import { ComponentStory, ComponentMeta } from '@storybook/react'
+import { Meta, Story } from '@/ioc/stories/story-types'
+import { withTemplate } from '@/ioc/stories/with-template'
 import { DropdownHamburger } from './dropdown-hamburger'
+import { DropdownHamburgerProps } from './dropdown-hamburger.props'
 
-export default {
+const meta: Meta<DropdownHamburgerProps> = {
   title: 'Molecules/DropdownHamburger',
   component: DropdownHamburger,
-} as ComponentMeta<typeof DropdownHamburger>
+}
 
-const Template: ComponentStory<typeof DropdownHamburger> = (args) => <DropdownHamburger {...args} />
+type DropdownHamburgerStory = Story<DropdownHamburgerProps>
 
-export const Primary = Template.bind({})
-Primary.args = {
-  menuItems: [
-    { label: 'Example item 1', onClick: () => ({}) },
-    { label: 'Example item 2', onClick: () => ({}) },
-    { label: 'Example item 3', onClick: () => ({}) },
-    { label: 'Example item 4', onClick: () => ({}) },
-  ],
+export default meta
+
+const DropdownHamburgerTemplate: React.FC<DropdownHamburgerProps> = (args) => (
+  <DropdownHamburger {...args} />
+)
+
+export const Primary: DropdownHamburgerStory = {
+  render: withTemplate(DropdownHamburgerTemplate),
+  args: {
+    menuItems: [
+      { label: 'Example item 1', onClick: () => ({}) },
+      { label: 'Example item 2', onClick: () => ({}) },
+      { label: 'Example item 3', onClick: () => ({}) },
+      { label: 'Example item 4', onClick: () => ({}) },
+    ],
+  },
 }

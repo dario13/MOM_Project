@@ -24,7 +24,7 @@ const dropDownBg = {
   neutral: 'bg-neutral',
 }
 
-const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
+const DropdownComponent = React.forwardRef<HTMLDivElement, DropdownProps>(
   (dropDownProps: DropdownProps, ref): JSX.Element => {
     const {
       toggleElement,
@@ -99,6 +99,6 @@ const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
   },
 )
 
-Dropdown.displayName = 'Dropdown'
+DropdownComponent.displayName = 'Dropdown'
 
-export { Dropdown }
+export const Dropdown = React.memo(DropdownComponent)

@@ -6,6 +6,7 @@ import './Ownership.sol';
 import {Match} from './Match.sol';
 import '@openzeppelin/contracts-upgradeable/token/ERC20/utils/SafeERC20Upgradeable.sol';
 import '@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol';
+import {IRandomUtils} from './IRandomUtils.sol';
 
 contract GameV1 is Ownership {
     enum Difficulty {
@@ -15,6 +16,7 @@ contract GameV1 is Ownership {
     }
     using SafeERC20Upgradeable for IERC20Upgradeable;
     IERC20Upgradeable public token;
+    IRandomUtils public randomUtils;
     struct MatchRegister {
         Match matchContract;
         Difficulty difficulty;
@@ -29,18 +31,19 @@ contract GameV1 is Ownership {
     );
     event PrizeAwarded(address indexed player, uint256 prize);
 
-    function initialize(address _owner, address _token) public initializer {
+    function initialize(address _owner, address _token, address _randomUtils) public initializer {
         initializeOwnership(_owner);
         token = IERC20Upgradeable(_token);
+        randomUtils = IRandomUtils(_randomUtils);
     }
 
     // This function returns the rules depending on the difficulty level
     function getRules(
         Difficulty _difficulty
     ) public pure returns (uint8 tokensToPlay, uint8 tokensPrize, uint8 cardsToWin) {
-        if (_difficulty == Difficulty.Easy) return (3, 1, 3);
-        if (_difficulty == Difficulty.Medium) return (5, 3, 5);
-        if (_difficulty == Difficulty.Hard) return (7, 10, 7);
+        if (_difficulty == Difficulty.Easy) return (3, 1, 4);
+        if (_difficulty == Difficulty.Medium) return (5, 3, 6);
+        if (_difficulty == Difficulty.Hard) return (7, 10, 8);
     }
 
     function getGameTokenBalance() public view returns (uint256) {
@@ -53,11 +56,19 @@ contract GameV1 is Ownership {
         token.safeTransferFrom(msg.sender, address(this), tokensToPlay);
     }
 
+    function _createMatchContract(uint8 cardsToWin) internal returns (Match) {
+        return new Match(msg.sender, cardsToWin, randomUtils);
+    }
+
+    function _addMatchToRegister(Match matchContract, Difficulty difficulty) internal {
+        matches[msg.sender].push(MatchRegister(matchContract, difficulty, false));
+    }
+
     function createMatch(Difficulty _difficulty) external {
         (uint8 tokensToPlay, , uint8 cardsToWin) = getRules(_difficulty);
         _depositTokens(tokensToPlay);
-        Match matchContract = new Match(msg.sender, cardsToWin);
-        matches[msg.sender].push(MatchRegister(matchContract, _difficulty, false));
+        Match matchContract = _createMatchContract(cardsToWin);
+        _addMatchToRegister(matchContract, _difficulty);
         emit MatchCreated(msg.sender, address(matchContract), _difficulty);
     }
 

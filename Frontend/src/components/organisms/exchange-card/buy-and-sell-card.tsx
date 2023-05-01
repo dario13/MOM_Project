@@ -68,7 +68,7 @@ const BuyAndSellCard = (props: BuyAndSellCardProps) => {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false)
   const { isMobile } = useMedia()
   const { ethUsdPrice } = useEthPrice()
-  const { buyToken, sellToken, transactionInProgress } = useExchange()
+  const { buyToken, sellToken, operationInProgress } = useExchange()
   const isBuyMode = exchangeMode === 'buy'
   const mainColor = isBuyMode ? 'success' : 'error'
   const ethDecimals = minimumMOMToBuyInETH.toString().length - 2
@@ -114,7 +114,7 @@ const BuyAndSellCard = (props: BuyAndSellCardProps) => {
   }
 
   const shouldConfirmButtonBeDisabled = () => {
-    if (transactionInProgress) return true
+    if (operationInProgress) return true
     if (isBuyMode) {
       if (!amountToBuy) return true
       return momToBuyIsLessThanMinimum()
@@ -177,7 +177,7 @@ const BuyAndSellCard = (props: BuyAndSellCardProps) => {
         <Input
           title={'amount-to-' + exchangeMode}
           label={inputLabel[exchangeMode]}
-          size={isMobile ? 'sm' : 'md'}
+          inputSize={isMobile ? 'sm' : 'md'}
           suffix={isBuyMode ? 'ETH' : 'MOM'}
           type="text"
           autoComplete="off"
@@ -250,7 +250,7 @@ const BuyAndSellCard = (props: BuyAndSellCardProps) => {
           color="primary"
           text="Confirm"
           responsive={false}
-          loading={transactionInProgress}
+          loading={operationInProgress}
           disabled={shouldConfirmButtonBeDisabled()}
           onClick={() => setShowConfirmationModal(true)}
         />
