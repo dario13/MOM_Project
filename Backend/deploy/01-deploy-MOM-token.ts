@@ -21,7 +21,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     await MOMTokenProxy.deployed()
     log('MOMToken Proxy deployed at:', MOMTokenProxy.address)
 
-    const MOMTokenImp = await upgrades.upgradeProxy(MOMTokenProxy, MOMTokenFactory) // await upgrades.erc1967.getImplementationAddress(MOMTokenProxy.address)
+    const MOMTokenImp = await upgrades.upgradeProxy(MOMTokenProxy, MOMTokenFactory)
 
     log('MOMToken Implementation deployed at:', MOMTokenImp.address)
 
