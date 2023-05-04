@@ -10,7 +10,6 @@ export const useWalletMocked = (...options: Partial<WalletState>[]) => {
     isWalletInstalled: false,
     isAccountConnected: false,
     isAccountLoggedOut: false,
-    operationInProgress: false,
     signer: {} as any,
     signerAddress: zeroAddress,
   }
