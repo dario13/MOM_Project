@@ -9,6 +9,7 @@ import { Rule, Difficulty } from '@/store/game/game.types'
 import { Controller, useForm } from 'react-hook-form'
 import { schema } from './choose-difficulty.schema'
 import { useRouter } from 'next/router'
+import { useOperationInProgress } from '@/hooks/use-operation-in-progress'
 
 interface FormValues {
   difficulty: Difficulty
@@ -19,9 +20,10 @@ const ChooseDifficultyComponent: React.FC = () => {
     resolver: yupResolver(schema),
   })
   const { isTabletOrMobile, isMobile } = useMedia()
-  const { rules, startGame, isGameStarted, operationInProgress } = useGame()
+  const { rules, startGame, isGameStarted } = useGame()
   const { momBalance } = useWalletBalance()
   const router = useRouter()
+  const { operationInProgress } = useOperationInProgress()
 
   const selectedOption = watch('difficulty')
 

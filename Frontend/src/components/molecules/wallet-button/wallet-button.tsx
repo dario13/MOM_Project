@@ -3,6 +3,8 @@ import { Button } from '@/components/atoms'
 import { useWallet } from '@/hooks/use-wallet'
 import { AlertDialog } from '../alert-dialog'
 import { useWalletBalance } from '@/hooks/use-wallet-balance'
+import { useExchange } from '@/hooks/use-exchange'
+import { useOperationInProgress } from '@/hooks/use-operation-in-progress'
 
 const actionWalletButtonText = {
   start: 'Start!',
@@ -18,16 +20,11 @@ const disconnectAccountMessage =
   "Do you want to disconnect? You won't be able to use the app but you won't lose your tokens and you can always connect again."
 
 const WalletButton = () => {
-  const {
-    connectWallet,
-    disconnectAccount,
-    isWalletInstalled,
-    isAccountConnected,
-    operationInProgress,
-  } = useWallet()
+  const { connectWallet, disconnectAccount, isWalletInstalled, isAccountConnected } = useWallet()
   const { momBalance } = useWalletBalance()
   const [showModalInstallWallet, setShowModalInstallWallet] = useState(false)
   const [showModalDisconnectAccount, setShowModalDisconnectAccount] = useState(false)
+  const { operationInProgress } = useOperationInProgress()
 
   const onClickStart = () => {
     if (isAccountConnected) {

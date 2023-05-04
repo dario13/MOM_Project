@@ -4,6 +4,7 @@ import { useContractConnection } from './use-contract-connection'
 import { useCallback, useEffect } from 'react'
 import { useWalletStore } from '@/store/wallet/wallet.store'
 import { useWallet } from './use-wallet'
+import { useOperationInProgress } from './use-operation-in-progress'
 
 export type WalletBalance = {
   momBalance: string
@@ -11,8 +12,8 @@ export type WalletBalance = {
 
 export const useWalletBalance = (): WalletBalance => {
   const { setMomBalance, momBalance } = useWalletStore()
-
   const { signerAddress, signer, isAccountLoggedOut } = useWallet()
+  const { operationInProgress } = useOperationInProgress()
 
   const { handleCall } = useHandleBlockchainOperations()
   const { momTokenContract } = useContractConnection(signer)
@@ -21,7 +22,7 @@ export const useWalletBalance = (): WalletBalance => {
     if (signerAddress === zeroAddress) return
     const balance = await handleCall(momTokenContract.balanceOf(signerAddress))
     setMomBalance(balance ? balance.toString() : '0')
-  }, [signerAddress, signer, isAccountLoggedOut])
+  }, [signerAddress, signer, isAccountLoggedOut, operationInProgress])
 
   useEffect(() => {
     getMomBalance()

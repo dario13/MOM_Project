@@ -1,42 +1,75 @@
-import { convertEthToWei } from '@dario13/backend/utils/token-conversion'
-import { BigNumber } from 'ethers'
 import { useWallet } from './use-wallet'
 import { useContractConnection } from './use-contract-connection'
 import env from '@/config/env'
 import { useHandleBlockchainOperations } from './use-handle-blockchain-operations'
-import { useState } from 'react'
+import { useTransactionStore } from '@/store/transaction/transaction.store'
 
 export type useExchangeType = {
-  buyToken: (amount: string) => Promise<void>
-  sellToken: (amount: string) => Promise<void>
-  operationInProgress: boolean
+  buyToken: (amountMOMToBuy: string, maxStableCoinToPay: string) => Promise<void>
+  sellToken: (amountMOMToSell: string, minStableCoinToReceive: string) => Promise<void>
+  getStableCoinNeededToBuyMOM: (amountMOMToBuy: string) => Promise<string | undefined>
+  getStableCoinToReceiveFromMOM: (amountStableCoinToSell: string) => Promise<string | undefined>
 }
 
+const { EXCHANGE_CONTRACT_ADDRESS } = env
+
 export const useExchange = (): useExchangeType => {
-  const { signerAddress, signer } = useWallet()
-  const { exchangeContract, momTokenContract } = useContractConnection(signer)
-  const [operationInProgress, setOperationInProgress] = useState<boolean>(false)
+  const { signer } = useWallet()
+  const { exchangeContract, momTokenContract, usdTokenContract } = useContractConnection(signer)
+  const { handleTransaction, handleCall } = useHandleBlockchainOperations()
+  const { setOperationInProgress } = useTransactionStore()
 
-  const { EXCHANGE_CONTRACT_ADDRESS } = env
-  const { handleTransaction } = useHandleBlockchainOperations()
-
-  const buyToken = async (amount: string) => {
+  // Buy token
+  const buyToken = async (amountMOMToBuy: string, maxStableCoinToPay: string) => {
+    if (!signer) {
+      return
+    }
     setOperationInProgress(true)
-    const amountInWei = convertEthToWei(amount)
 
-    const amountToBuy = { value: BigNumber.from(amountInWei) }
+    // Approve the exchange to spend the stable coin
+    await handleTransaction(usdTokenContract.approve(EXCHANGE_CONTRACT_ADDRESS, maxStableCoinToPay))
 
-    await handleTransaction(exchangeContract.buyToken(amountToBuy))
+    await handleTransaction(exchangeContract.buyTokens(amountMOMToBuy, maxStableCoinToPay))
     setOperationInProgress(false)
   }
 
-  const sellToken = async (amount: string) => {
+  const sellToken = async (amountMOMToSell: string, minStableCoinToReceive: string) => {
+    if (!signer) {
+      return
+    }
     setOperationInProgress(true)
-    await handleTransaction(momTokenContract.approve(EXCHANGE_CONTRACT_ADDRESS, amount))
+    await handleTransaction(momTokenContract.approve(EXCHANGE_CONTRACT_ADDRESS, amountMOMToSell))
 
-    await handleTransaction(exchangeContract.sellToken(amount, signerAddress))
+    await handleTransaction(exchangeContract.sellTokens(amountMOMToSell, minStableCoinToReceive))
     setOperationInProgress(false)
   }
 
-  return { buyToken, sellToken, operationInProgress }
+  const getStableCoinNeededToBuyMOM = async (amountMOMToBuy: string) => {
+    if (!signer || !amountMOMToBuy) return
+
+    const stableCoinNeeded = await handleCall(
+      exchangeContract.getStableCoinAmountOut(amountMOMToBuy),
+    )
+
+    const extraToExceedTheMin = 1
+
+    return stableCoinNeeded?.add(extraToExceedTheMin)?.toString()
+  }
+
+  const getStableCoinToReceiveFromMOM = async (amountMOMToSell: string) => {
+    if (!signer || !amountMOMToSell) return
+
+    const stableCoinToReceive = await handleCall(
+      exchangeContract.getStableCoinAmountOut(amountMOMToSell),
+    )
+
+    return stableCoinToReceive?.toString()
+  }
+
+  return {
+    buyToken,
+    sellToken,
+    getStableCoinNeededToBuyMOM,
+    getStableCoinToReceiveFromMOM,
+  }
 }

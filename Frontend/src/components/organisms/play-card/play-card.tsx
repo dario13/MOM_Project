@@ -6,19 +6,12 @@ import { BetOptions } from '@/store/game/game.types'
 import React, { useEffect, useState } from 'react'
 import GameLostModal from './game-lost-modal'
 import GameWinModal from './game-win-modal'
+import { useOperationInProgress } from '@/hooks/use-operation-in-progress'
 
 const PlayCard: React.FC = () => {
-  const {
-    bet,
-    resetGame,
-    claimPrize,
-    dealtCards,
-    rules,
-    difficulty,
-    operationInProgress,
-    isGameLost,
-    isGameWon,
-  } = useGame()
+  const { bet, resetGame, claimPrize, dealtCards, rules, difficulty, isGameLost, isGameWon } =
+    useGame()
+  const { operationInProgress } = useOperationInProgress()
   const { isMobile } = useMedia()
   const [showLostModal, setShowLostModal] = useState(false)
   const [showWinModal, setShowWinModal] = useState(false)

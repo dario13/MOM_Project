@@ -7,6 +7,7 @@ import { useContractConnection } from './use-contract-connection'
 import { useHandleBlockchainOperations } from './use-handle-blockchain-operations'
 import { useWalletBalance } from './use-wallet-balance'
 import { numberToCard } from '@/utils/number-to-card'
+import { useTransactionStore } from '@/store/transaction/transaction.store'
 
 enum GameErrors {
   NotEnoughTokens = 'Not enough tokens to play',
@@ -18,13 +19,12 @@ export type GameState = Game & {
   canPlay: (tokensToPlay: number) => boolean
   claimPrize: () => Promise<void>
   resetGame: () => void
-  operationInProgress: boolean
   gameError?: GameErrors
 }
 
 export const useGame = (): GameState => {
   const { isAccountConnected, signer } = useWallet()
-  const [operationInProgress, setOperationInProgress] = useState<boolean>(false)
+  const { setOperationInProgress } = useTransactionStore()
   const { gameContract, momTokenContract, matchContract } = useContractConnection(signer)
   const {
     isGameStarted,
@@ -194,7 +194,6 @@ export const useGame = (): GameState => {
     claimPrize,
     isGameLost,
     isGameWon,
-    operationInProgress,
     difficulty,
     isGameStarted,
     isGameOver,

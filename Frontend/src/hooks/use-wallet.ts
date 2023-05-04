@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState } from 'react'
 import { ethers } from 'ethers'
 import { Wallet, useWalletStore } from '@/store/wallet/wallet.store'
+import { useTransactionStore } from '@/store/transaction/transaction.store'
 
 export type WalletState = Omit<Wallet, 'momBalance'> & {
   connectWallet: () => void
   disconnectAccount: () => void
-  operationInProgress: boolean
 }
 
 export const useWallet = (): WalletState => {
@@ -22,7 +22,7 @@ export const useWallet = (): WalletState => {
     setSignerAddress,
     disconnect,
   } = useWalletStore()
-  const [operationInProgress, setOperationInProgress] = useState<boolean>(false)
+  const { setOperationInProgress } = useTransactionStore()
 
   // Returns true if the wallet is installed, false otherwise
   const checkIfWalletIsInstalled = () => {
@@ -111,7 +111,6 @@ export const useWallet = (): WalletState => {
   return {
     connectWallet,
     disconnectAccount: disconnect,
-    operationInProgress,
     isWalletInstalled,
     isAccountLoggedOut,
     isAccountConnected,
