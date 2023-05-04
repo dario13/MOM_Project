@@ -41,9 +41,9 @@ contract GameV1 is Ownership {
     function getRules(
         Difficulty _difficulty
     ) public pure returns (uint8 tokensToPlay, uint8 tokensPrize, uint8 cardsToWin) {
-        if (_difficulty == Difficulty.Easy) return (3, 1, 4);
-        if (_difficulty == Difficulty.Medium) return (5, 3, 6);
-        if (_difficulty == Difficulty.Hard) return (7, 10, 8);
+        if (_difficulty == Difficulty.Easy) return (3, 4, 4);
+        if (_difficulty == Difficulty.Medium) return (5, 8, 6);
+        if (_difficulty == Difficulty.Hard) return (7, 20, 8);
     }
 
     function getGameTokenBalance() public view returns (uint256) {
