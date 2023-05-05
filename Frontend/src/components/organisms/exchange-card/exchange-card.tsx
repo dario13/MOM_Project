@@ -2,36 +2,44 @@ import { Card, FlexBox, Text } from '@/components/atoms'
 import { useMedia } from '@/hooks/use-media'
 import React, { useState } from 'react'
 import { ExchangeMode } from './exchange-card.props'
-import { exchangeModeContent, InfoCard } from './info-card'
-import { BuyAndSellCard } from './buy-and-sell-card'
+import { InfoCard } from './info-card'
+import { BuyAndSellCard } from './buy-and-sell-card/buy-and-sell-card'
+import exchangeModeContent from './exchange-mode-content'
 
-const ExchangeCard = () => {
+const ExchangeCard: React.FC = () => {
   const { isMobile, isTabletOrMobile } = useMedia()
   const [exchangeMode, setExchangeMode] = useState<ExchangeMode>('buy')
   const { title, description } = exchangeModeContent(exchangeMode)
 
   const renderMobileTitleAndDescription = () => {
     return (
-      <FlexBox gap="0.7rem" flexDirection="column" flex="0" marginBottom="1.5rem">
+      <FlexBox maxHeight="10vh">
         <Text size="xl" bold align="center" text={title} />
-        <Text size="md" align="justify" text={description} />
+        <Text size="md" align="center" text={description} />
       </FlexBox>
     )
   }
 
-  return (
-    <FlexBox
-      flex="0"
-      minHeight={isMobile ? '80vh' : '60vh'}
-      maxWidth={isTabletOrMobile ? '80vw' : '60vw'}
-    >
-      {isMobile && renderMobileTitleAndDescription()}
+  const showExchange = () => {
+    return (
       <Card color="base200">
-        <FlexBox flexDirection="row">
+        <FlexBox flexDirection={isMobile ? 'column' : 'row'}>
           {!isMobile && <InfoCard exchangeMode={exchangeMode} />}
-          <BuyAndSellCard handleExchangeMode={(mode) => setExchangeMode(mode)} />
+          <BuyAndSellCard
+            handleExchangeMode={(mode) => setExchangeMode(mode)}
+            exchangeMode={exchangeMode}
+          />
         </FlexBox>
       </Card>
+    )
+  }
+
+  return (
+    <FlexBox maxHeight={isMobile ? '60vh' : '50vh'} width={isTabletOrMobile ? '90vw' : '60vw'}>
+      <FlexBox gap="1rem">
+        {isMobile && renderMobileTitleAndDescription()}
+        {showExchange()}
+      </FlexBox>
     </FlexBox>
   )
 }

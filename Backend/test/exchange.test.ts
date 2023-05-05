@@ -1,152 +1,90 @@
 import { expect } from './chai-setup'
-import { deployments, ethers, getNamedAccounts, upgrades } from 'hardhat'
-
+import { deployments, ethers, getNamedAccounts } from 'hardhat'
 import { setupNamedUsers } from './utils/setup-users'
-import { BigNumber } from 'ethers'
-import { convertWeiToMom } from '../utils/token-conversion'
-import { networkConfig } from '../helper-hardhat-config'
-import { ExchangeV1__factory, MOMTokenV1 } from 'typechain-types'
+import { Exchange } from 'typechain-types/contracts/Exchange'
+import { USDtoken } from 'typechain-types/contracts/USDtoken'
+import { MOMTokenV1 } from 'typechain-types'
 
 const setup = async () => {
-  await deployments.fixture(['ExchangeV1', 'MOMTokenV1'])
+  await deployments.fixture(['MOMTokenV1', 'USDtoken', 'Exchange'])
 
-  const provider = ethers.provider
+  const MomTokenV1Contract: MOMTokenV1 = await ethers.getContract('MOMTokenV1')
+  const USDtokenContract: USDtoken = await ethers.getContract('USDtoken')
+  const ExchangeContract: Exchange = await ethers.getContract('Exchange')
 
-  const config = networkConfig.default
-
-  const MomTokenContract: MOMTokenV1 = await ethers.getContract('MOMTokenV1')
-  const ExchangeFactory: ExchangeV1__factory = await ethers.getContractFactory('ExchangeV1')
-  const ExchangeContract = await upgrades.deployProxy(
-    ExchangeFactory,
-    [config.ownerAddress, MomTokenContract.address],
-    {
-      initializer: 'initialize',
-    },
-  )
-
-  const contracts = {
+  const users = await setupNamedUsers(await getNamedAccounts(), {
+    MomTokenV1: MomTokenV1Contract,
+    USDtoken: USDtokenContract,
     Exchange: ExchangeContract,
-    MOMToken: MomTokenContract,
-  }
-
-  const { owner, userA } = await getNamedAccounts()
-
-  const users = await setupNamedUsers({ owner, userA }, contracts)
-
-  // Put some ethers and tokens into the exchange
-  const weiAmount = { value: ethers.utils.parseEther('100.0') }
-  const MOMTokenAmount = 100000000000
-  await users.owner.Exchange.depositWei(weiAmount)
-  await users.owner.MOMToken.transfer(ExchangeContract.address, MOMTokenAmount)
+  })
 
   return {
-    ...contracts,
+    MomTokenV1Contract,
     users,
-    provider,
   }
 }
 
 describe('Exchange contract tests', () => {
-  it('should have the right owner', async () => {
+  it('should buy tokens with stablecoin', async () => {
     // Given
-    const { Exchange } = await setup()
-    const { owner } = await getNamedAccounts()
+    const { MomTokenV1Contract, users } = await setup()
+    const { owner, userA } = users
+    const tokenAmountToBuy = (10 ** 4).toString()
+    const maxStablecoinAmountToPay = (10 ** 5).toString()
+    await owner.USDtoken.transfer(userA.address, maxStablecoinAmountToPay)
 
     // When
-    const contractOwner = await Exchange.owner()
+    await userA.USDtoken.approve(userA.Exchange.address, maxStablecoinAmountToPay)
+    const userBalanceBeforeBuy = await MomTokenV1Contract.balanceOf(userA.address)
+    await userA.Exchange.buyTokens(tokenAmountToBuy, maxStablecoinAmountToPay)
+    const userBalanceAfterBuy = await MomTokenV1Contract.balanceOf(userA.address)
 
     // Then
-    expect(contractOwner).to.equal(owner)
+    expect(userBalanceBeforeBuy).to.equal(0)
+    expect(userBalanceAfterBuy).to.equal(tokenAmountToBuy)
   })
-
-  it('when a certain amount is deposited, the balance of the exchange must be the balance before the deposit plus the new deposit', async () => {
+  it('should sell tokens for stablecoin', async () => {
     // Given
-    const { Exchange, users } = await setup()
-    const { userA } = users
-    const amount = { value: ethers.utils.parseEther('1.0') }
+    const { users } = await setup()
+    const { owner, userA } = users
+    const tokenAmountToSell = (10 ** 5).toString()
+    const minStablecoinAmountToReceive = (10 ** 4).toString()
+
+    // Transfer tokens to userA
+    await owner.MomTokenV1.transfer(userA.address, tokenAmountToSell)
 
     // When
-    const balanceBeforeDeposit = await Exchange.getExchangeWeiBalance()
-    await userA.Exchange.depositWei(amount)
-    const balanceAfterDeposit = await Exchange.getExchangeWeiBalance()
+    const userBalanceBeforeSell = await userA.USDtoken.balanceOf(userA.address)
+    await userA.MomTokenV1.approve(userA.Exchange.address, tokenAmountToSell)
+    await userA.Exchange.sellTokens(tokenAmountToSell, minStablecoinAmountToReceive)
+    const userBalanceAfterSell = await userA.USDtoken.balanceOf(userA.address)
 
     // Then
-    expect(balanceAfterDeposit).to.equal(amount.value.add(balanceBeforeDeposit))
+    expect(userBalanceBeforeSell).to.equal(0)
+    expect(userBalanceAfterSell.toNumber()).to.be.approximately(Number(tokenAmountToSell), 1000)
   })
-
-  it('when a certain amount is withdrawn, the balance of the exchange must be the balance before the withdrew minus the withdrawal amount', async () => {
-    // Given
-    const { Exchange, users } = await setup()
-    const { owner } = users
-    const amount = ethers.utils.parseEther('1.0')
-
-    // When
-    const balanceBeforeWithdrawal = await Exchange.getExchangeWeiBalance()
-    await owner.Exchange.withdrawWei(amount, owner.address)
-    const balanceAfterWithdrawal = await Exchange.getExchangeWeiBalance()
-
-    // Then
-    expect(balanceAfterWithdrawal).to.equal(balanceBeforeWithdrawal.sub(amount))
-  })
-
-  it('should fail when a non-owner tries to withdraw the exchange balance', async () => {
+  it('should get stablecoin amount in', async () => {
     // Given
     const { users } = await setup()
     const { userA } = users
-    const amount = { value: ethers.utils.parseEther('1.0') }
-    await userA.Exchange.depositWei(amount)
+    const tokenAmountToBuy = '1000'
 
     // When
-    const WitdhDrawTransaction = async () =>
-      await userA.Exchange.withdrawWei(amount.value, userA.address)
+    const stablecoinAmountOut = await userA.Exchange.getStableCoinAmountIn(tokenAmountToBuy)
 
     // Then
-    expect(WitdhDrawTransaction()).to.be.revertedWith('NotOwner()')
+    expect(stablecoinAmountOut.toNumber()).to.be.approximately(Number(tokenAmountToBuy), 10)
   })
-
-  it('an user with ethers should be able to buy MOM tokens', async () => {
+  it('should get token amount out', async () => {
     // Given
-    const { MOMToken, users } = await setup()
+    const { users } = await setup()
     const { userA } = users
-    const amountToBuy = { value: BigNumber.from(100000000000000) }
+    const tokenAmountToSell = '1000'
 
     // When
-    await userA.Exchange.buyToken(amountToBuy)
+    const tokenAmountOut = await userA.Exchange.getStableCoinAmountOut(tokenAmountToSell)
 
     // Then
-    expect(await MOMToken.balanceOf(userA.address)).to.equal(convertWeiToMom(amountToBuy.value))
-  })
-
-  it('a user with MOM tokens should be able to sell their tokens and get ETH back', async () => {
-    // Given
-    const { MOMToken, Exchange, users, provider } = await setup()
-    const { owner, userA } = users
-
-    const userAaddress = userA.address
-    const amountToSell = 10000
-
-    // Preload userA with MOM tokens
-    await owner.MOMToken.transfer(userAaddress, 100000)
-
-    const userAtokensBalanceBeforeSell = await userA.MOMToken.balanceOf(userAaddress)
-    const userAgetContractWeiBalanceBeforeSell = await provider.getBalance(userAaddress)
-    const exchangeTokensBalanceBeforeSell = await MOMToken.balanceOf(Exchange.address)
-    const exchangeEthBalanceBeforeSell = await provider.getBalance(Exchange.address)
-
-    // When
-    await userA.MOMToken.approve(Exchange.address, amountToSell)
-    await userA.Exchange.sellToken(amountToSell, userAaddress)
-    const userAtokensBalanceAfterSell = await userA.MOMToken.balanceOf(userAaddress)
-    const userAgetWeiBalanceAfterSell = await provider.getBalance(userAaddress)
-    const exchangeTokensBalanceAfterSell = await MOMToken.balanceOf(Exchange.address)
-    const exchangeEthBalanceAfterSell = await provider.getBalance(Exchange.address)
-
-    // Then
-    expect(userAtokensBalanceAfterSell).to.equal(userAtokensBalanceBeforeSell.sub(amountToSell))
-    expect(userAgetWeiBalanceAfterSell).to.be.gt(userAgetContractWeiBalanceBeforeSell)
-    expect(exchangeEthBalanceAfterSell).to.be.lt(exchangeEthBalanceBeforeSell)
-    expect(exchangeTokensBalanceAfterSell).to.equal(
-      exchangeTokensBalanceBeforeSell.add(amountToSell),
-    )
+    expect(tokenAmountOut.toNumber()).to.be.approximately(Number(tokenAmountToSell), 10)
   })
 })

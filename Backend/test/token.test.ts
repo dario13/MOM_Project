@@ -21,7 +21,7 @@ describe('MomToken contract tests', () => {
     // Given
     const { users } = await setup()
     const { owner } = users
-    const initialSupply = '1000000000000000000000'
+    const initialSupply = (10 ** 18).toString()
 
     // When
     const balanceTokenOwner = await owner.MOMToken.balanceOf(owner.address)

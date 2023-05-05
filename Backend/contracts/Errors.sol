@@ -14,9 +14,8 @@ error IncorrectTokenAllowance();
 error TokenFraction();
 
 // Exchange errors
-error EthersTransferFailed();
-error MinimumAmountNotReached();
-error InsufficientWeiInReserve();
+error MaxStableCoinAmountTooLow();
+error MinStableCoinAmountTooHigh();
 
 // Game errors
 error OnlyPlayerCanCallThisFunction();

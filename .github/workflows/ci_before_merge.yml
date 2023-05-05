@@ -1,4 +1,4 @@
-name: ci
+name: ci_before_merge
 on:
   pull_request:
     types: [labeled]

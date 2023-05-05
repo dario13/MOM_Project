@@ -6,17 +6,15 @@ export class NullSigner extends ethers.Signer {
     return zeroAddress
   }
 
-  async signMessage(_message: string | ethers.utils.Bytes): Promise<string> {
+  async signMessage(): Promise<string> {
     throw new Error('NullSigner cannot sign messages')
   }
 
-  async signTransaction(
-    _transaction: ethers.utils.Deferrable<ethers.providers.TransactionRequest>,
-  ): Promise<string> {
+  async signTransaction(): Promise<string> {
     throw new Error('NullSigner cannot sign transactions')
   }
 
-  connect(_provider: ethers.providers.Provider): Signer {
+  connect(): Signer {
     return this
   }
 }

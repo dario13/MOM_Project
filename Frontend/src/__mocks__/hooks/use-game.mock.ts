@@ -11,7 +11,6 @@ export const useGameMocked = (...options: Partial<GameState>[]): void => {
     claimPrize: jest.fn(),
     isGameLost: false,
     isGameWon: false,
-    operationInProgress: false,
     difficulty: 0,
     isGameStarted: false,
     isGameOver: false,

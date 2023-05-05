@@ -3,7 +3,8 @@ import { Button } from '@/components/atoms'
 import { useWallet } from '@/hooks/use-wallet'
 import { AlertDialog } from '../alert-dialog'
 import { useWalletBalance } from '@/hooks/use-wallet-balance'
-import { useHandleBlockchainOperations } from '@/hooks/use-handle-blockchain-operations'
+import { useExchange } from '@/hooks/use-exchange'
+import { useOperationInProgress } from '@/hooks/use-operation-in-progress'
 
 const actionWalletButtonText = {
   start: 'Start!',
@@ -21,9 +22,9 @@ const disconnectAccountMessage =
 const WalletButton = () => {
   const { connectWallet, disconnectAccount, isWalletInstalled, isAccountConnected } = useWallet()
   const { momBalance } = useWalletBalance()
-  const { operationInProgress } = useHandleBlockchainOperations()
   const [showModalInstallWallet, setShowModalInstallWallet] = useState(false)
   const [showModalDisconnectAccount, setShowModalDisconnectAccount] = useState(false)
+  const { operationInProgress } = useOperationInProgress()
 
   const onClickStart = () => {
     if (isAccountConnected) {

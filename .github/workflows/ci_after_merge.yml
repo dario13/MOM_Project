@@ -1,3 +1,4 @@
+name: ci_after_merge
 on:
   pull_request:
     types: [closed]

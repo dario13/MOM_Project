@@ -7,7 +7,7 @@ export const useContractConnectionMocked = (...options: Partial<ContractConnecti
     exchangeContract: {} as any,
     gameContract: {} as any,
     momTokenContract: {} as any,
-    priceFeedConsumerContract: {} as any,
+    usdTokenContract: {} as any,
     matchContract: jest.fn(),
   }
 

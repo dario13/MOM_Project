@@ -13,6 +13,7 @@
     "@tailwindcss/typography": "^0.5.2",
     "clsx": "^1.1.1",
     "daisyui": "^2.15.1",
+    "dotenv": "^16.0.3",
     "eslint-config-next": "^13.3.0",
     "ethers": "^5.7.0",
     "fork-ts-checker-webpack-plugin": "^7.2.11",
@@ -37,7 +38,7 @@
   "scripts": {
     "start": "next start",
     "build": "next build",
-    "lint": "eslint --fix --ext .ts,.tsx src",
+    "lint": "next lint",
     "dev": "next dev",
     "dev testnet": "MOM_ENV=testnet next dev",
     "test": "jest",

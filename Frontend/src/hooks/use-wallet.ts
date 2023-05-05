@@ -1,6 +1,7 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { ethers } from 'ethers'
 import { Wallet, useWalletStore } from '@/store/wallet/wallet.store'
+import { useTransactionStore } from '@/store/transaction/transaction.store'
 
 export type WalletState = Omit<Wallet, 'momBalance'> & {
   connectWallet: () => void
@@ -21,6 +22,7 @@ export const useWallet = (): WalletState => {
     setSignerAddress,
     disconnect,
   } = useWalletStore()
+  const { setOperationInProgress } = useTransactionStore()
 
   // Returns true if the wallet is installed, false otherwise
   const checkIfWalletIsInstalled = () => {
@@ -86,6 +88,7 @@ export const useWallet = (): WalletState => {
   const connectWallet = async () => {
     if (isAccountConnected) return
     if (isWalletInstalled) {
+      setOperationInProgress(true)
       try {
         await window.ethereum.request({
           method: 'wallet_requestPermissions',
@@ -97,7 +100,9 @@ export const useWallet = (): WalletState => {
         })
         setAccountConnected(true)
         setAccountLoggedOut(false)
+        setOperationInProgress(false)
       } catch (e) {
+        setOperationInProgress(false)
         console.error(e)
       }
     }

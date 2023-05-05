@@ -1,7 +1,6 @@
 Frontend/.next
 Frontend/build
 Backend/typechain-types
-Backend/deployed-contract-addresses.json
 .vscode
 node_modules
 lerna-debug.log

@@ -26,7 +26,7 @@ task(
 
     const isLocalHost: boolean = hre.network.name === 'localhost'
 
-    const [, owner] = await hre.ethers.getSigners()
+    const owner = await hre.ethers.getSigner(config.ownerAddress)
 
     return {
       isLocalNetwork,
