@@ -14,6 +14,12 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   log('-----------------MomToken-Deployment----------------')
 
+  const existingDeployment = await deployments.getOrNull('MOMTokenV1')
+  if (existingDeployment) {
+    log('MOMToken Proxy already deployed at:', existingDeployment.address)
+    return
+  }
+
   try {
     const MOMTokenProxy = await upgrades.deployProxy(MOMTokenFactory, [ownerAddress, fundAmount], {
       initializer: 'initialize',
@@ -21,9 +27,9 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     await MOMTokenProxy.deployed()
     log('MOMToken Proxy deployed at:', MOMTokenProxy.address)
 
-    const MOMTokenImp = await upgrades.upgradeProxy(MOMTokenProxy, MOMTokenFactory)
+    // const MOMTokenImp = await upgrades.upgradeProxy(MOMTokenProxy.address, MOMTokenFactory)
 
-    log('MOMToken Implementation deployed at:', MOMTokenImp.address)
+    // log('MOMToken Implementation deployed at:', MOMTokenImp.address)
 
     const artifact = await deployments.getArtifact('MOMTokenV1')
     const MOMTokenDeployment = {

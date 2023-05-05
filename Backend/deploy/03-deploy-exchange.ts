@@ -13,6 +13,12 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   log('-----------------Exchange-Deployment----------------')
 
+  const existingDeployment = await deployments.getOrNull('Exchange')
+  if (existingDeployment) {
+    log('Exchange already deployed at:', existingDeployment.address)
+    return
+  }
+
   try {
     const MomTokenContract: MOMTokenV1 = await ethers.getContract('MOMTokenV1')
     const USDtokenContract: USDtoken = await ethers.getContract('USDtoken')
@@ -24,7 +30,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     })
 
     // Provide the exchange with some MOM tokens and some USD tokens
-    const amountToTransfer = (10 ** 8).toString()
+    const amountToTransfer = (10 ** 2).toString()
     await MomTokenContract.connect(owner).transfer(exchangeAddress, amountToTransfer)
     await USDtokenContract.connect(owner).transfer(exchangeAddress, amountToTransfer)
 

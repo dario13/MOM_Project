@@ -1,17 +1,25 @@
+import { run } from 'hardhat'
 import { DeployFunction } from 'hardhat-deploy/types'
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
+import { NetWorkInfo } from 'tasks'
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  const { deployments, getNamedAccounts } = hre
+  const { deployments } = hre
   const { deploy, log } = deployments
 
-  const { owner } = await getNamedAccounts()
+  const { ownerAddress }: NetWorkInfo = await run('networkInfo')
 
   log('----------------------------------------------------')
 
+  const existingDeployment = await deployments.getOrNull('USDtoken')
+  if (existingDeployment) {
+    log('USDtoken already deployed at:', existingDeployment.address)
+    return
+  }
+
   try {
     await deploy('USDtoken', {
-      from: owner,
+      from: ownerAddress,
       args: [],
       log: true,
     })

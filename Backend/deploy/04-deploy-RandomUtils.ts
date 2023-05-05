@@ -4,21 +4,24 @@ import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { NetWorkInfo } from 'tasks'
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  const { deployments, getNamedAccounts } = hre
+  const { deployments } = hre
   const { deploy, log } = deployments
 
-  const { deployer } = await getNamedAccounts()
-
-  const { blockConfirmations }: NetWorkInfo = await run('networkInfo')
+  const { ownerAddress }: NetWorkInfo = await run('networkInfo')
 
   log('----------------------------------------------------')
 
+  const existingDeployment = await deployments.getOrNull('RandomUtils')
+  if (existingDeployment) {
+    log('RandomUtils already deployed at:', existingDeployment.address)
+    return
+  }
+
   try {
     await deploy('RandomUtils', {
-      from: deployer,
+      from: ownerAddress,
       log: true,
       args: [],
-      waitConfirmations: blockConfirmations,
     })
   } catch (error) {
     log('Error deploying RandomUtils...')

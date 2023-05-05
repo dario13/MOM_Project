@@ -13,6 +13,13 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { ownerAddress }: NetWorkInfo = await run('networkInfo')
   try {
     log('-----------------Game-Deployment--------------------')
+
+    const existingDeployment = await deployments.getOrNull('GameV1')
+    if (existingDeployment) {
+      log('GameV1 already deployed at:', existingDeployment.address)
+      return
+    }
+
     const MomTokenContract: MOMTokenV1 = await ethers.getContract('MOMTokenV1')
     const RandomUtilsContract = await ethers.getContract('RandomUtils')
     const Game = await upgrades.deployProxy(

@@ -3,6 +3,7 @@ import '@typechain/hardhat'
 import 'hardhat-deploy'
 import '@nomiclabs/hardhat-ethers'
 import '@nomiclabs/hardhat-waffle'
+import '@nomiclabs/hardhat-etherscan'
 import '@openzeppelin/hardhat-upgrades'
 import './tasks'
 import * as dotenv from 'dotenv'
@@ -10,9 +11,10 @@ import * as dotenv from 'dotenv'
 dotenv.config({ path: '../.env' })
 
 const GOERLI_RPC_URL = process.env.GOERLI_RPC_URL || ''
-const ADMIN_PRIVATE_KEY = process.env.ADMIN_PRIVATE_KEY
+const GOERLI_PRIVATE_KEY = process.env.GOERLI_PRIVATE_KEY
 const MAINNET_RPC_URL = process.env.MAINNET_RPC_URL || ''
 const FORKING_BLOCK_NUMBER = process.env.FORKING_BLOCK_NUMBER || '0'
+const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || ''
 
 const config: HardhatUserConfig = {
   namedAccounts: {
@@ -26,7 +28,7 @@ const config: HardhatUserConfig = {
   networks: {
     goerli: {
       url: GOERLI_RPC_URL,
-      accounts: ADMIN_PRIVATE_KEY !== undefined ? [ADMIN_PRIVATE_KEY] : [],
+      accounts: GOERLI_PRIVATE_KEY !== undefined ? [GOERLI_PRIVATE_KEY] : [],
       saveDeployments: true,
       chainId: 5,
     },
@@ -40,6 +42,12 @@ const config: HardhatUserConfig = {
     },
     localhost: {
       chainId: 31337,
+    },
+  },
+  etherscan: {
+    // npx hardhat verify --network <NETWORK> <CONTRACT_ADDRESS> <CONSTRUCTOR_PARAMETERS>
+    apiKey: {
+      goerli: ETHERSCAN_API_KEY,
     },
   },
   solidity: {
