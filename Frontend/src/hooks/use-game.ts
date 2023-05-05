@@ -1,7 +1,7 @@
 import { Difficulty, Game, BetOptions, BetResult, Rule } from '@/store/game/game.types'
 import { useWallet } from './use-wallet'
 import { useGameStore } from '@/store/game/game.store'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import env from '@/config/env'
 import { useContractConnection } from './use-contract-connection'
 import { useHandleBlockchainOperations } from './use-handle-blockchain-operations'
@@ -49,9 +49,12 @@ export const useGame = (): GameState => {
     setMatchContractAddress,
     reset,
   } = useGameStore()
+
   const { momBalance } = useWalletBalance()
   const { GAME_CONTRACT_ADDRESS } = env
   const { handleCall, handleTransaction } = useHandleBlockchainOperations()
+
+  console.log('Contract Address', matchContractAddress)
 
   const fetchRules = useCallback(async () => {
     if (!isAccountConnected) return
@@ -116,6 +119,54 @@ export const useGame = (): GameState => {
     })
   }
 
+  const forceToGetDealtCards = async () => {
+    if (!matchContractAddress || !isAccountConnected) return
+
+    try {
+      // Get current block
+      const currentBlockNumber = await signer.provider!.getBlockNumber()
+
+      // Subtract a specified number of blocks
+      const blocksToSubtract = 1000
+      const fromBlock = currentBlockNumber - blocksToSubtract
+      const toBlock = currentBlockNumber
+
+      // Query past DealtCard events in the specified block range
+      const pastEvents = await matchContract(matchContractAddress).queryFilter(
+        matchContract(matchContractAddress).filters.DealtCard(),
+        fromBlock,
+        toBlock,
+      )
+
+      // Process events and update status
+      pastEvents.forEach((event) => {
+        const cardNumber = event.args[0]
+        const hand = event.args[1]
+        setDealtCard(numberToCard(cardNumber), hand)
+        if (isTheLastHand(hand)) setIsGameOver(true)
+      })
+    } catch (error) {
+      console.error('Error fetching past DealtCard events:', error)
+    }
+  }
+
+  const gameStartTimeout = useRef<NodeJS.Timeout | null>(null)
+
+  useEffect(() => {
+    if (isGameStarted && dealtCards.length === 0) {
+      gameStartTimeout.current = setTimeout(() => {
+        forceToGetDealtCards()
+      }, 15000) // 15 seconds
+    }
+
+    // Clean the timer
+    return () => {
+      if (gameStartTimeout.current) {
+        clearTimeout(gameStartTimeout.current)
+      }
+    }
+  }, [isGameStarted])
+
   const unRegisterBetResult = () => {
     matchContract(matchContractAddress).removeAllListeners('BetResult')
   }
@@ -133,7 +184,6 @@ export const useGame = (): GameState => {
   }
 
   const startGame = async (difficulty: Difficulty) => {
-    setOperationInProgress(true)
     if (rules.length === 0 || isGameStarted) return
 
     setDifficulty(difficulty)
@@ -141,6 +191,8 @@ export const useGame = (): GameState => {
     const tokensToPlay = rules[difficulty].tokensToPlay
 
     if (!canPlay(tokensToPlay)) return
+
+    setOperationInProgress(true)
 
     // Approve tokens to be spent
     await handleTransaction(momTokenContract.approve(GAME_CONTRACT_ADDRESS, tokensToPlay))
@@ -151,7 +203,10 @@ export const useGame = (): GameState => {
     // Get match address
     const matchContractAddress = await handleCall(gameContract.getLastMatch())
 
-    if (!matchContractAddress) return
+    if (!matchContractAddress) {
+      setOperationInProgress(false)
+      return
+    }
 
     // Start match
     await handleTransaction(matchContract(matchContractAddress).startMatch())
@@ -163,11 +218,9 @@ export const useGame = (): GameState => {
   }
 
   const resetGame = () => {
-    setOperationInProgress(true)
     if (isGameStarted && isGameOver) {
       reset()
     }
-    setOperationInProgress(false)
   }
 
   const bet = async (betOption: BetOptions) => {
