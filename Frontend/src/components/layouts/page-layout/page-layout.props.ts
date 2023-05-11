@@ -3,5 +3,5 @@ import React from 'react'
 
 export type PageLayoutProps = IComponentBaseProps & {
   content: React.ReactNode
-  name: string
+  name?: string
 }
