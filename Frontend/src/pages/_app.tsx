@@ -1,28 +1,22 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { AppProps } from 'next/app'
 import '@/styles/global.css'
-import { useHydration } from '@/hooks/use-hydration'
 import { FlexBox, Loader } from '@/components'
 
 const App = ({ Component, pageProps }: AppProps) => {
-  const hasHydrated = useHydration()
-
   const renderLoader = () => {
     return (
-      <FlexBox
-        alignItems="center"
-        justifyContent="center"
-        height="100vh"
-        width="100%"
-        padding="0"
-        margin="0"
-      >
+      <FlexBox alignItems="center" justifyContent="center" height="100vh" width="100vw">
         <Loader />
       </FlexBox>
     )
   }
 
-  return hasHydrated ? <Component {...pageProps} /> : renderLoader()
+  return (
+    <Suspense fallback={renderLoader()}>
+      <Component {...pageProps} />
+    </Suspense>
+  )
 }
 
 export default App

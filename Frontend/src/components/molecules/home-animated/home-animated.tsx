@@ -1,6 +1,6 @@
-import React, { useRef, useState } from 'react'
+import React, { Suspense, useRef, useState } from 'react'
 import { Canvas } from '@react-three/fiber'
-import { FlexBox, Text3D, PlayingCard3D } from '@/components/atoms'
+import { FlexBox, Text3D, PlayingCard3D, Loader } from '@/components/atoms'
 import { OrbitControls, Environment } from '@react-three/drei'
 import { Card } from '@/store/game/game.types'
 import { numberToCard } from '@/utils/number-to-card'
@@ -31,36 +31,47 @@ const CardFlip: React.FC = () => {
 }
 
 const HomeAnimatedComponent: React.FC = () => {
+  const renderLoader = () => {
+    return (
+      <FlexBox justifyContent="center" alignItems="center">
+        <Loader />
+      </FlexBox>
+    )
+  }
+
   return (
-    <FlexBox
-      style={{
-        zIndex: 999,
-      }}
-    >
-      <Canvas camera={{ position: [0, 1, 12], fov: 50 }}>
-        <group position={[0, 3, 0]}>
-          <Text3D text="GUESS" size={0.6} />
-        </group>
-        <ambientLight intensity={0.5} />
-        <pointLight position={[10, 10, 10]} />
-        <directionalLight position={[-10, -10, -10]} />
+    <Suspense fallback={renderLoader()}>
+      <FlexBox
+        style={{
+          zIndex: 999,
+        }}
+      >
+        <Canvas camera={{ position: [0, 1, 12], fov: 50 }}>
+          <group position={[0, 3, 0]}>
+            <Text3D text="GUESS" size={0.6} />
+          </group>
+          <ambientLight intensity={0.5} />
+          <pointLight position={[10, 10, 10]} />
+          <directionalLight position={[-10, -10, -10]} />
 
-        <group position={[0, 0, 0]}>
-          <CardFlip />
-        </group>
+          <group position={[0, 0, 0]}>
+            <CardFlip />
+          </group>
 
-        <Environment
-          path={'/images/casino/'}
-          files={[`px.png`, `nx.png`, `py.png`, `ny.png`, `pz.png`, `nz.png`]}
-          background
-          blur={0.04}
-        />
-        <group position={[0, -3, 0]}>
-          <Text3D text="NEXT CARD" size={0.6} />
-        </group>
-        <OrbitControls autoRotate autoRotateSpeed={2} />
-      </Canvas>
-    </FlexBox>
+          <Environment
+            path={'/images/casino/'}
+            files={[`px.png`, `nx.png`, `py.png`, `ny.png`, `pz.png`, `nz.png`]}
+            background
+            blur={0.04}
+          />
+          <group position={[0, -3, 0]}>
+            <Text3D text="NEXT CARD" size={0.6} />
+          </group>
+
+          <OrbitControls autoRotate autoRotateSpeed={2} />
+        </Canvas>
+      </FlexBox>
+    </Suspense>
   )
 }
 
