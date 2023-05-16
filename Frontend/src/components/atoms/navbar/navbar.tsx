@@ -40,7 +40,16 @@ const Navbar = React.forwardRef<HTMLDivElement, NavbarProps>(
     }
 
     return (
-      <FlexBox flexDirection="row" {...props} data-theme={dataTheme} className={classes} ref={ref}>
+      <FlexBox
+        flexDirection="row"
+        {...props}
+        data-theme={dataTheme}
+        className={classes}
+        ref={ref}
+        style={{
+          zIndex: 1000,
+        }}
+      >
         {left && renderSection('navbar-start', left)}
         {center && renderSection('navbar-center', center)}
         {right && renderSection('navbar-end', right)}

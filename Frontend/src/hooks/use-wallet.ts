@@ -31,7 +31,7 @@ export const useWallet = (): WalletState => {
 
   // Fetch signer
   const fetchSigner = useCallback(async () => {
-    if (isAccountLoggedOut) return
+    if (isAccountLoggedOut || !checkIfWalletIsInstalled()) return
 
     const provider = new ethers.providers.Web3Provider(window.ethereum as any, 'any')
 
