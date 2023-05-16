@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text3D as Text3d, Center, Float } from '@react-three/drei'
 import { Text3DProps } from './text-3d.props'
-import { FontLoader } from 'three/examples/jsm/loaders/FontLoader'
+import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js'
 import { useLoader } from '@react-three/fiber'
 
 const Text3DComponent: React.FC<Text3DProps> = ({

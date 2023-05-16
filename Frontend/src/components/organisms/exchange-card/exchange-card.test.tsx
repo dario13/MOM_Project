@@ -36,8 +36,6 @@ describe('ExchangeCard', () => {
 
     const { debug, getByText, getByTestId } = renderedComponent()
 
-    debug()
-
     // When
     const renderedAmountInput = getByTestId('Input')
     await userEvent.type(renderedAmountInput, minimumMOMToBuy.toString())
