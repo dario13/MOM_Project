@@ -12,3 +12,5 @@ coverage*
 deployments/
 .env
 .npmrc
+Frontend/.vercel
+Frontend/storybook-static
