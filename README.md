@@ -4,6 +4,11 @@
 
 ---
 
+## TL;DR
+
+- **[Game](https://mom-project-frontend.vercel.app/)**
+- **[Storybook](https://mom-project-storybook.vercel.app)**
+
 \
 This project aims to create a full stack DAPP with focus on best practices and scalability. It's a simple card game but with many applied concepts.
 
@@ -36,11 +41,11 @@ This project aims to create a full stack DAPP with focus on best practices and s
 ## Why MOM?
 
 The name MOM stands for **M**aximum **O**r **M**inimum. It's clearly not the best synonym for Higher or Lower, and was a mistranslation early in development, but I liked the initials and kept that name.<br>
-The main purpose with which I started this project was to have a simple business domain to focus on the technical aspects of the project.
+The main purpose of this project is to focus on the technical aspects of a simple business domain.
 
 ## About the game
 
-MOM is a simple card game, where you have to guess if the next card in the deck is higher or lower. The game is played with a standard deck of 52 cards. The cards are ranked from highest to lowest as follows: King, Queen, Jack, 10, 9, 8, 7, 6, 5, 4, 3, 2, Ace. The card suit is used when two cards of same value are dealt one after the other, then the suit define what is higher. The suit ranking is:
+MOM is a simple card game, where you have to guess if the next card in the deck is higher or lower. The game is played with a standard deck of 52 cards. The cards are ranked from highest to lowest as follows: Ace, King, Queen, Jack, 10, 9, 8, 7, 6, 5, 4, 3, 2. The card suit is used when two cards of same value are dealt consecutively, then the suit define what is higher. The suit ranking is:
 
 <br>
 
@@ -49,8 +54,7 @@ MOM is a simple card game, where you have to guess if the next card in the deck 
 3 - ♥ (hearts)\
 4 - ♠ (spades)
 
-The game is played with a single deck of cards. The player is dealt one card face up. The player then bets on whether the next card will be higher or lower. The player wins if the next card is higher or lower than the previous card. <br>
-The player can choose between 3 different difficulty levels: Easy, Medium and Hard (the higher the difficulty, the higher the bet and subsequently the prize) <br>
+The player is dealt one card face up and then bets on whether the next card will be higher or lower. The player wins if their guess is correct. The game offers three different difficulty levels: Easy, Medium, and Hard. The higher the difficulty, the higher the bet and subsequently, the prize. <br>
 <br>
 
 ## Project structure
@@ -243,8 +247,6 @@ The context for executing each each tool is clarified in parentheses. <br>
 
 ## To Do
 
-- [ ] Create an organism for bet.
-- [ ] Create an organism for claim the prize.
-- [ ] Create an organism for the game history.
-- [ ] Create an organism for the game rules.
-- [ ] Apply chainlink VRF.
+- [ ] Create a page for explain how to use the site.
+- [ ] Create a page for the user's game history.
+- [ ] Deploy in another testnets
