@@ -4,15 +4,14 @@
 
 ---
 
+This project aims to create a full stack DAPP with focus on best practices and scalability. It's a simple card game but with many applied concepts.
+
 ## TL;DR
 
 - **[Game](https://mom-project-frontend.vercel.app/)**
 - **[Storybook](https://mom-project-storybook.vercel.app)**
 
 If you want to test the game, just open an issue indicating your wallet address of Goerli and I will send you some MOM tokens to play :) 
-
-\
-This project aims to create a full stack DAPP with focus on best practices and scalability. It's a simple card game but with many applied concepts.
 
 ## Table of content
 
