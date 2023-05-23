@@ -30,7 +30,7 @@ const PageLayout = (pageLayoutProps: PageLayoutProps) => {
   const renderDefaultLayout = () => {
     return (
       <ThemeProvider>
-        <FlexBox gap="5rem" className="bg-base-200">
+        <FlexBox gap="5rem" className="bg-base-200" height="100vh" minHeight="100vh">
           <FlexBox maxHeight="5%" paddingTop="1rem" paddingLeft="0.8rem" paddingRight="0.8rem">
             <MainNavbar />
           </FlexBox>
