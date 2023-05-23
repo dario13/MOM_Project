@@ -11,7 +11,7 @@ This project aims to create a full stack DAPP with focus on best practices and s
 - **[Game](https://mom-project-frontend.vercel.app/)**
 - **[Storybook](https://mom-project-storybook.vercel.app)**
 
-If you want to test the game, just open an issue indicating your wallet address of Goerli and I will send you some MOM tokens to play :) 
+If you want to test the game, just open an issue indicating your wallet address of Goerli and I will send you some MOM tokens to play :)
 
 ## Table of content
 
@@ -151,6 +151,7 @@ The most relevant technologies used in this project are:
 - **Jest**
 - **React Testing Library**
 - **Tailwind CSS**
+- **Three.js**
 
 </td>
 <td>
@@ -242,9 +243,13 @@ The context for executing each each tool is clarified in parentheses. <br>
 
 - **Storybook** _(Frontend)_ \
   To run storybook, you need to run the following command:
+
   ```bash
   yarn storybook
   ```
+
+- **HomePage** _(Frontend)_ \
+  For creating the 3D view of the home page, was used this site: https://matheowis.github.io/HDRI-to-CubeMap/
 
 ## To Do
 
