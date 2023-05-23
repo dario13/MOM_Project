@@ -4,10 +4,10 @@
   "publishConfig": {
     "@dario13:registry": "https://npm.pkg.github.com/dario13"
   },
-  "version": "0.0.19",
+  "version": "0.0.20",
   "license": "MIT",
   "dependencies": {
-    "@dario13/backend": "^0.0.19",
+    "@dario13/backend": "^0.0.20",
     "@hookform/resolvers": "^3.1.0",
     "@react-spring/web": "^9.7.1",
     "@react-three/drei": "^9.66.3",
